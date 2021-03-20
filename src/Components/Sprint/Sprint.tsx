@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   word,
@@ -11,7 +11,7 @@ import {
   isFinished,
   correctSeries,
   pointsToAdd,
-} from './sprintSlice';
+} from '../../store/reducers/sprintSlice';
 import { GameResult } from '../GameResult/GameResult';
 import styles from './Sprint.module.css';
 import { Timer } from './Timer/Timer';

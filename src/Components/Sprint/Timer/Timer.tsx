@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { gameOver } from '../sprintSlice';
+import { gameOver } from '../../../store/reducers/sprintSlice';
 
 export const Timer: FC = () => {
-  const GAME_TIME = 6000;
+  const GAME_TIME = 60;
   const [time, setTime] = useState<number>(GAME_TIME);
   const dispatch = useDispatch();
   useEffect(() => {

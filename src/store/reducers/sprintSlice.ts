@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store.models';
+import { RootState } from '../store.models';
 
 interface WordsType {
   en: string;
