@@ -1,56 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import { MainPage } from "./Components/MainPage/MainPage";
+import { LandingPage } from "./Components/LandingPage/LandingPage";
+import { Book } from "./Components/Book/Book";
+import { Dictionary } from "./Components/Dictionary/Dictionary";
+import { Statistics } from "./Components/Statistics/Statictics";
+import { Settings } from "./Components/Settings/Settings";
+import { Savannah } from "./Components/Savannah/Savannah";
+import { Audio } from "./Components/Audio/Audio";
+import { Sprint } from "./Components/Sprint/Sprint";
+import { MyGame } from "./Components/MyGame/MyGame";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div className="app">
+      <Switch>
+        <Route path="/book">
+          <MainPage>
+            <Book/>
+          </MainPage>
+        </Route>
+        <Route path="/dictionary">
+          <MainPage>
+            <Dictionary/>
+          </MainPage>
+        </Route>
+        <Route path="/statistics">
+          <MainPage>
+            <Statistics/>
+          </MainPage>
+        </Route>
+        <Route path="/settings">
+          <MainPage>
+            <Settings/>
+          </MainPage>
+        </Route>
+        <Route path="/savannah">
+            <Savannah/>
+        </Route>
+        <Route path="/audio">
+            <Audio/>
+        </Route>
+        <Route path="/sprint">
+            <Sprint/>
+        </Route>
+        <Route path="/my-game">
+            <MyGame/>
+        </Route>
+        <Route exact path="/">
+          <MainPage>
+            <LandingPage/>
+          </MainPage>
+        </Route>
+        <Route>
+          <div>404 Not Found</div>
+        </Route>
+      </Switch>
     </div>
   );
 }
