@@ -14,15 +14,6 @@ const initialState = {
     { en: 'alcohol', ru: 'алкоголь' },
     { en: 'catch', ru: 'поймать' },
     { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
-    { en: 'duck', ru: 'утка' },
   ] as Array<WordsType>,
   word: { en: 'hello', ru: 'привет' },
   translation: { en: 'hello', ru: 'привет' },
@@ -39,25 +30,33 @@ const sprintSlice = createSlice({
     nextWord: (state, action) => {
       const wordIndex = state.words.findIndex((w) => w.en === action.payload);
       if (wordIndex >= state.words.length - 1) {
-        state.word = state.words[wordIndex];
         state.isFinished = true;
+        state.word = state.words[wordIndex];
       } else {
         state.word = state.words[wordIndex + 1];
       }
+      // eslint-disable-next-line no-debugger
+      debugger
     },
     setTranslated: (state, { payload }) => {
       state.translation = payload;
     },
     setScore: (state, action) => {
-      if (state.correctSeries <= 2) {
-        state.pointsToAdd = 10;
-      } else if (state.correctSeries >= 3 && state.correctSeries <= 5) {
-        state.pointsToAdd = 20;
-      } else if (state.correctSeries >= 6 && state.correctSeries <= 8) {
-        state.pointsToAdd = 40;
-      } else if (state.correctSeries >= 9) {
-        state.pointsToAdd = 80;
+      if (state.correctSeries >= 12) {
+        state.pointsToAdd = 80
+      } else {
+        const power = Math.floor(state.correctSeries / 3)
+        state.pointsToAdd = 10 * Math.pow(2, power)
       }
+      // if (state.correctSeries <= 2) {
+      //   state.pointsToAdd = 10;
+      // } else if (state.correctSeries >= 3 && state.correctSeries <= 5) {
+      //   state.pointsToAdd = 20;
+      // } else if (state.correctSeries >= 6 && state.correctSeries <= 8) {
+      //   state.pointsToAdd = 40;
+      // } else if (state.correctSeries >= 9) {
+      //   state.pointsToAdd = 80;
+      // }
       if ((state.word.en === state.translation.en) === action.payload) {
         state.score += state.pointsToAdd;
         state.correctSeries += 1;
