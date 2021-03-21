@@ -35,8 +35,6 @@ const sprintSlice = createSlice({
       } else {
         state.word = state.words[wordIndex + 1];
       }
-      // eslint-disable-next-line no-debugger
-      debugger
     },
     setTranslated: (state, { payload }) => {
       state.translation = payload;
