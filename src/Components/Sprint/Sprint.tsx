@@ -27,7 +27,7 @@ export const Sprint: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const random = Math.random();
-    const randomIndex = Math.round(0 - 0.5 + Math.random() * (wordsArr.length - 1 - 0 + 1));
+    const randomIndex = Math.round(0 - 0.5 + Math.random() * (wordsArr.length - 1));
     if (random > 0.6) {
       dispatch(setTranslated(learnedWord));
     } else {
