@@ -21,38 +21,47 @@ function App() {
             <Book/>
           </MainPage>
         </Route>
+
         <Route path="/dictionary">
           <MainPage>
             <Dictionary/>
           </MainPage>
         </Route>
+
         <Route path="/statistics">
           <MainPage>
             <Statistics/>
           </MainPage>
         </Route>
+
         <Route path="/settings">
           <MainPage>
             <Settings/>
           </MainPage>
         </Route>
+
         <Route path="/savannah">
             <Savannah/>
         </Route>
+
         <Route path="/audio">
             <Audio/>
         </Route>
+
         <Route path="/sprint">
             <Sprint/>
         </Route>
+
         <Route path="/my-game">
             <MyGame/>
         </Route>
+
         <Route exact path="/">
           <MainPage>
             <LandingPage/>
           </MainPage>
         </Route>
+
         <Route>
           <div>404 Not Found</div>
         </Route>

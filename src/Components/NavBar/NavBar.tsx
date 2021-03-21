@@ -12,7 +12,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import home from "../../assets/image/home.svg";
 import book from "../../assets/image/book.svg";
 import dictionary from "../../assets/image/dictionary.svg";
@@ -70,30 +70,30 @@ export const NavBar = (props: any) => {
         </div>
         <Divider/>
         <List>
-          <Link to='/'>
+          <NavLink exact to='/' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
                 <img src={home} alt="home"/>
               </ListItemIcon>
               <ListItemText primary="Главная"/>
             </ListItem>
-          </Link>
-          <Link to='/book'>
+          </NavLink>
+          <NavLink to='/book' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
                 <img src={book} alt="book"/>
               </ListItemIcon>
               <ListItemText primary="Учебник"/>
             </ListItem>
-          </Link>
-          <Link to='/dictionary'>
+          </NavLink>
+          <NavLink to='/dictionary' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
                 <img src={dictionary} alt="dictionary"/>
               </ListItemIcon>
               <ListItemText primary="Словарь"/>
             </ListItem>
-          </Link>
+          </NavLink>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
               <></>
@@ -103,57 +103,57 @@ export const NavBar = (props: any) => {
           </ListItem>
           <Collapse className='nested' in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <Link to='/savannah'>
+              <NavLink to='/savannah' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Саванна"/>
                 </ListItem>
-              </Link>
-              <Link to='/audio'>
+              </NavLink>
+              <NavLink to='/audio' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Аудиовызов"/>
                 </ListItem>
-              </Link>
-              <Link to='/sprint'>
+              </NavLink>
+              <NavLink to='/sprint' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Спринт"/>
                 </ListItem>
-              </Link>
-              <Link to='/my-game'>
+              </NavLink>
+              <NavLink to='/my-game' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Моя игра"/>
                 </ListItem>
-              </Link>
+              </NavLink>
             </List>
           </Collapse>
           <Divider/>
-          <Link to='/statistics'>
+          <NavLink to='/statistics' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
                 <img src={statistic} alt="statistics"/>
               </ListItemIcon>
               <ListItemText primary="Статистика"/>
             </ListItem>
-          </Link>
-          <Link to='/settings'>
+          </NavLink>
+          <NavLink to='/settings' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
                 <img src={settings} alt="settings"/>
               </ListItemIcon>
               <ListItemText primary="Настройки"/>
             </ListItem>
-          </Link>
+          </NavLink>
         </List>
       </Drawer>
     </div>
