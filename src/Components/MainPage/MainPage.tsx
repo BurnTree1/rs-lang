@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import { NavBar } from "../NavBar/NavBar";
 import { Header } from "../Header/Header";
+import './MainPage.scss'
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,6 +42,14 @@ export function MainPage(props: any) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [menuOpen, setMenuOpen] = React.useState(true);
+  console.log(menuOpen);
+  useEffect(() => {
+    const screenWidth = window.innerWidth
+    console.log(screenWidth);
+    if (screenWidth < 1280) {
+      setMenuOpen(false)
+    }
+  },[])
 
   const handleClick = () => {
     setOpen(!open);

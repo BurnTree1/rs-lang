@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     hide: {
-      display: 'none',
+        display: 'none',
     },
     MuiButton: {
       fill: 'black',

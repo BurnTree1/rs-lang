@@ -12,6 +12,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Hidden from '@material-ui/core/Hidden';
 import { Link, NavLink } from "react-router-dom";
 import home from "../../assets/image/home.svg";
 import book from "../../assets/image/book.svg";
@@ -29,8 +30,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
     },
     drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
+        width: drawerWidth,
+        flexShrink: 0,
     },
     drawerPaper: {
       width: drawerWidth,

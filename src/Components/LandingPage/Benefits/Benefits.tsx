@@ -18,7 +18,7 @@ export const  Benefits =() => <div className={styles.benefits}>
       </div>
       <div className={styles.benefits__item}>
         <img src={benefits_3} alt="icon"/>
-        <div className={styles.benefits__text}>Постоянный доступ к учебнику, словарю и статистике</div>
+        <div className={styles.benefits__text}>Закрепление материала в минииграх</div>
       </div>
     </div>
     <div className={styles.benefits__video}>
