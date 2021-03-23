@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-import { MainPage } from "./Components/MainPage/MainPage";
+import { AppWrapper } from "./Components/AppWrapper/AppWrapper";
 import { LandingPage } from "./Components/LandingPage/LandingPage";
 import { Book } from "./Components/Book/Book";
 import { Dictionary } from "./Components/Dictionary/Dictionary";
@@ -15,29 +15,22 @@ import { MyGame } from "./Components/MyGame/MyGame";
 function App() {
   return (
     <div className="app">
+      <AppWrapper>
       <Switch>
         <Route path="/book">
-          <MainPage>
             <Book/>
-          </MainPage>
         </Route>
 
         <Route path="/dictionary">
-          <MainPage>
             <Dictionary/>
-          </MainPage>
         </Route>
 
         <Route path="/statistics">
-          <MainPage>
             <Statistics/>
-          </MainPage>
         </Route>
 
         <Route path="/settings">
-          <MainPage>
             <Settings/>
-          </MainPage>
         </Route>
 
         <Route path="/savannah">
@@ -57,15 +50,14 @@ function App() {
         </Route>
 
         <Route exact path="/">
-          <MainPage>
             <LandingPage/>
-          </MainPage>
         </Route>
 
         <Route>
           <div>404 Not Found</div>
         </Route>
       </Switch>
+      </AppWrapper>
     </div>
   );
 }

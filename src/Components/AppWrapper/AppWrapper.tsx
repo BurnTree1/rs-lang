@@ -3,7 +3,7 @@ import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import { NavBar } from "../NavBar/NavBar";
 import { Header } from "../Header/Header";
-import './MainPage.scss'
+import './AppWrapper.scss'
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export function MainPage(props: any) {
+export function AppWrapper(props: any) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [menuOpen, setMenuOpen] = React.useState(true);
