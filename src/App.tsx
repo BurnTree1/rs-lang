@@ -9,7 +9,7 @@ import { Statistics } from "./Components/Statistics/Statictics";
 import { Settings } from "./Components/Settings/Settings";
 import { Savannah } from "./Components/Savannah/Savannah";
 import { Audio } from "./Components/Audio/Audio";
-import { Sprint } from "./Components/Sprint/Sprint";
+import { SprintContainer } from "./Components/Sprint/SprintContainer/SprintContainer";
 import { MyGame } from "./Components/MyGame/MyGame";
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
         </Route>
 
         <Route path="/sprint">
-            <Sprint/>
+            <SprintContainer/>
         </Route>
 
         <Route path="/my-game">
