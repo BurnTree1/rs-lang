@@ -1,0 +1,72 @@
+.sprint__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../../../assets/image/sprintBG.png') no-repeat center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sprint__icon {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 44px auto 20px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 48px;
+}
+
+.text {
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 27px;
+  max-width: 584px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.start__btn {
+  background: #2196f3;
+  border-radius: 4px;
+  width: 100px;
+  height: 36px;
+  color: #ffffff;
+  letter-spacing: 1.25px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  border: 0;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  transition: all 0.2s linear;
+
+  &:hover {
+    background: #1d84d6;
+  }
+}
+
+.loader {
+    color: #FFFFFF;
+    font-weight: 300;
+font-size: 32px;
+line-height: 48px;
+width: 90px;
+height: 90px;
+border-radius: 50%;
+border: 4px solid #2196F3;
+display: flex;
+align-items: center;
+justify-content: center;
+}
