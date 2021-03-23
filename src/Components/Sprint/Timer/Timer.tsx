@@ -17,7 +17,7 @@ export const Timer: FC = () => {
     return () => {
       clearInterval(timeId);
     };
-  });
+  },[time]);
   return (
     <div>
       <div className="time">Time: {time}</div>
