@@ -1,62 +1,65 @@
-import React, { useCallback, useEffect } from "react";
+import React, { ReactElement, ReactNode, ReactNodeArray, useCallback, useEffect, FC } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
-import clsx from 'clsx';
+import clsx from "clsx";
 import { NavBar } from "../NavBar/NavBar";
 import { Header } from "../Header/Header";
-import './AppWrapper.scss'
+import "./AppWrapper.scss";
 
 const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: 'flex',
+      display: "flex"
     },
     drawerHeader: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: 'flex-end',
+      justifyContent: "flex-end"
     },
     content: {
       flexGrow: 1,
-      marginLeft: '-40px',
-      paddingTop: '65px',
-      transition: theme.transitions.create('margin', {
+      marginLeft: "-40px",
+      paddingTop: "65px",
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
+        duration: theme.transitions.duration.leavingScreen
+      })
 
     },
     contentShift: {
-      transition: theme.transitions.create('margin', {
+      transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
+        duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: '65px',
-    },
+      marginLeft: "65px"
+    }
   })
 );
 
-export function AppWrapper(props: any) {
+type PropsType = {
+  children: ReactNode
+}
+export const AppWrapper: FC<PropsType> = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [menuOpen, setMenuOpen] = React.useState(true);
   console.log(menuOpen);
   useEffect(() => {
-    const screenWidth = window.innerWidth
+    const screenWidth = window.innerWidth;
     console.log(screenWidth);
     if (screenWidth < 1280) {
-      setMenuOpen(false)
+      setMenuOpen(false);
     }
-  },[])
+  }, []);
 
   const handleClick = useCallback(() => {
     setOpen(!open);
-  },[open]);
+  }, [open]);
   const handleDrawerToggle = useCallback(() => {
     setMenuOpen(!menuOpen);
-  },[menuOpen]);
+  }, [menuOpen]);
 
   return (
     <div className={classes.root}>
@@ -64,12 +67,12 @@ export function AppWrapper(props: any) {
       <NavBar open={open} handleClick={handleClick} handleDrawerToggle={handleDrawerToggle} menuOpen={menuOpen}/>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: menuOpen,
+          [classes.contentShift]: menuOpen
         })}
       >
-        <div className={classes.drawerHeader} />
+        <div className={classes.drawerHeader}/>
         {props.children}
       </main>
     </div>
   );
-}
+};
