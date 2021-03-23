@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -48,7 +48,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const NavBar = (props: any) => {
+type PropsType = {
+  open: boolean
+  menuOpen: boolean
+  handleClick: ()=> void
+  handleDrawerToggle: ()=> void
+}
+export const NavBar: FC<PropsType> = (props) => {
   const { open, menuOpen, handleClick, handleDrawerToggle } = props;
   const classes = useStyles();
   const theme = useTheme();

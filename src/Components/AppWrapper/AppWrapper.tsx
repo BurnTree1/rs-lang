@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from 'clsx';
 import { NavBar } from "../NavBar/NavBar";
@@ -51,12 +51,12 @@ export function AppWrapper(props: any) {
     }
   },[])
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setOpen(!open);
-  };
-  const handleDrawerToggle = () => {
+  },[open]);
+  const handleDrawerToggle = useCallback(() => {
     setMenuOpen(!menuOpen);
-  };
+  },[menuOpen]);
 
   return (
     <div className={classes.root}>
