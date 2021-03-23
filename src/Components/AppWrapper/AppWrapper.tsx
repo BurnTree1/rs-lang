@@ -1,11 +1,10 @@
-import React, { ReactElement, ReactNode, ReactNodeArray, useCallback, useEffect, FC } from "react";
+import React, { ReactNode, useCallback, useEffect, FC } from "react";
 import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import { NavBar } from "../NavBar/NavBar";
 import { Header } from "../Header/Header";
 import "./AppWrapper.scss";
 
-const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -45,10 +44,8 @@ export const AppWrapper: FC<PropsType> = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const [menuOpen, setMenuOpen] = React.useState(true);
-  console.log(menuOpen);
   useEffect(() => {
     const screenWidth = window.innerWidth;
-    console.log(screenWidth);
     if (screenWidth < 1280) {
       setMenuOpen(false);
     }
