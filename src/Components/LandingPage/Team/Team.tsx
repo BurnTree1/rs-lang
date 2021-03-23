@@ -8,25 +8,25 @@ export const Team = () => (
     <div className={styles.team__inner}>
       <div className={styles.team__item}>
         <div className={styles.photo}>
-          <img src={avatar} alt="photo" className={styles.photo__img}/>
+          <img src={avatar} alt="avatar" className={styles.photo__img}/>
         </div>
         <div className={styles.text}>Lorem ipsum</div>
       </div>
       <div className={styles.team__item}>
         <div className={styles.photo}>
-          <img src={avatar} alt="photo" className={styles.photo__img}/>
+          <img src={avatar} alt="avatar" className={styles.photo__img}/>
         </div>
         <div className={styles.text}>Lorem ipsum</div>
       </div>
       <div className={styles.team__item}>
         <div className={styles.photo}>
-          <img src={avatar} alt="photo" className={styles.photo__img}/>
+          <img src={avatar} alt="avatar" className={styles.photo__img}/>
         </div>
         <div className={styles.text}>Lorem ipsum</div>
       </div>
       <div className={styles.team__item}>
         <div className={styles.photo}>
-          <img src={avatar} alt="photo" className={styles.photo__img}/>
+          <img src={avatar} alt="avatar" className={styles.photo__img}/>
         </div>
         <div className={styles.text}>Lorem ipsum</div>
       </div>

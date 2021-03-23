@@ -22,7 +22,7 @@ export const  Benefits =() => <div className={styles.benefits}>
       </div>
     </div>
     <div className={styles.benefits__video}>
-      <iframe className={styles.video} width="555" height="325" src="https://www.youtube.com/embed/5nmpokoRaZI" frameBorder="0"
+      <iframe className={styles.video} width="555" height="325" title='benefits' src="https://www.youtube.com/embed/5nmpokoRaZI" frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen />
     </div>
