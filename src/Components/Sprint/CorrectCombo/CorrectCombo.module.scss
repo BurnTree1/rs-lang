@@ -1,0 +1,19 @@
+.correct__icons {
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+    padding-top: 40px;
+  }
+  
+  .correct__icon {
+    font-size: 0;
+    line-height: 0;
+    width: 24px;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.54);
+    border-radius: 50%;
+  
+    &_filled {
+  background: url('../../../assets//image/check.svg') no-repeat center;
+    }
+  }

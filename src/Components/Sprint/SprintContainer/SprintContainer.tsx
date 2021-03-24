@@ -5,7 +5,6 @@ import icon from '../../../assets/image/sprint-start-icon.svg';
 
 export const SprintContainer = () => {
   const LOADER_TIME = 3;
-  const [isStartPressed, setIsStartPressed] = useState<boolean>(false);
   const [startGame, setStartGame] = useState<boolean>(true);
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const [gameLoader, setGameLoader] = useState<boolean>(false);

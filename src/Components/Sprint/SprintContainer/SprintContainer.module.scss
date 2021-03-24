@@ -70,3 +70,16 @@ display: flex;
 align-items: center;
 justify-content: center;
 }
+
+
+@media (max-width: 700px) {
+  .text {
+    font-size: 18px;
+    padding: 0 20px;
+  }
+.sprint__icon {
+  width: 100px;
+  height: 100px;
+}
+
+}

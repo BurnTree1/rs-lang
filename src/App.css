@@ -34,3 +34,9 @@ a {
   margin: 0 auto;
   position: relative;
 }
+
+@media (max-width: 700px) {
+  .app {
+    min-height: 110vh;
+  }
+}
