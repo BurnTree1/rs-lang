@@ -1,0 +1,11 @@
+.app .MuiTypography-displayBlock {
+    font-size: 14px;
+}
+
+.nested {
+    color: #757575;
+}
+
+.app .active .MuiTypography-displayBlock {
+    font-weight: bold;
+}

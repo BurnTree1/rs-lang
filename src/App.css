@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  /*font-family: 'Rochester', cursive;*/
+  font-size: 18px;
+  color: #000;
+  margin: 0 auto;
+}
+h1,h2,h3,h4,h5,h6 {
+  margin: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app {
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+}

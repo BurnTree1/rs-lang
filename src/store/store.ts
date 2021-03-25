@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import savannahReducer from './slices/Savannah'
+import sprint from './reducers/sprintSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: savannahReducer,
+    sprint,
   },
 });
