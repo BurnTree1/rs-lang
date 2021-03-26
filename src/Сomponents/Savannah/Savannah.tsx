@@ -8,11 +8,11 @@ import { ReactComponent as FullScreenIcon } from './assets/fullscreen_24px.svg';
 import { ReactComponent as CloseIcon } from './assets/close_24px_outlined.svg';
 import getThreeRandomWords, { shuffleArray } from '../../helpers/shuffleArray';
 import Words from './Words';
-import EndGameModal from './EndGameModal';
-import StartView from './StartView';
-import GetReadyView from './GetReadyView';
-import SettingsView from './SettingsView';
-import GamePauseModal from './GamePauseModal';
+import EndGameModal from '../Modals/EndGameModal';
+import StartView from '../Views/StartView/StartView';
+import GetReadyView from '../Views/GetReadyView/GetReadyView';
+import SettingsView from '../Views/SettingsView/SettingsView';
+import GamePauseModal from '../Modals/GamePauseModal';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);

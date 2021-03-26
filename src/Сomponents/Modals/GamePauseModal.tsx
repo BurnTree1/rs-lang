@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import styles from './Savannah.module.scss';
+import styles from '../Savannah/Savannah.module.scss';
 
 type Props = {
   setGameIsPaused: Dispatch<SetStateAction<boolean>>;

@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './Savannah.module.scss';
-import { WordsType } from './types';
-import WrongAnswerList from './WrongAnswerList';
+import styles from '../Savannah/Savannah.module.scss';
+import { WordsType } from '../Savannah/types';
+import WrongAnswerList from '../Savannah/WrongAnswerList';
 
 type Props = {
   wrongAnswers: WordsType;

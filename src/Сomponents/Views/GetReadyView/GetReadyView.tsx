@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { useSpring, animated } from 'react-spring';
-import styles from './Savannah.module.scss';
+import styles from '../../Savannah/Savannah.module.scss';
 
 type Props = {
   setGameStatus: Dispatch<SetStateAction<{ startView: boolean; getReadyView: boolean; settingsView: boolean }>>;

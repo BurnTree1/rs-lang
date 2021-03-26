@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core';
-import styles from './Savannah.module.scss';
+import styles from '../../Savannah/Savannah.module.scss';
 import ValueLabel from './ValueLabel';
 import RadioButtons from './RadioButtons';
 
