@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
-import { AppWrapper } from './components/AppWrapper/AppWrapper';
-import { LandingPage } from './components/LandingPage/LandingPage';
-import { Book } from './components/Book/Book';
-import { Dictionary } from './components/Dictionary/Dictionary';
-import { Statistics } from './components/Statistics/Statictics';
-import { Settings } from './components/Settings/Settings';
-import Savannah from './components/Savannah/Savannah';
-import { Audio } from './components/Audio/Audio';
-import { Sprint } from './components/Sprint/Sprint';
-import { MyGame } from './components/MyGame/MyGame';
+import { AppWrapper } from './Сomponents/AppWrapper/AppWrapper';
+import { LandingPage } from './Сomponents/LandingPage/LandingPage';
+import { Book } from './Сomponents/Book/Book';
+import { Dictionary } from './Сomponents/Dictionary/Dictionary';
+import { Statistics } from './Сomponents/Statistics/Statictics';
+import { Settings } from './Сomponents/Settings/Settings';
+import Savannah from './Сomponents/Savannah/Savannah';
+import { Sprint } from './Сomponents/Sprint/Sprint';
+import { MyGame } from './Сomponents/MyGame/MyGame';
+import { Audio } from './Сomponents/Audio/Audio';
 
 function App() {
   return (
@@ -48,7 +48,6 @@ function App() {
           <Route path="/my-game">
             <MyGame />
           </Route>
-
           <Route exact path="/">
             <LandingPage />
           </Route>
