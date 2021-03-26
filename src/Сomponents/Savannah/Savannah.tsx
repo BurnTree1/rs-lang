@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './Savannah.module.scss';
-import './animation.scss';
 import words from './mockData';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
