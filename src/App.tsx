@@ -10,7 +10,7 @@ import { Settings } from "./Components/Settings/Settings";
 import { Savannah } from "./Components/Savannah/Savannah";
 import { Audio } from "./Components/Audio/Audio";
 import { Sprint } from "./Components/Sprint/Sprint";
-import { MyGame } from "./Components/MyGame/MyGame";
+import MyGame from "./Components/MyGame/MyGame";
 
 function App() {
   return (
