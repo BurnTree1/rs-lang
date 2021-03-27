@@ -1,8 +1,8 @@
 import React from 'react'
-import cosmo_2 from '../../../assets/image/cosmo_2.png';
-import cosmo_3 from '../../../assets/image/cosmo_3.png';
-import cosmo_4 from '../../../assets/image/cosmo_4.png';
-import cosmo_1 from '../../../assets/image/cosmo_1.png';
+import cosmo_2 from '../../../../assets/image/cosmo_2.png';
+import cosmo_3 from '../../../../assets/image/cosmo_3.png';
+import cosmo_4 from '../../../../assets/image/cosmo_4.png';
+import cosmo_1 from '../../../../assets/image/cosmo_1.png';
 import styles from './Spacemen.module.scss'
 
 export const Spacemen = () => {

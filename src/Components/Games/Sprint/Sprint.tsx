@@ -10,14 +10,14 @@ import {
   score,
   isFinished,
   pointsToAdd,
-} from '../../store/reducers/sprintSlice';
+} from '../../../store/reducers/sprintSlice';
 import { GameResult } from '../GameResult/GameResult';
 import styles from './Sprint.module.scss';
 import { Timer } from './Timer/Timer';
-import volume from '../../assets/image/volume.svg';
-import rocket from '../../assets/image/rocket.svg';
-import arrow from '../../assets/image/arrow.svg';
-import { useRandom } from '../../helpers/hooks';
+import volume from '../../../assets/image/volume.svg';
+import rocket from '../../../assets/image/rocket.svg';
+import arrow from '../../../assets/image/arrow.svg';
+import { useRandom } from '../../../helpers/hooks';
 import { CorrectCombo } from './CorrectCombo/CorrectCombo';
 import { Spacemen } from './Spacemen/Spacemen';
 import { TopPanel } from './TopPanel/TopPanel';

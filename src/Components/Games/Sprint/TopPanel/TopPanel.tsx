@@ -1,6 +1,6 @@
 import React from 'react'
-import fullscreen from '../../../assets/image/fullscreen.svg';
-import close from '../../../assets/image/close.svg';
+import fullscreen from '../../../../assets/image/fullscreen.svg';
+import close from '../../../../assets/image/close.svg';
 import styles from './TopPanel.module.scss'
 
 export const TopPanel = () => {

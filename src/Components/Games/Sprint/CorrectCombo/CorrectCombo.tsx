@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx';
 import { useSelector } from 'react-redux';
-import { correctSeries } from '../../../store/reducers/sprintSlice';
+import { correctSeries } from '../../../../store/reducers/sprintSlice';
 import styles from './CorrectCombo.module.scss'
 
 

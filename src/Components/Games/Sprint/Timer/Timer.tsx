@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { gameOver } from '../../../store/reducers/sprintSlice';
+import { gameOver } from '../../../../store/reducers/sprintSlice';
 import styles from './Timer.module.scss'
 
 type PropsType = {
