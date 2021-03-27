@@ -2,29 +2,38 @@ import React, { useEffect, useMemo, useState } from "react";
 import map from "lodash/map";
 import { useParams, Link } from "react-router-dom";
 import { Pagination, PaginationItem } from "@material-ui/lab";
-import { wordsApi } from "../../../api";
+import { CircularProgress } from "@material-ui/core";
 import Card from "./CardItem";
+import SectionHandler from "./SectionHandler";
 import { bookBuilder, COUNT_SECTION_PAGES } from "../../../helpers";
+import { wordsApi } from "../../../api";
 
 export default () => {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [words, setWords] = useState([]);
   const { sectionId } = useParams();
   const { pageId = "1" } = useParams();
 
   useEffect(() => {
-    wordsApi.get(sectionId, parseInt(pageId, 10) - 1)
+    setIsLoaded(false);
+    wordsApi.get(parseInt(sectionId, 10) - 1, parseInt(pageId, 10) - 1)
       .then(({ data }) => {
         setWords(data);
-      });
+        setIsLoaded(true);
+      })
+      .catch(() => setIsLoaded(true));
   }, [sectionId, pageId]);
 
-  const cards = useMemo(() => map(words, ({ id, word }) => <Card key={id} name={word}/>), [words]);
+  const cards = useMemo(() =>
+      isLoaded ?
+        // @ts-ignore
+        map(words, word => <Card key={word.id} {...word}/>)
+        : <CircularProgress/>
+    , [words, isLoaded]
+  );
 
-  return <div>
-    Page
-    {cards}
-    {cards}
-    <Pagination page={parseInt(pageId, 10)}
+  const pagination =
+    useMemo(() => <Pagination page={parseInt(pageId, 10)}
                 count={COUNT_SECTION_PAGES}
                 renderItem={(item) => (
                   <PaginationItem
@@ -33,7 +42,14 @@ export default () => {
                     {...item}
                   />
                 )}
-    />
+    />, [pageId])
+
+  return <div>
+    <SectionHandler/>
+    <h3>Page</h3>
+    {pagination}
+    {cards}
+    {pagination}
   </div>;
 }
 
