@@ -21,17 +21,29 @@ const Word: React.FC<Props> = ({ rockRef, speed, currentWord, setNextLevel, setH
   });
   const [initialCoordY, setInitialCoordY] = useState<number>();
 
-  useEffect(() => {
-    if (gameIsDone || gameIsPaused) stop();
-    else onResume();
-  }, [gameIsDone, gameIsPaused]);
-
   const [props, set, stop] = useSpring(() => ({
     top: coordinates.y,
     from: { top: initialCoordY },
     reset: true,
     config: { duration: speed },
   }));
+
+  const onResume = () => {
+    if (wordRef.current && rockRef.current) {
+      const yCoordOfWord = wordRef.current.getBoundingClientRect().y;
+      const yCooodOfBox = rockRef.current.getBoundingClientRect().y;
+      setCoordinates({
+        x: yCoordOfWord,
+        y: yCooodOfBox,
+      });
+      setNewTime(speed - (yCoordOfWord / yCooodOfBox) * speed);
+    }
+  };
+
+  useEffect(() => {
+    if (gameIsDone || gameIsPaused) stop();
+    else onResume();
+  }, [gameIsDone, gameIsPaused]);
 
   useEffect(() => {
     if (wordRef.current) setInitialCoordY(wordRef.current.getBoundingClientRect().y + 60);
@@ -90,22 +102,6 @@ const Word: React.FC<Props> = ({ rockRef, speed, currentWord, setNextLevel, setH
       },
     });
   }, [currentWord]);
-
-  const onStop = () => {
-    stop();
-  };
-
-  const onResume = () => {
-    if (wordRef.current && rockRef.current) {
-      const yCoordOfWord = wordRef.current.getBoundingClientRect().y;
-      const yCooodOfBox = rockRef.current.getBoundingClientRect().y;
-      setCoordinates({
-        x: yCoordOfWord,
-        y: yCooodOfBox,
-      });
-      setNewTime(speed - (yCoordOfWord / yCooodOfBox) * speed);
-    }
-  };
 
   return (
     <>

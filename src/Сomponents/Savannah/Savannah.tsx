@@ -16,6 +16,7 @@ import GamePauseModal from '../Modals/GamePauseModal';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
+  const gameContainerRef = useRef<HTMLDivElement>(null);
   const [currentWords, setCurrentWords] = useState<typeof words>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string>();
   const [wrongAnswers, setWrongAnswers] = useState<typeof words>([]);
@@ -30,9 +31,9 @@ const Savannah = () => {
   const [gameIsPaused, setGameIsPaused] = useState(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const [gameView, setGameView] = useState({
-    startView: true,
-    getReadyView: true,
-    settingsView: true,
+    startView: false,
+    getReadyView: false,
+    settingsView: false,
   });
 
   useEffect(() => {
@@ -60,6 +61,14 @@ const Savannah = () => {
     setWrongAnswers((prevState) => [...prevState, words[currentLevel]]);
   };
 
+  const onFullscreen = () => {
+    if (!document.fullscreenElement && gameContainerRef.current) {
+      gameContainerRef.current.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
   const checkAnswer = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
     const word = e.currentTarget.textContent;
     if (word && word.slice(2) !== currentAnswer) {
@@ -85,7 +94,7 @@ const Savannah = () => {
           <div className={styles.heartsContainer}>
             <HeartsWidget livesCount={livesCount} livesLeft={livesLeft} />
           </div>
-          <FullScreenIcon className={styles.fullscreenIcon} />
+          <FullScreenIcon className={styles.fullscreenIcon} onClick={onFullscreen} />
         </div>
         <Word
           gameIsPaused={gameIsPaused}
@@ -105,7 +114,7 @@ const Savannah = () => {
   };
 
   return (
-    <div className={styles.gameContainer}>
+    <div className={styles.gameContainer} ref={gameContainerRef}>
       {conditionalRender()}
       <CloseIcon className={styles.close} onClick={onClose} />
       {gameIsPaused && (
