@@ -2,7 +2,6 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   word,
-  words,
   nextWord,
   translation,
   setTranslated,
@@ -13,6 +12,7 @@ import {
   makeAnswer,
   wrongAnswers,
   correctAnswers,
+  wordsArr,
 } from '../../../store/reducers/sprintSlice';
 import { GameResult } from '../GameResult/GameResult';
 import styles from './Sprint.module.scss';
@@ -28,7 +28,7 @@ import EndGameModal from '../../Modals/EndGameModal';
 import GamePauseModal from '../../Modals/GamePauseModal';
 
 export const Sprint: FC = () => {
-  const wordsArr = useSelector(words);
+  const words = useSelector(wordsArr);
   const learnedWord = useSelector(word);
   const translatedWord = useSelector(translation);
   const gameScore = useSelector(score);
@@ -39,19 +39,18 @@ export const Sprint: FC = () => {
   const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { random, randomIndex } = useRandom(wordsArr.length)
+  const { random, randomIndex } = useRandom(words.length)
   useEffect(() => {
     if (random > 0.6) {
-      dispatch(setTranslated(learnedWord));
+      dispatch(setTranslated(learnedWord.wordTranslate));
     } else {
-      dispatch(setTranslated(wordsArr[randomIndex]));
+      dispatch(setTranslated(words[randomIndex].wordTranslate));
     }
-  }, [learnedWord, dispatch, random, randomIndex, wordsArr]);
+  }, [learnedWord]);
   const onTranslationConfirm = useCallback((isRight: boolean) => {
     dispatch(setScore(isRight));
-    dispatch(nextWord(learnedWord.en));
-    dispatch(makeAnswer(learnedWord.ru))
-  },[learnedWord.en, dispatch]);
+    dispatch(nextWord(learnedWord.word));
+  },[learnedWord.word, dispatch]);
   const onAnswerSelect = useCallback((e: KeyboardEvent): void => {
     if (e.key === 'ArrowRight') {
       onTranslationConfirm(true)
@@ -75,8 +74,8 @@ export const Sprint: FC = () => {
         <div className={styles.points}>+{points}</div>
         <Spacemen/>
         <img src={rocket} alt="rocket" className={styles.rocket} />
-        <div className={styles.english}>{learnedWord.en}</div>
-        <div className={styles.translated}>{translatedWord.ru}</div>
+        <div className={styles.english}>{learnedWord.word}</div>
+        <div className={styles.translated}>{translatedWord}</div>
         <div className={styles.btns}>
           <button
             onClick={() => onTranslationConfirm(false)}

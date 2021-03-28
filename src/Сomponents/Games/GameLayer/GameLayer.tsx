@@ -15,7 +15,8 @@ export const GameLayer: FC<PropsType> = (props) => {
   const [startGame, setStartGame] = useState<boolean>(true);
   const [gameLoader, setGameLoader] = useState<boolean>(false);
   const [loaderSec, setLoaderSec] = useState<number>(LOADER_TIME);
-  const [play] = useSound(learnedWord.audio)
+  const url = 'https://react-learnwords-example.herokuapp.com';
+  const [play] = useSound(`${url}/${learnedWord.audio}`)
   const path = useLocation().pathname
   const dispatch = useDispatch()
     useEffect(() => {

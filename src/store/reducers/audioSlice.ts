@@ -1,28 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store.models';
+import words from '../../Сomponents/Savannah/mockData'
 
 export interface WordsType {
-  en: string;
-  ru: string;
-  audio: string
-  image: string
+  id: string;
+  group: number;
+  page: number;
+  word: string;
+  image: string;
+  audio: string;
+  audioMeaning: string;
+  audioExample: string;
+  textMeaning: string;
+  textExample: string;
+  transcription: string;
+  textExampleTranslate: string;
+  textMeaningTranslate: string;
+  wordTranslate: string;
 }
 
 const initialState = {
-  words: [
-    { en: 'boat', ru: 'лодка', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0005.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0005.jpg' },
-    { en: 'agree', ru: 'согласна', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0001.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0001.jpg' },
-    { en: 'arrive', ru: 'прибыть', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0003.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0003.jpg' },
-    { en: 'alcohol', ru: 'алкоголь', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0002.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0002.jpg' },
-    { en: 'August', ru: 'август', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0004.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0004.jpg' },
-    { en: 'breakfast', ru: 'завтрак', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0006.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0006.jpg' },
-  ] as Array<WordsType>,
-  word: { en: 'boat', ru: 'лодка', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0005.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0005.jpg' },
-  next: { en: 'agree', ru: 'согласна', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0001.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0001.jpg' },
+  wordsArr: words as Array<WordsType>,
+  word: words[0],
+  next: words[1],
   isFinished: false,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
-  isCorrectAnswer: null as null | boolean,
   isAnswered: false
 };
 
@@ -31,19 +34,19 @@ const sprintSlice = createSlice({
   initialState,
   reducers: {
     setWord: (state) => {
-      state.word = { en: 'boat', ru: 'лодка', audio: 'https://react-learnwords-example.herokuapp.com/files/01_0005.mp3', image: 'https://react-learnwords-example.herokuapp.com/files/01_0005.jpg' }
+      state.word = { ...words[0] }
     },
     nextWord: (state, { payload: word }) => {
-      const wordIndex = state.words.findIndex((w) => w.en === word.en);
-      if (wordIndex >= state.words.length - 1) {
+      const wordIndex = state.wordsArr.findIndex((w) => w.word === word.word);
+      if (wordIndex >= state.wordsArr.length - 1) {
         state.isFinished = true;
-        state.word = state.words[wordIndex];
+        state.word = state.wordsArr[wordIndex];
       } else {
-        state.word = state.words[wordIndex + 1];
-        if(state.words[wordIndex + 2]) {
-          state.next = state.words[wordIndex + 2];
+        state.word = state.wordsArr[wordIndex + 1];
+        if(state.wordsArr[wordIndex + 2]) {
+          state.next = state.wordsArr[wordIndex + 2];
         } else {
-          state.next = state.words[state.words.length - 1]
+          state.next = state.wordsArr[state.wordsArr.length - 1]
         }
       }
     },
@@ -51,12 +54,10 @@ const sprintSlice = createSlice({
       state.isAnswered = isAnswered
     },
     makeAnswer: (state, { payload: word }) => {
-      if (state.word.ru === word) {
+      if (state.word.wordTranslate === word) {
         state.correctAnswers = [...state.correctAnswers, state.word]
-        state.isCorrectAnswer = true
       } else {
         state.wrongAnswers = [...state.wrongAnswers, state.word]
-        state.isCorrectAnswer = false
       }
     },
     gameOver: (state) => {
@@ -69,7 +70,7 @@ const { actions, reducer } = sprintSlice;
 
 export const { nextWord, gameOver, setWord, makeAnswer, setAnswered } = actions;
 
-export const words = (state: RootState) => state.audio.words;
+export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;
 export const next = (state: RootState) => state.audio.next;
 export const translation = (state: RootState) => state.audio.translation;

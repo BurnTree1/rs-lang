@@ -6,7 +6,7 @@ import styles from './TopPanel.module.scss'
 type PropsType = {
   setGameIsPaused: (value: boolean)=> void
 }
-export const TopPanel: FC<PropsType> = ({setGameIsPaused}) => {
+export const TopPanel: FC<PropsType> = ({ setGameIsPaused }) => {
     const onFullscreen = () => {
         const doc = document.documentElement as HTMLElement & {
           webkitRequestFullscreen(): Promise<void>;
