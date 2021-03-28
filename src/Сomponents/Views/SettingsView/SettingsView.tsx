@@ -8,6 +8,7 @@ import RadioButtons from './RadioButtons';
 type Props = {
   setSettings: Dispatch<SetStateAction<{ section: string; difficult: string }>>;
   setGameStatus: Dispatch<SetStateAction<{ startView: boolean; getReadyView: boolean; settingsView: boolean }>>;
+  startPlay?: () => void
 };
 
 const SettingsSlider = withStyles({
@@ -39,7 +40,7 @@ const SettingsSlider = withStyles({
 
 const sections = ['Начальный', 'Легкий', 'Средний', 'Сложный', 'Великий', 'Невероятный'];
 
-const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus }) => {
+const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }) => {
   const [values, setValues] = useState<{ section: number; difficult: string }>({
     section: 0,
     difficult: '',
@@ -62,6 +63,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus }) => {
       ...prevState,
       settingsView: false,
     }));
+    startPlay && startPlay()
   };
 
   return (

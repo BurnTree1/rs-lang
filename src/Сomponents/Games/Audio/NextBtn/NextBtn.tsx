@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import next from '../../../../assets/image/next.svg';
-import { correctAnswers, isAnswered, nextWord, setAnswered, word, wrongAnswers } from '../../../../store/reducers/audioSlice';
+import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, word, wrongAnswers } from '../../../../store/reducers/audioSlice';
 import EndGameModal from '../../../Modals/EndGameModal';
 import GamePauseModal from '../../../Modals/GamePauseModal';
 import { TopPanel } from '../../Sprint/TopPanel/TopPanel';
@@ -13,6 +13,7 @@ export const NextBtn = () => {
   const answered = useSelector(isAnswered);
   const wrongWords = useSelector(wrongAnswers);
   const correctWords = useSelector(correctAnswers);
+  const finished = useSelector(isFinished);
   const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const onNextWord = () => {
@@ -39,7 +40,7 @@ export const NextBtn = () => {
           <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} />
         </div>
       )}
-      {gameIsDone && (
+      {(gameIsDone || finished) && (
         <>
           <div className={styles.overlay} />
           <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} />
