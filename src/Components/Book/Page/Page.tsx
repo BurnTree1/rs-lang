@@ -1,14 +1,17 @@
-import React, { useEffect, useMemo, useState } from "react";
-import map from "lodash/map";
+import React, { FC, useEffect, useMemo, useState } from "react";
+import { get, map, head } from "lodash";
 import { useParams, Link } from "react-router-dom";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { CircularProgress } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "./CardItem";
 import SectionHandler from "./SectionHandler";
 import { bookBuilder, COUNT_SECTION_PAGES } from "../../../helpers";
-import { wordsApi } from "../../../api";
+import { userAggregateWords } from "../../../api";
+import { initPage } from "../../../store/reducers/book";
+import { RootState } from "../../../store/store.models";
 
-export default () => {
+const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const { sectionId } = useParams();
   const { pageId = "1" } = useParams();
@@ -19,14 +22,17 @@ export default () => {
   const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
 
   useEffect(() => {
-    setIsLoaded(false);
-    wordsApi.get(parseInt(sectionId, 10) - 1, parseInt(pageId, 10) - 1)
-      .then(({ data }) => {
-        setWords(data);
-        setIsLoaded(true);
-      })
-      .catch(() => setIsLoaded(true));
-  }, [sectionId, pageId]);
+    if (!words) {
+      setIsLoaded(false);
+      userAggregateWords.get(sectionIdInt - 1, pageIdInt - 1)
+        .then(({ data }) => {
+          // @ts-ignore
+          dispatch(initPage({ sectionId, pageId, words: head(data).paginatedResults }));
+          setIsLoaded(true);
+        })
+        .catch(() => setIsLoaded(true));
+    }
+  }, [words]);
 
   const cards = useMemo(() =>
       isLoaded ?
@@ -38,15 +44,15 @@ export default () => {
 
   const pagination =
     useMemo(() => <Pagination page={parseInt(pageId, 10)}
-                count={COUNT_SECTION_PAGES}
-                renderItem={(item) => (
-                  <PaginationItem
-                    component={Link}
-                    to={bookBuilder(sectionId, item.page)}
-                    {...item}
-                  />
-                )}
-    />, [pageId])
+                              count={COUNT_SECTION_PAGES}
+                              renderItem={(item) => (
+                                <PaginationItem
+                                  component={Link}
+                                  to={bookBuilder(sectionId, item.page)}
+                                  {...item}
+                                />
+                              )}
+    />, [pageId]);
 
   return <div>
     <SectionHandler/>
@@ -55,5 +61,7 @@ export default () => {
     {cards}
     {pagination}
   </div>;
-}
+};
+
+export default Page;
 
