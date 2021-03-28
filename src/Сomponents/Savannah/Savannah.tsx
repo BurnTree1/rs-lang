@@ -31,9 +31,9 @@ const Savannah = () => {
   const [gameIsPaused, setGameIsPaused] = useState(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const [gameView, setGameView] = useState({
-    startView: false,
-    getReadyView: false,
-    settingsView: false,
+    startView: true,
+    getReadyView: true,
+    settingsView: true,
   });
 
   useEffect(() => {
