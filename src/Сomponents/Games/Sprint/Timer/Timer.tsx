@@ -7,7 +7,7 @@ type PropsType = {
   finished: boolean
 }
 export const Timer: FC<PropsType> = ({ finished }) => {
-  const GAME_TIME = 6000;
+  const GAME_TIME = 60;
   const [time, setTime] = useState<number>(GAME_TIME);
   const dispatch = useDispatch();
   useEffect(() => {

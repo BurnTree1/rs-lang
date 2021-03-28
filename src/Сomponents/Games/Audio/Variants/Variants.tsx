@@ -25,20 +25,20 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
     }
     setCorrectWord(learnedWord.ru);
   };
+  const answerFromBoard = (index: number) => {
+    onAnswer(shuffledWords[index]);
+    document.removeEventListener('keydown', onAnswerSelect);
+  }
   const onAnswerSelect = useCallback(
     (e: KeyboardEvent): void => {
       if (e.key === '1') {
-        onAnswer(shuffledWords[0]);
-        document.removeEventListener('keydown', onAnswerSelect);
+        answerFromBoard(0)
       } else if (e.key === '2') {
-        onAnswer(shuffledWords[1]);
-        document.removeEventListener('keydown', onAnswerSelect);
+        answerFromBoard(1)
       } else if (e.key === '3') {
-        onAnswer(shuffledWords[2]);
-        document.removeEventListener('keydown', onAnswerSelect);
+        answerFromBoard(2)
       } else if (e.key === '4') {
-        onAnswer(shuffledWords[3]);
-        document.removeEventListener('keydown', onAnswerSelect);
+        answerFromBoard(3)
       }
     },
     [shuffledWords]
