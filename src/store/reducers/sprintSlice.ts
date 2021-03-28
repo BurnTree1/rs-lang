@@ -21,6 +21,8 @@ const initialState = {
   pointsToAdd: 10,
   isFinished: false,
   correctSeries: 0,
+  correctAnswers: [] as Array<WordsType>,
+  wrongAnswers: [] as Array<WordsType>,
 };
 
 const sprintSlice = createSlice({
@@ -57,12 +59,19 @@ const sprintSlice = createSlice({
     gameOver: (state) => {
       state.isFinished = true;
     },
+    makeAnswer: (state, { payload: word }) => {
+      if (state.word.ru === word) {
+        state.correctAnswers = [...state.correctAnswers, state.word]
+      } else {
+        state.wrongAnswers = [...state.wrongAnswers, state.word]
+      }
+    },
   },
 });
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver } = actions;
+export const { nextWord, setTranslated, setScore, gameOver, makeAnswer } = actions;
 
 export const words = (state: RootState) => state.sprint.words;
 export const word = (state: RootState) => state.sprint.word;
@@ -71,5 +80,7 @@ export const score = (state: RootState) => state.sprint.score;
 export const isFinished = (state: RootState) => state.sprint.isFinished;
 export const correctSeries = (state: RootState) => state.sprint.correctSeries;
 export const pointsToAdd = (state: RootState) => state.sprint.pointsToAdd;
+export const wrongAnswers = (state: RootState) => state.sprint.wrongAnswers;
+export const correctAnswers = (state: RootState) => state.sprint.correctAnswers;
 
 export default reducer;

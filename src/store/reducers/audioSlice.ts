@@ -78,5 +78,7 @@ export const isFinished = (state: RootState) => state.audio.isFinished;
 export const correctSeries = (state: RootState) => state.audio.correctSeries;
 export const pointsToAdd = (state: RootState) => state.audio.pointsToAdd;
 export const isAnswered = (state: RootState) => state.audio.isAnswered;
+export const correctAnswers = (state: RootState) => state.audio.correctAnswers;
+export const wrongAnswers = (state: RootState) => state.audio.wrongAnswers;
 
 export default reducer;

@@ -49,6 +49,7 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
       document.removeEventListener('keydown', onAnswerSelect);
     };
   }, [onAnswerSelect]);
+  console.log(shuffledWords)
   return (
     <div className={styles.variants}>
       {shuffledWords.map((w: string, i: number) => (
