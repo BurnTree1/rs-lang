@@ -1,0 +1,48 @@
+.audio__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('../../../../assets/image/audioBG.png') no-repeat center;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.audio__icon {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.text {
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 27px;
+  max-width: 584px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 44px auto 20px;
+  text-align: center;
+  color: #ffffff;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 48px;
+}
+
+@media (max-width: 700px) {
+  .text {
+    font-size: 18px;
+    padding: 0 20px;
+  }
+  .audio__icon {
+    width: 100px;
+    height: 100px;
+  }
+}

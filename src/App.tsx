@@ -1,16 +1,19 @@
 import React from "react";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
-import { AppWrapper } from "./Components/AppWrapper/AppWrapper";
-import { LandingPage } from "./Components/LandingPage/LandingPage";
-import { Dictionary } from "./Components/Dictionary/Dictionary";
-import { Statistics } from "./Components/Statistics/Statictics";
-import { Settings } from "./Components/Settings/Settings";
-import { Savannah } from "./Components/Savannah/Savannah";
-import { Audio } from "./Components/Audio/Audio";
-import { Sprint } from "./Components/Sprint/Sprint";
-import { MyGame } from "./Components/MyGame/MyGame";
-import BookRoute from "./Components/Book/BookRoute";
+import { AppWrapper } from "./Сomponents/AppWrapper/AppWrapper";
+import { LandingPage } from "./Сomponents/LandingPage/LandingPage";
+import { Dictionary } from "./Сomponents/Dictionary/Dictionary";
+import { Statistics } from "./Сomponents/Statistics/Statictics";
+import { Settings } from "./Сomponents/Settings/Settings";
+import Savannah from "./Сomponents/Savannah/Savannah";
+import { AudioContainer } from "./Сomponents/Games/Audio/AudioContainer/AudioContainer";
+import { SprintContainer } from "./Сomponents/Games/Sprint/SprintContainer/SprintContainer";
+import { MyGame } from "./Сomponents/Games/MyGame/MyGame";
+import { Studied } from "./Сomponents/Dictionary/Studied/Studied";
+import { Difficult } from "./Сomponents/Dictionary/Difficult/Difficult";
+import { Deleted } from "./Сomponents/Dictionary/Deleted/Deleted";
+import BookRoute from "./Сomponents/Book/BookRoute";
 
 function App() {
   return (
@@ -19,35 +22,50 @@ function App() {
       <Switch>
         <Route path="/book" component={BookRoute} />
 
-        <Route path="/dictionary">
-            <Dictionary/>
+          <Route path="/dictionary">
+            <Dictionary />
+          </Route>
+
+          <Route path="/statistics">
+            <Statistics />
+          </Route>
+        <Route path="/studied">
+            <Studied/>
+        </Route>
+
+        <Route path="/difficult">
+            <Difficult/>
+        </Route>
+
+        <Route path="/deleted">
+            <Deleted/>
         </Route>
 
         <Route path="/statistics">
             <Statistics/>
         </Route>
 
-        <Route path="/settings">
-            <Settings/>
-        </Route>
+          <Route path="/settings">
+            <Settings />
+          </Route>
 
-        <Route path="/savannah">
-            <Savannah/>
-        </Route>
+          <Route path="/savannah">
+            <Savannah />
+          </Route>
 
         <Route path="/audio">
-            <Audio/>
+            <AudioContainer/>
         </Route>
 
         <Route path="/sprint">
-            <Sprint/>
+            <SprintContainer/>
         </Route>
 
         <Route path="/my-game">
             <MyGame/>
         </Route>
 
-        <Route exact path="/" >
+        <Route exact path="/">
             <LandingPage/>
         </Route>
 
