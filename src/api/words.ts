@@ -6,14 +6,14 @@ const WORD_API = `${URL_API}/words`
 export const wordsApi = {
   get(section: number, page: number) {
     return axios({
-      method: 'GET',
+      method: "GET",
       url: `${WORD_API}`,
       params: {
         group: section, page
       }
-    })
+    });
   }
-}
+};
 
 const token = "";
 const userId = ""
@@ -22,11 +22,11 @@ export const userWords = {
   get() {
     return axios({
       url: `${URL_API}/users/${userId}/words`,
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
       },
       withCredentials: true,
     })
@@ -40,9 +40,9 @@ export const userAggregateWords = {
       url: `${URL_API}/users/${userId}/words`,
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`,
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
       },
       withCredentials: true,
     })

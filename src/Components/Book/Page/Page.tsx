@@ -10,9 +10,13 @@ import { wordsApi } from "../../../api";
 
 export default () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [words, setWords] = useState([]);
   const { sectionId } = useParams();
   const { pageId = "1" } = useParams();
+
+  const sectionIdInt = parseInt(sectionId, 10);
+  const pageIdInt = parseInt(pageId, 10);
+  const dispatch = useDispatch();
+  const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
 
   useEffect(() => {
     setIsLoaded(false);
