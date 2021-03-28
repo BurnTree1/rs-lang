@@ -1,0 +1,40 @@
+.variants {
+  display: flex;
+  column-gap: 120px;
+  margin-bottom: 90px;
+}
+
+.variant__text {
+  background: none;
+  border: 0;
+  font-size: 24px;
+  line-height: 24px;
+  color: #ffffff;
+  outline: none;
+  cursor: pointer;
+}
+
+.correct {
+  font-weight: bold;
+  font-size: 26px;
+}
+
+.wrong {
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+@media (max-width: 925px) {
+  .variants {
+    flex-direction: column;
+    margin-bottom: 65px;
+    row-gap: 9px;
+    align-items: flex-start;
+    margin-left: 10px;
+  }
+
+  .variant__text {
+    font-size: 18px;
+    line-height: 18px;
+  }
+}

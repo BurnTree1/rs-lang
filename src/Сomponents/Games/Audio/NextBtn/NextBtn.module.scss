@@ -1,0 +1,34 @@
+.next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.next__btn {
+  cursor: pointer;
+  width: 253px;
+  height: 88px;
+  background: none;
+  border: 1px solid #ffffff;
+  border-radius: 21px;
+  color: #ffffff;
+  font-size: 24px;
+  line-height: 24px;
+  transition: all 0.2s linear;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@media (max-width: 925px) {
+  .next__btn {
+    width: 240px;
+    height: 60px;
+    font-size: 18px;
+  }
+}

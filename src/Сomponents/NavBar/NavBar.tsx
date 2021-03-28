@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
       ...theme.mixins.toolbar,
       justifyContent: "flex-end",
     }
@@ -57,6 +56,10 @@ export const NavBar: FC<PropsType> = (props) => {
   const { open, menuOpen, handleClick, handleDrawerToggle } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const [dictionaryOpen, setDictionaryOpen] = useState<boolean>(true)
+  const handleDictionaryClick = () => {
+    setDictionaryOpen(!dictionaryOpen)
+  }
 
   return (
     <div className={classes.root}>
@@ -93,12 +96,42 @@ export const NavBar: FC<PropsType> = (props) => {
             </ListItem>
           </NavLink>
           <NavLink to='/dictionary' activeClassName='active'>
-            <ListItem button>
+            <ListItem button onClick={handleDictionaryClick}>
               <ListItemIcon>
                 <img src={dictionary} alt="dictionary"/>
               </ListItemIcon>
               <ListItemText primary="Словарь"/>
+              {dictionaryOpen ? <ExpandLess/> : <ExpandMore/>}
             </ListItem>
+            <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <NavLink to='/studied' activeClassName='active'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <></>
+                  </ListItemIcon>
+                  <ListItemText primary="Изучаемые"/>
+                </ListItem>
+              </NavLink>
+              <NavLink to='/difficult' activeClassName='active'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <></>
+                  </ListItemIcon>
+                  <ListItemText primary="Сложные"/>
+                </ListItem>
+              </NavLink>
+              <NavLink to='/deleted' activeClassName='active'>
+                <ListItem button>
+                  <ListItemIcon>
+                    <></>
+                  </ListItemIcon>
+                  <ListItemText primary="Удаленные"/>
+                </ListItem>
+              </NavLink>
+            </List>
+          </Collapse>
+          <Divider/>
           </NavLink>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>

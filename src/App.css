@@ -1,5 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rochester&display=swap');
+
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -44,8 +46,6 @@ table {
     border-spacing: 0;
 }
 
-
-
 *,
 *:before,
 *:after {
@@ -78,4 +78,10 @@ a {
   max-width: 1440px;
   margin: 0 auto;
   position: relative;
+}
+
+@media (max-width: 785px) {
+  .app {
+    min-height: 110vh;
+  }
 }

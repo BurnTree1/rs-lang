@@ -1,16 +1,19 @@
-import React from 'react';
-import './App.css';
-import { Route, Switch } from 'react-router-dom';
-import { AppWrapper } from './Сomponents/AppWrapper/AppWrapper';
-import { LandingPage } from './Сomponents/LandingPage/LandingPage';
-import { Book } from './Сomponents/Book/Book';
-import { Dictionary } from './Сomponents/Dictionary/Dictionary';
-import { Statistics } from './Сomponents/Statistics/Statictics';
-import { Settings } from './Сomponents/Settings/Settings';
-import Savannah from './Сomponents/Savannah/Savannah';
-import { Sprint } from './Сomponents/Sprint/Sprint';
-import { MyGame } from './Сomponents/MyGame/MyGame';
-import { Audio } from './Сomponents/Audio/Audio';
+import React from "react";
+import "./App.css";
+import { Route, Switch } from "react-router-dom";
+import { AppWrapper } from "./Сomponents/AppWrapper/AppWrapper";
+import { LandingPage } from "./Сomponents/LandingPage/LandingPage";
+import { Book } from "./Сomponents/Book/Book";
+import { Dictionary } from "./Сomponents/Dictionary/Dictionary";
+import { Statistics } from "./Сomponents/Statistics/Statictics";
+import { Settings } from "./Сomponents/Settings/Settings";
+import Savannah from "./Сomponents/Savannah/Savannah";
+import { AudioContainer } from "./Сomponents/Games/Audio/AudioContainer/AudioContainer";
+import { SprintContainer } from "./Сomponents/Games/Sprint/SprintContainer/SprintContainer";
+import { MyGame } from "./Сomponents/Games/MyGame/MyGame";
+import { Studied } from "./Сomponents/Dictionary/Studied/Studied";
+import { Difficult } from "./Сomponents/Dictionary/Difficult/Difficult";
+import { Deleted } from "./Сomponents/Dictionary/Deleted/Deleted";
 
 function App() {
   return (
@@ -28,6 +31,21 @@ function App() {
           <Route path="/statistics">
             <Statistics />
           </Route>
+        <Route path="/studied">
+            <Studied/>
+        </Route>
+
+        <Route path="/difficult">
+            <Difficult/>
+        </Route>
+
+        <Route path="/deleted">
+            <Deleted/>
+        </Route>
+
+        <Route path="/statistics">
+            <Statistics/>
+        </Route>
 
           <Route path="/settings">
             <Settings />
@@ -37,25 +55,26 @@ function App() {
             <Savannah />
           </Route>
 
-          <Route path="/audio">
-            <Audio />
-          </Route>
+        <Route path="/audio">
+            <AudioContainer/>
+        </Route>
 
-          <Route path="/sprint">
-            <Sprint />
-          </Route>
+        <Route path="/sprint">
+            <SprintContainer/>
+        </Route>
 
-          <Route path="/my-game">
-            <MyGame />
-          </Route>
-          <Route exact path="/">
-            <LandingPage />
-          </Route>
+        <Route path="/my-game">
+            <MyGame/>
+        </Route>
 
-          <Route>
-            <div>404 Not Found</div>
-          </Route>
-        </Switch>
+        <Route exact path="/">
+            <LandingPage/>
+        </Route>
+
+        <Route>
+          <div>404 Not Found</div>
+        </Route>
+      </Switch>
       </AppWrapper>
     </div>
   );
