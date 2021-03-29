@@ -9,8 +9,9 @@ export const Listening = () => {
   const learnedWord = useSelector(word);
   const nextWord = useSelector(next);
   const answered = useSelector(isAnswered);
-  const playNext = useAudio(nextWord.audio);
-  const playCurrent = useAudio(learnedWord.audio);
+  const url = 'https://react-learnwords-example.herokuapp.com';
+  const playNext = useAudio(`${url}/${nextWord.audio}`);
+  const playCurrent = useAudio(`${url}/${learnedWord.audio}`);
   useEffect(() => {
     playNext();
   }, [learnedWord]);
@@ -25,12 +26,12 @@ export const Listening = () => {
         </button>
       ) : (
         <div className={styles.listen__inner}>
-          <img src={learnedWord.image} alt="word-img" className={styles.listen__img} />
+          <img src={`${url}/${learnedWord.image}`} alt="word-img" className={styles.listen__img} />
           <div className={styles.listen__row}>
             <button onClick={onAudioPlay} type="button" className={styles.listen__btn}>
             <img src={sound} alt="sound"/>
             </button>
-            <div className={styles.listen__text}>{learnedWord.en}</div>
+            <div className={styles.listen__text}>{learnedWord.word}</div>
           </div>
         </div>
       )}

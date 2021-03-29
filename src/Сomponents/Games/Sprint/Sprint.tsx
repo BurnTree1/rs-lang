@@ -1,8 +1,7 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   word,
-  words,
   nextWord,
   translation,
   setTranslated,
@@ -10,8 +9,11 @@ import {
   score,
   isFinished,
   pointsToAdd,
+  makeAnswer,
+  wrongAnswers,
+  correctAnswers,
+  wordsArr,
 } from '../../../store/reducers/sprintSlice';
-import { GameResult } from '../GameResult/GameResult';
 import styles from './Sprint.module.scss';
 import { Timer } from './Timer/Timer';
 import volume from '../../../assets/image/volume.svg';
@@ -21,34 +23,46 @@ import { useRandom } from '../../../helpers/hooks';
 import { CorrectCombo } from './CorrectCombo/CorrectCombo';
 import { Spacemen } from './Spacemen/Spacemen';
 import { TopPanel } from './TopPanel/TopPanel';
+import EndGameModal from '../../Modals/EndGameModal';
+import GamePauseModal from '../../Modals/GamePauseModal';
 
 export const Sprint: FC = () => {
-  const wordsArr = useSelector(words);
+  const words = useSelector(wordsArr);
   const learnedWord = useSelector(word);
   const translatedWord = useSelector(translation);
   const gameScore = useSelector(score);
   const finished = useSelector(isFinished);
   const points = useSelector(pointsToAdd);
+  const wrongWords = useSelector(wrongAnswers);
+  const correctWords = useSelector(correctAnswers);
+  const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
+  const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const dispatch = useDispatch();
-  const { random, randomIndex } = useRandom(wordsArr.length)
+  const { random, randomIndex } = useRandom(words.length);
   useEffect(() => {
     if (random > 0.6) {
-      dispatch(setTranslated(learnedWord));
+      dispatch(setTranslated(learnedWord.wordTranslate));
     } else {
-      dispatch(setTranslated(wordsArr[randomIndex]));
+      dispatch(setTranslated(words[randomIndex].wordTranslate));
     }
-  }, [learnedWord, dispatch, random, randomIndex, wordsArr]);
-  const onTranslationConfirm = useCallback((isRight: boolean) => {
-    dispatch(setScore(isRight));
-    dispatch(nextWord(learnedWord.en));
-  },[learnedWord.en, dispatch]);
-  const onAnswerSelect = useCallback((e: KeyboardEvent): void => {
-    if (e.key === 'ArrowRight') {
-      onTranslationConfirm(true)
-    } else if (e.key === 'ArrowLeft') {
-      onTranslationConfirm(false)
-    }
-  },[onTranslationConfirm]);
+  }, [learnedWord]);
+  const onTranslationConfirm = useCallback(
+    (isRight: boolean) => {
+      dispatch(setScore(isRight));
+      dispatch(nextWord(learnedWord.word));
+    },
+    [learnedWord.word, dispatch]
+  );
+  const onAnswerSelect = useCallback(
+    (e: KeyboardEvent): void => {
+      if (e.key === 'ArrowRight') {
+        onTranslationConfirm(true);
+      } else if (e.key === 'ArrowLeft') {
+        onTranslationConfirm(false);
+      }
+    },
+    [onTranslationConfirm]
+  );
   useEffect(() => {
     document.addEventListener('keydown', onAnswerSelect);
     if (finished) {
@@ -61,12 +75,12 @@ export const Sprint: FC = () => {
   return (
     <div className={styles.sprint}>
       <div className={styles.board}>
-        <CorrectCombo/>
+        <CorrectCombo />
         <div className={styles.points}>+{points}</div>
-        <Spacemen/>
+        <Spacemen />
         <img src={rocket} alt="rocket" className={styles.rocket} />
-        <div className={styles.english}>{learnedWord.en}</div>
-        <div className={styles.translated}>{translatedWord.ru}</div>
+        <div className={styles.english}>{learnedWord.word}</div>
+        <div className={styles.translated}>{translatedWord}</div>
         <div className={styles.btns}>
           <button
             onClick={() => onTranslationConfirm(false)}
@@ -90,11 +104,23 @@ export const Sprint: FC = () => {
           <img src={arrow} alt="arrow" className={styles.arrow} />
         </div>
         <img src={volume} alt="volume" className={styles.volume} />
-        <div className={styles.score}>Score<span>{gameScore}</span></div>
-        <Timer finished={finished} />
+        <div className={styles.score}>
+          Score<span>{gameScore}</span>
+        </div>
+        <Timer finished={finished} gameIsDone={gameIsDone}/>
       </div>
-      {finished && <GameResult score={gameScore} />}
-      <TopPanel/>
+      <TopPanel setGameIsPaused={setGameIsPaused} />
+      {gameIsPaused && (
+        <div className={styles.overlay}>
+          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} />
+        </div>
+      )}
+      {(gameIsDone || finished) && (
+        <>
+          <div className={styles.overlay} />
+          <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} />
+        </>
+      )}
     </div>
   );
 };
