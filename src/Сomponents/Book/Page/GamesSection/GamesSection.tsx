@@ -10,15 +10,19 @@ import item3 from '../../../../assets/image/game-item3.svg'
 import item4 from '../../../../assets/image/game-item4.svg'
 import settings from '../../../../assets/image/book-settings.svg'
 import styles from './GamesSection.module.scss'
-import { setWordsArr } from '../../../../store/reducers/sprintSlice';
+import { setSprintWords } from '../../../../store/reducers/sprintSlice';
+import { setAudioWords } from '../../../../store/reducers/audioSlice';
 
 export const GamesSection = () => {
     const { sectionId } = useParams();
     const { pageId = "1" } = useParams();
     const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
     const dispatch = useDispatch()
-    const onWordsSet = () => {
-        dispatch(setWordsArr(words))
+    const onSprintWordsSet = () => {
+        dispatch(setSprintWords(words))
+    }
+    const onAudioWordsSet = () => {
+        dispatch(setAudioWords(words))
     }
     return (
     <div className={styles.games}>
@@ -33,11 +37,11 @@ export const GamesSection = () => {
             </div>
             <div className={styles.games__item}>
                 <img src={item2} alt="sprint" className={styles.item__img}/>
-                <Link onClick={onWordsSet} to='/sprint'>Спринт</Link>
+                <Link onClick={onSprintWordsSet} to='/sprint'>Спринт</Link>
             </div>
             <div className={styles.games__item}>
                 <img src={item3} alt="audio" className={styles.item__img}/>
-                <Link to='/audio'>Аудиовызов</Link>
+                <Link onClick={onAudioWordsSet} to='/audio'>Аудиовызов</Link>
             </div>
             <div className={styles.games__item}>
                 <img src={item4} alt="my game" className={styles.item__img}/>

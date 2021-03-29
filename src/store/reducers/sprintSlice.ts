@@ -34,10 +34,10 @@ const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
-    setWordsArr: (state, {payload}) => {
-      for (const key in payload) {
-        if (Object.prototype.hasOwnProperty.call(payload, key)) {
-        state.wordsArr = [...state.wordsArr, payload[key]]
+    setSprintWords: (state, {payload: words}) => {
+      for (const key in words) {
+        if (Object.prototype.hasOwnProperty.call(words, key)) {
+        state.wordsArr = [...state.wordsArr, words[key]]
         }
       }
       state.word = {...state.wordsArr[0]}
@@ -87,7 +87,7 @@ const sprintSlice = createSlice({
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setWordsArr } = actions;
+export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords } = actions;
 
 export const wordsArr = (state: RootState) => state.sprint.wordsArr;
 export const word = (state: RootState) => state.sprint.word;

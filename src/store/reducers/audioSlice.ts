@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store.models';
-import words from '../../Сomponents/Savannah/mockData'
 
 export interface WordsType {
   id: string;
@@ -20,9 +19,9 @@ export interface WordsType {
 }
 
 const initialState = {
-  wordsArr: words as Array<WordsType>,
-  word: words[0],
-  next: words[1],
+  wordsArr: [] as Array<WordsType>,
+  word: {} as WordsType,
+  next: {} as WordsType,
   isFinished: false,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
@@ -34,7 +33,16 @@ const sprintSlice = createSlice({
   initialState,
   reducers: {
     setWord: (state) => {
-      state.word = { ...words[0] }
+      
+    },
+    setAudioWords: (state, {payload: words}) => {
+      for (const key in words) {
+        if (Object.prototype.hasOwnProperty.call(words, key)) {
+        state.wordsArr = [...state.wordsArr, words[key]]
+        }
+      }
+      state.word = {...state.wordsArr[0]}
+      state.next = {...state.wordsArr[1]}
     },
     nextWord: (state, { payload: word }) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === word.word);
@@ -68,7 +76,7 @@ const sprintSlice = createSlice({
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, gameOver, setWord, makeAnswer, setAnswered } = actions;
+export const { nextWord, gameOver, setWord, makeAnswer, setAnswered, setAudioWords } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;
