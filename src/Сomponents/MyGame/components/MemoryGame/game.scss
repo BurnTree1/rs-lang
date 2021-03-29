@@ -11,6 +11,9 @@
   z-index: 9999;
   width: 100%;
   background: #fff;
+  background-image: url('../../assets/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .game-field {
@@ -43,8 +46,8 @@
   }
 
   @media (max-width: 800px) {
-    --cardWidth: 60px;
-    --cardHeight: 60px;
+    // --cardWidth: 60px;
+    // --cardHeight: 60px;
     --smallRows: 6;
     --smallColumns: 2;
     --mediumRows: 6;
@@ -83,10 +86,13 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  // background: #273A7C;
+  // filter: blur(50px);
 }
 
 .statistics__inner {
   margin-right: 20px;
+  color: #fff;
 }
 
 .statistics__inner:last-child {
@@ -135,4 +141,23 @@
   right: 0;
   top: 0;
   bottom: 0;
+}
+
+.statistics .MuiIconButton-root {
+  color: #fff;
+}
+
+.volume-wrapper {
+  position: absolute;
+  left: 0;
+}
+
+.volume-wrapper {
+  position: absolute;
+  left: 0;
+}
+
+.statistics__inner_controls {
+  position: absolute;
+  right: 0;
 }

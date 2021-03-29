@@ -14,7 +14,9 @@ import card9 from './assets/9.png';
 import card10 from './assets/10.png';
 import card11 from './assets/11.png';
 import card12 from './assets/12.png';
-import { Cards } from '../../my-game.models';
+import { Cards, ICard } from '../../my-game.models';
+import { getSrcUrl } from '../../../../helpers/words.helper';
+import { IWord } from '../../../../models/common.models';
 
 const cardsMap = {
   [Cards.card1]: card1,
@@ -31,16 +33,13 @@ const cardsMap = {
   [Cards.card12]: card12,
 }
 
-interface IProps {
+interface IProps extends ICard {
   cardClick(): void;
-  isFlipped: boolean;
-  imgName: Cards;
-  found: boolean;
   animationOn: boolean;
 }
 
 export default function Card(props: IProps) {
-  const { cardClick, isFlipped, imgName, found, animationOn } = props;
+  const { cardClick, isFlipped, found, animationOn, image, word, wordTranslate, isSecondCard } = props;
   return (
     <div
       className={
@@ -50,7 +49,9 @@ export default function Card(props: IProps) {
       <div className={`card${  isFlipped ? " flipped" : ""}`}>
         <div className="card__back" />
         <div className="card__front">
-          <img src={cardsMap[imgName]} className="card__image" alt="card__image" />
+          <img src={getSrcUrl(image)} className="card__image" alt="card__image" />
+          <p className="card__description card__description_bold">{isSecondCard ? wordTranslate : word}</p>
+          {/* <p className="card__description">{wordTranslate}</p> */}
         </div>
       </div>
     </div>

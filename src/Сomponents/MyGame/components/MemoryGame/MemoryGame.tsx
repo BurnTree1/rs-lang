@@ -3,11 +3,13 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Button, IconButton } from '@material-ui/core';
-import { Fullscreen, FullscreenExit } from '@material-ui/icons';
-import { ICard, IGameData, IGameWinData, ISettings, IState } from './my-game.models';
-import Card from './components/Card/Card';
+import { Close, Fullscreen, FullscreenExit, VolumeDown, VolumeUp } from '@material-ui/icons';
+import { ICard, IGameData, IGameWinData, ISettings, IState } from '../../my-game.models';
+import Card from '../Card/Card';
 import './game.scss';
-import { formatTime, generateCards } from './my-game.helpers';
+import { formatTime, generateCards } from '../../my-game.helpers';
+import { IWord } from '../../../../models/common.models';
+import { VolumeControl } from '../VolumeControl/VolumeControl';
 // @ts-ignore
 // import flipCard from './assets/card_flip.mp3';
 // // @ts-ignore
@@ -36,16 +38,19 @@ const DEFAULT_SETTINGS: ISettings = {
   musicVolume: 0.2,
 };
 
-interface IProps extends RouteComponentProps {}
+interface IProps extends RouteComponentProps {
+  words: IWord[]
+}
 
-class MyGame extends React.Component<IProps, IState> {
+class MemoryGame extends React.Component<IProps, IState> {
   flipSound: any;
 
   foundSound: any;
 
   constructor(props: IProps) {
     super(props);
-    const cards = generateCards(DEFAULT_SETTINGS)
+    const { words } = props;
+    const cards = generateCards(words, DEFAULT_SETTINGS)
     const settings = DEFAULT_SETTINGS;
     const time = 0;
     const attempts = 0;
@@ -69,14 +74,15 @@ class MyGame extends React.Component<IProps, IState> {
       time,
       haveWin: false,
       fullScreen: false,
+      soundToggle: true,
     };
 
     // this.flipSound = new Audio(flipCard);
-    this.flipSound = new Audio('flipCard');
-    this.flipSound.volume = settings.soundsVolume;
+    this.flipSound = new Audio(`${process.env.PUBLIC_URL}/card_flip.mp3`);
+    // this.flipSound.volume = settings.soundsVolume;
     // this.foundSound = new Audio(foundPair);
-    this.foundSound = new Audio('foundPair');
-    this.foundSound.volume = settings.soundsVolume;
+    this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
+    // this.foundSound.volume = settings.soundsVolume;
   }
 
   componentDidMount() {
@@ -200,11 +206,18 @@ class MyGame extends React.Component<IProps, IState> {
   }
 
   changeFlipped(cardId: string) {
-    // if (this.props.soundsOn) {
-    //   this.flipSound.volume = this.storageService.settings.soundsVolume;
+    // if (true) {
+    //   // this.flipSound.volume = this.storageService.settings.soundsVolume;
     //   this.flipSound.play();
     // }
     const cardIndex = this.state.cards.findIndex(({ id }) => id === cardId);
+    if (this.state.cards[cardIndex].isFlipped) {
+      return;
+    }
+
+    if (this.state.soundToggle) {
+      this.flipSound.play();
+    }
 
     const changedCard: ICard = { ...this.state.cards[cardIndex], isFlipped: !this.state.cards[cardIndex].isFlipped };
     let cardsCopy = this.state.cards.slice();
@@ -221,6 +234,9 @@ class MyGame extends React.Component<IProps, IState> {
       if (!prevState.secondCard && changedCard.isFlipped) {
         let successGuess: boolean = false;
         if (prevState.firstCard && prevState.firstCard.image === changedCard.image) {
+          if (this.state.soundToggle) {
+            this.foundSound.play();
+          }
           // if (this.props.soundsOn) {
           //   this.flipSound.volume = this.storageService.settings.soundsVolume;
           //   this.foundSound.play();
@@ -275,6 +291,12 @@ class MyGame extends React.Component<IProps, IState> {
     });
   }
 
+  onSoundToggle = () => {
+    this.setState({
+      soundToggle: !this.state.soundToggle
+    });
+  }
+
   render() {
     const { cards, fullScreen } = this.state;
     // const { autoPlay } = this.props;
@@ -282,11 +304,8 @@ class MyGame extends React.Component<IProps, IState> {
     return (
       <div className={`game ${fullScreen ? 'game_fullscreen' : ''}`}>
         <div className="statistics">
-          <div className="statistics__inner">
-            <Button
-              variant="contained"
-              className="pause-button"
-              onClick={this.pauseHandler}>Stop</Button>
+          <div className="volume-wrapper">
+            <VolumeControl volumeIsOn={this.state.soundToggle} handler={this.onSoundToggle} />
           </div>
           <div className="statistics__inner">
             <div className="score-wrapper">
@@ -297,10 +316,14 @@ class MyGame extends React.Component<IProps, IState> {
             <div className="time-wrapper">
               <p className="time-wrapper__caption">Time:</p> <p className="time-wrapper__time">{formatTime(this.state.time)}</p>
             </div>
+            <div />
           </div>
-          <div className="statistics__inner">
+          <div className="statistics__inner statistics__inner_controls">
             <IconButton color="primary" onClick={this.fullScreenToggle} component="span">
               {fullScreen ? <FullscreenExit /> : <Fullscreen />}
+            </IconButton>
+            <IconButton color="primary" onClick={this.pauseHandler} component="span">
+              <Close />
             </IconButton>
           </div>
         </div>
@@ -309,11 +332,14 @@ class MyGame extends React.Component<IProps, IState> {
           {cards.map((card: ICard) => (
             <div className="game-field__item" key={card.id}>
               <Card
-                cardClick={() => this.changeFlipped(card.id)}
-                isFlipped={card.isFlipped}
-                imgName={card.image}
-                found={card.found}
-                animationOn={this.animationCheck(card)}
+                {...{
+                  ...card,
+                  cardClick: () => this.changeFlipped(card.id),
+                  animationOn: this.animationCheck(card)
+                }}
+                // isFlipped={card.isFlipped}
+                // imgName={card.image}
+                // found={card.found}
               />
             </div>
           ))}
@@ -324,4 +350,4 @@ class MyGame extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(MyGame);
+export default withRouter(MemoryGame);

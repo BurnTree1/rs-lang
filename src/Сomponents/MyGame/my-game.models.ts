@@ -1,3 +1,5 @@
+import { IWord } from "../../models/common.models";
+
 export interface IState {
   cards: ICard[];
   size: number;
@@ -9,13 +11,15 @@ export interface IState {
   time: number;
   haveWin: boolean;
   fullScreen: boolean;
+  soundToggle: boolean;
 }
 
-export interface ICard {
-  image: Cards;
+export interface ICard extends IWord {
+  // image: Cards;
   isFlipped: boolean;
-  id: string;
+  // id: string;
   found: boolean;
+  isSecondCard?: boolean;
 }
 
 export enum Cards {

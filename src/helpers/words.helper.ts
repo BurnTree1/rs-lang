@@ -1,0 +1,1 @@
+export const getSrcUrl = (path: string) => `${process.env.REACT_APP_BACKEND}/${path}`;

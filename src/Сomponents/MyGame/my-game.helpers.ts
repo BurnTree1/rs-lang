@@ -1,52 +1,42 @@
 import shortid from "shortid";
+import { IWord } from "../../models/common.models";
 import { Cards, ICard, ISettings } from "./my-game.models";
 
-const cards: Cards[] = [
-  Cards.card1,
-  Cards.card2,
-  Cards.card3,
-  Cards.card4,
-  Cards.card5,
-  Cards.card6,
-  Cards.card7,
-  Cards.card8,
-  Cards.card9,
-  Cards.card10,
-  Cards.card11,
-  Cards.card12
-];
-
-const generateUniqCards = (count: number): ICard[] => {
-  const cardsCopy: Cards[] = [...cards];
+const generateUniqCards = (words: IWord[], count: number): ICard[] => {
+  const wordsCopy: IWord[] = [...words];
   let mixedCards: ICard[] = [];
 
   for (let i = 0; i < count; i += 1) {
-    const cardToInsert: number = Math.floor(Math.random() * cardsCopy.length);
+    const wordToInsert: number = Math.floor(Math.random() * wordsCopy.length);
+    const word = wordsCopy.splice(wordToInsert, 1)[0];
     mixedCards = [
       ...mixedCards,
       {
-        image: cardsCopy.splice(cardToInsert, 1)[0],
+        // image: word,
         isFlipped: true,
-        id: '',
-        found: false
+        found: false,
+        ...word,
       }
     ];
   }
   return mixedCards;
 };
 
-export const generateCards = (settings: ISettings): ICard[] => {
+const addMarker = (cards: ICard[]) => cards.map((card) => ({ ...card, isSecondCard: true }));
+
+export const generateCards = (words: IWord[], settings: ISettings): ICard[] => {
   const size = settings.width * settings.height;
   const count = size / 2;
 
-  const uniqCards: ICard[] = generateUniqCards(count);
+  const uniqCards: ICard[] = generateUniqCards(words, count);
 
-  const tempCards: ICard[] = [...uniqCards, ...uniqCards];
+  const tempCards: ICard[] = [...uniqCards, ...addMarker(uniqCards)];
   let mixedCards: ICard[] = [];
 
   for (let i = 0; i < size; i += 1) {
     const cardToInsert: number = Math.floor(Math.random() * tempCards.length);
-    mixedCards = [...mixedCards, tempCards.splice(cardToInsert, 1)[0]];
+    const card = tempCards.splice(cardToInsert, 1)[0];
+    mixedCards = [...mixedCards, card];
   }
 
   mixedCards = mixedCards.map(card => ({ ...card, id: shortid() }));

@@ -43,10 +43,12 @@
 .card {
   width: 100px;
   height: 139.68px;
-  background: #80cbc4;
+  // background: #80cbc4;
+  background: #630468;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  background-image: url('./assets/solar-system.svg');
+  background-image: url('../../assets/logo.png');
+  background-size: 90px;
   background-position: center;
   background-repeat: no-repeat;
 
@@ -65,6 +67,7 @@
 
 .card__front {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #fff;
@@ -85,6 +88,7 @@
   .card {
     width: 80px;
     height: 80px;
+    background-size: 70px;
   }
 
   .card__image {
@@ -93,14 +97,33 @@
   }
 }
 
-@media (max-width: 800px) {
-  .card {
-    width: 60px;
-    height: 60px;
-  }
+// @media (max-width: 800px) {
+//   .card {
+//     width: 60px;
+//     height: 60px;
+//     background-size: 50px;
+//   }
 
-  .card__image {
-    width: 60px;
-    height: auto;
-  }
+//   .card__image {
+//     width: 60px;
+//     height: auto;
+//   }
+// }
+
+.card__description {
+  height: 28px;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 14px;
+  word-break: break-word;
+  text-align: center;
+
+  // @media (max-width: 800px) {
+  //   height: 24px;
+  //   font-size: 12px;
+  //   line-height: 10px;
+  // }
 }
