@@ -7,14 +7,7 @@ interface WordsType {
 }
 
 const initialState = {
-  words: [
-    { en: 'hello', ru: 'привет' },
-    { en: 'world', ru: 'мир' },
-    { en: 'table', ru: 'стол' },
-    { en: 'alcohol', ru: 'алкоголь' },
-    { en: 'catch', ru: 'поймать' },
-    { en: 'duck', ru: 'утка' },
-  ] as Array<WordsType>,
+  wordsArr: [] as Array<WordsType>,
   word: { en: 'hello', ru: 'привет' },
   translation: { en: 'hello', ru: 'привет' },
   score: 0,
@@ -27,13 +20,22 @@ const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
+    setWordsArr: (state, {payload}) => {
+      for (const key in payload) {
+        if (Object.prototype.hasOwnProperty.call(payload, key)) {
+        state.wordsArr = [...state.wordsArr, payload[key]]
+        }
+      }
+      state.word = {...state.wordsArr[0]}
+      state.translation = {...state.wordsArr[0]}
+    },
     nextWord: (state, action) => {
-      const wordIndex = state.words.findIndex((w) => w.en === action.payload);
-      if (wordIndex >= state.words.length - 1) {
+      const wordIndex = state.wordsArr.findIndex((w) => w.en === action.payload);
+      if (wordIndex >= state.wordsArr.length - 1) {
         state.isFinished = true;
-        state.word = state.words[wordIndex];
+        state.word = state.wordsArr[wordIndex];
       } else {
-        state.word = state.words[wordIndex + 1];
+        state.word = state.wordsArr[wordIndex + 1];
       }
     },
     setTranslated: (state, { payload }) => {
@@ -62,7 +64,7 @@ const sprintSlice = createSlice({
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver } = actions;
+export const { nextWord, setTranslated, setScore, gameOver, setWordsArr } = actions;
 
 export const words = (state: RootState) => state.sprint.words;
 export const word = (state: RootState) => state.sprint.word;

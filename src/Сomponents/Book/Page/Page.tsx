@@ -10,6 +10,7 @@ import { bookBuilder, COUNT_SECTION_PAGES } from "../../../helpers";
 import { userAggregateWords } from "../../../api";
 import { initPage } from "../../../store/reducers/book";
 import { RootState } from "../../../store/store.models";
+import { GamesSection } from "./GamesSection/GamesSection";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,7 +21,6 @@ const Page: FC = () => {
   const pageIdInt = parseInt(pageId, 10);
   const dispatch = useDispatch();
   const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
-
   useEffect(() => {
     if (!words) {
       setIsLoaded(false);
@@ -58,6 +58,7 @@ const Page: FC = () => {
     <SectionHandler/>
     <h3>Page</h3>
     {pagination}
+    <GamesSection/>
     {cards}
     {pagination}
   </div>;
