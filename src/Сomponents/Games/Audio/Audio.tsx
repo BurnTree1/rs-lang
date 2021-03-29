@@ -1,21 +1,20 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useShuffle } from '../../../helpers/hooks'
-import { word, words } from '../../../store/reducers/audioSlice'
-import { TopPanel } from '../Sprint/TopPanel/TopPanel'
-import { Listening } from './Listening/Listening'
-import { NextBtn } from './NextBtn/NextBtn'
-import { Variants } from './Variants/Variants'
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useShuffle } from '../../../helpers/hooks';
+import { word, wordsArr } from '../../../store/reducers/audioSlice';
+import { Listening } from './Listening/Listening';
+import { NextBtn } from './NextBtn/NextBtn';
+import { Variants } from './Variants/Variants';
 
 export const Audio = () => {
-    const learnedWord = useSelector(word)
-    const allWords = useSelector(words)
-    const shuffledWords = useShuffle(allWords, learnedWord.ru)
-    return(
+  const learnedWord = useSelector(word);
+  const allWords = useSelector(wordsArr);
+  const shuffledWords = useShuffle(allWords, learnedWord.wordTranslate);
+  return (
     <div>
-        <Listening/>
-        <Variants shuffledWords={shuffledWords}/>
-        <NextBtn/>
-        <TopPanel/>
+      <Listening />
+      <Variants shuffledWords={shuffledWords} />
+      <NextBtn />
     </div>
-)}
+  );
+};
