@@ -44,7 +44,7 @@ const sprintSlice = createSlice({
       state.translation = state.wordsArr[0].wordTranslate
     },
     nextWord: (state, action) => {
-      const wordIndex = state.wordsArr.findIndex((w) => w.en === action.payload);
+      const wordIndex = state.wordsArr.findIndex((w) => w.word === action.payload);
       if (wordIndex >= state.wordsArr.length - 1) {
         state.isFinished = true;
         state.word = state.wordsArr[wordIndex];
