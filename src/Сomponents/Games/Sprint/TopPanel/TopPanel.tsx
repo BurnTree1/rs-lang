@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { FC, useState } from 'react'
 import fullscreen from '../../../../assets/image/fullscreen.svg';
 import close from '../../../../assets/image/close.svg';
 import styles from './TopPanel.module.scss'
 
-export const TopPanel = () => {
+type PropsType = {
+  setGameIsPaused: (value: boolean)=> void
+}
+export const TopPanel: FC<PropsType> = ({ setGameIsPaused }) => {
     const onFullscreen = () => {
         const doc = document.documentElement as HTMLElement & {
           webkitRequestFullscreen(): Promise<void>;
@@ -13,7 +16,7 @@ export const TopPanel = () => {
         }
       }
       const onGameClose = () => {
-
+        setGameIsPaused(true);
     }
       return (
         <div className={styles.panel}>

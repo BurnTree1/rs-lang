@@ -5,8 +5,9 @@ import styles from './Timer.module.scss'
 
 type PropsType = {
   finished: boolean
+  gameIsDone: boolean
 }
-export const Timer: FC<PropsType> = ({ finished }) => {
+export const Timer: FC<PropsType> = ({ finished, gameIsDone }) => {
   const GAME_TIME = 60;
   const [time, setTime] = useState<number>(GAME_TIME);
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export const Timer: FC<PropsType> = ({ finished }) => {
         setTime(0);
       }
     }, 1000);
-    if (finished) {
+    if (finished || gameIsDone) {
       clearInterval(timeId)
     }
     return () => {

@@ -13,10 +13,10 @@ export const useAudio = (sound: string) => {
 }
 
 export const useShuffle = (array: Array<WordsType>, word: string) => {
-const shuffledArr = array.filter((w: WordsType)=> w.ru !== word).sort(()=>Math.random() - 0.5)
-return [shuffledArr[0].ru,
-shuffledArr[1].ru,
-shuffledArr[2].ru,
+const shuffledArr = array.filter((w: WordsType)=> w.wordTranslate !== word).sort(()=>Math.random() - 0.5)
+return [shuffledArr[0].wordTranslate,
+shuffledArr[1].wordTranslate,
+shuffledArr[2].wordTranslate,
 word
 ].sort(()=> Math.random() - 0.5)
 }

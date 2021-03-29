@@ -20,10 +20,10 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
   const onAnswer = (w: string) => {
     dispatch(setAnswered(true));
     dispatch(makeAnswer(w));
-    if (w !== learnedWord.ru) {
+    if (w !== learnedWord.wordTranslate) {
       setWrongWord(w);
     }
-    setCorrectWord(learnedWord.ru);
+    setCorrectWord(learnedWord.wordTranslate);
   };
   const answerFromBoard = (index: number) => {
     onAnswer(shuffledWords[index]);
@@ -57,7 +57,7 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
           onClick={() => onAnswer(w)}
           disabled={answered}
           className={clsx(
-            answered && learnedWord.ru === w ? styles.correct : styles.variant__text,
+            answered && learnedWord.wordTranslate === w ? styles.correct : styles.variant__text,
             wrongWord === w ? styles.wrong : styles.variant__text
           )}
           type="button"
