@@ -95,7 +95,6 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Учебник"/>
             </ListItem>
           </NavLink>
-          <NavLink to='/dictionary' activeClassName='active'>
             <ListItem button onClick={handleDictionaryClick}>
               <ListItemIcon>
                 <img src={dictionary} alt="dictionary"/>
@@ -105,7 +104,7 @@ export const NavBar: FC<PropsType> = (props) => {
             </ListItem>
             <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to='/studied' activeClassName='active'>
+              <NavLink to='/dictionary/studied' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -113,7 +112,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Изучаемые"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/difficult' activeClassName='active'>
+              <NavLink to='/dictionary/difficult' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -121,7 +120,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Сложные"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/deleted' activeClassName='active'>
+              <NavLink to='/dictionary/deleted' activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -132,7 +131,6 @@ export const NavBar: FC<PropsType> = (props) => {
             </List>
           </Collapse>
           <Divider/>
-          </NavLink>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
               <></>

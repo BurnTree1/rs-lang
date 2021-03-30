@@ -33,3 +33,4 @@ export const bookSections: Array<SectionType> = [
 export const URL_API = "https://rs-lang2021.herokuapp.com"
 export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
+export const MAX_WORDS_IN_GROUP = 600

@@ -23,7 +23,7 @@ const Page: FC = () => {
   useEffect(() => {
     if (!words) {
       setIsLoaded(false);
-      userAggregateWords.get(sectionIdInt - 1, pageIdInt - 1)
+      userAggregateWords.getForBook(sectionIdInt - 1, pageIdInt - 1)
         .then(({ data }) => {
           // @ts-ignore
           dispatch(initPage({ sectionId, pageId, words: head(data).paginatedResults }));

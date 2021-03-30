@@ -1,5 +1,5 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { WORD_PER_PAGE, URL_API, MAX_WORDS_IN_GROUP } from "../helpers";
 import { and, choosePage, isDeleted } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
@@ -55,7 +55,7 @@ export const userWords = {
 };
 
 export const userAggregateWords = {
-  get(group: number, page: number) {
+  get(group: number|null, page: number|null, wordsPerPage: number|null, filter: object|null) {
     return axios({
       url: `${URL_API}/users/${userId}/aggregatedWords`,
       method: "GET",
@@ -66,10 +66,17 @@ export const userAggregateWords = {
       },
       params: {
         group,
-        wordsPerPage: WORD_PER_PAGE,
-        filter: and(choosePage(page), isDeleted(null))
+        page,
+        wordsPerPage,
+        filter
       },
       withCredentials: true
     });
   },
+  getForBook(group: number, pageId: number) {
+    return this.get(group, null, WORD_PER_PAGE, and(choosePage(pageId), isDeleted(null)))
+  },
+  getAllByFilter(group: number, filter: object) {
+    return this.get(group, null, MAX_WORDS_IN_GROUP, filter)
+  }
 };
