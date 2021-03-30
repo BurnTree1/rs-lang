@@ -3,7 +3,7 @@ import { WORD_PER_PAGE, URL_API } from "../helpers";
 
 const WORD_API = `${URL_API}/words`;
 
-export const words = {
+export const fetchWords = {
   get(group: number, page: number) {
     return axios({
       method: "GET",
@@ -15,7 +15,7 @@ export const words = {
   }
 };
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzAzMTc0OSwiZXhwIjoxNjE3MDQ2MTQ5fQ.lxWNG40g3UaSuJ8o9_755XcE07h1gECd9ZLpmaYmNJk";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzEzNTI2MiwiZXhwIjoxNjE3MTQ5NjYyfQ.aDaK6Ogo80CEltlHMWkqOM3f2LUjLWiZaYeOHD8_Ris";
 const userId = "605a44e22898bf35e44bff04";
 
 export const userWords = {

@@ -9,7 +9,6 @@ import {
   score,
   isFinished,
   pointsToAdd,
-  makeAnswer,
   wrongAnswers,
   correctAnswers,
   wordsArr,

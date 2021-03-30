@@ -10,7 +10,7 @@ import item3 from '../../../../assets/image/game-item3.svg'
 import item4 from '../../../../assets/image/game-item4.svg'
 import settings from '../../../../assets/image/book-settings.svg'
 import styles from './GamesSection.module.scss'
-import { setSprintWords } from '../../../../store/reducers/sprintSlice';
+import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
 import { setAudioWords } from '../../../../store/reducers/audioSlice';
 
 export const GamesSection = () => {
@@ -18,10 +18,8 @@ export const GamesSection = () => {
     const { pageId = "1" } = useParams();
     const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
     const dispatch = useDispatch()
-    const onSprintWordsSet = () => {
+    const onWordsSet = () => {
         dispatch(setSprintWords(words))
-    }
-    const onAudioWordsSet = () => {
         dispatch(setAudioWords(words))
     }
     return (
@@ -33,15 +31,15 @@ export const GamesSection = () => {
         <div className={styles.games__inner}>
             <div className={styles.games__item}>
                 <img src={item1} alt="savannah" className={styles.item__img}/>
-                <Link to='/savannah'>Саванна</Link>
+                <Link onClick={onWordsSet} to='/savannah'>Саванна</Link>
             </div>
             <div className={styles.games__item}>
                 <img src={item2} alt="sprint" className={styles.item__img}/>
-                <Link onClick={onSprintWordsSet} to='/sprint'>Спринт</Link>
+                <Link onClick={onWordsSet} to='/sprint'>Спринт</Link>
             </div>
             <div className={styles.games__item}>
                 <img src={item3} alt="audio" className={styles.item__img}/>
-                <Link onClick={onAudioWordsSet} to='/audio'>Аудиовызов</Link>
+                <Link onClick={onWordsSet} to='/audio'>Аудиовызов</Link>
             </div>
             <div className={styles.games__item}>
                 <img src={item4} alt="my game" className={styles.item__img}/>

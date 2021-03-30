@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchWords } from '../../api/words';
+import words from '../../Сomponents/Savannah/mockData';
 import { RootState } from '../store.models';
 
 interface WordsType {
@@ -19,7 +21,7 @@ interface WordsType {
 }
 
 const initialState = {
-  wordsArr: [] as Array<WordsType>,
+  wordsArr: words as Array<WordsType>,
   word: {} as WordsType,
   translation: '',
   score: 0,
@@ -28,20 +30,23 @@ const initialState = {
   correctSeries: 0,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
+  hasDifficulty: true,
+  difficulty: 0
 };
 
 const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {
-    setSprintWords: (state, {payload: words}) => {
+    setSprintWords: (state, { payload: fetchedWords }) => {
       for (const key in words) {
-        if (Object.prototype.hasOwnProperty.call(words, key)) {
-        state.wordsArr = [...state.wordsArr, words[key]]
+        if (Object.prototype.hasOwnProperty.call(fetchedWords, key)) {
+        state.wordsArr = [...state.wordsArr, fetchedWords[key]]
         }
       }
-      state.word = {...state.wordsArr[0]}
+      state.word = { ...state.wordsArr[0] }
       state.translation = state.wordsArr[0].wordTranslate
+      state.hasDifficulty = false
     },
     nextWord: (state, action) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === action.payload);
@@ -82,12 +87,24 @@ const sprintSlice = createSlice({
         state.wrongAnswers = [...state.wrongAnswers, state.word]
       }
     },
+    setSprintDifficult: (state, { payload: difficulty }) => {
+      state.difficulty = difficulty / 100
+    }
   },
 });
 
+export function fetchAllWords(g: number,p: number) {
+  // @ts-ignore
+  return async dispatch => {
+      const response = await fetchWords.get(g, p)
+      dispatch(setSprintWords(response.data))
+   
+  }
+}
+
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords } = actions;
+export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult } = actions;
 
 export const wordsArr = (state: RootState) => state.sprint.wordsArr;
 export const word = (state: RootState) => state.sprint.word;
@@ -98,5 +115,7 @@ export const correctSeries = (state: RootState) => state.sprint.correctSeries;
 export const pointsToAdd = (state: RootState) => state.sprint.pointsToAdd;
 export const wrongAnswers = (state: RootState) => state.sprint.wrongAnswers;
 export const correctAnswers = (state: RootState) => state.sprint.correctAnswers;
+export const hasDifficulty = (state: RootState) => state.sprint.hasDifficulty;
+export const difficulty = (state: RootState) => state.sprint.difficulty;
 
 export default reducer;

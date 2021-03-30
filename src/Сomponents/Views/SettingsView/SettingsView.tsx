@@ -1,9 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import useSound from "use-sound";
 import Slider from '@material-ui/core/Slider';
 import { withStyles } from '@material-ui/core';
 import styles from '../../Savannah/Savannah.module.scss';
 import ValueLabel from './ValueLabel';
 import RadioButtons from './RadioButtons';
+import { fetchAllWords, hasDifficulty, setSprintDifficult } from '../../../store/reducers/sprintSlice';
+import { fetchAllAudioWords, word } from '../../../store/reducers/audioSlice';
+import { useRandomPage } from '../../../helpers/hooks';
 
 type Props = {
   setSettings: Dispatch<SetStateAction<{ section: string; difficult: string }>>;
@@ -43,9 +49,19 @@ const sections = ['Начальный', 'Легкий', 'Средний', 'Сл�
 const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }) => {
   const [values, setValues] = useState<{ section: number; difficult: string }>({
     section: 0,
-    difficult: '',
+    difficult: '7000',
   });
-
+  const LOADER_TIME = 3;
+  const learnedWord = useSelector(word)
+  const dispatch = useDispatch()
+  const url = 'https://react-learnwords-example.herokuapp.com';
+  const [play] = useSound(`${url}/${learnedWord.audio}`)
+  const path = useLocation().pathname
+  const difficulty = useSelector(hasDifficulty)
+  const randomPage = useRandomPage()
+  useEffect(()=> {
+    dispatch(fetchAllAudioWords(values.section, randomPage))
+  },[values])
   const onChange = (event: React.ChangeEvent<{}>, value: number | number[]) => {
     setValues((prevState) => ({
       ...prevState,
@@ -63,12 +79,19 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }
       ...prevState,
       settingsView: false,
     }));
+    dispatch(fetchAllWords(values.section, randomPage))
+    dispatch(setSprintDifficult(values.difficult))
+    if(path === '/audio') {
+      setTimeout(()=> {
+        play()
+      },LOADER_TIME * 1000)
+    }
     startPlay && startPlay()
   };
-
   return (
     <div className={styles.settingsContainer}>
       <span>Настройки</span>
+      {difficulty &&
       <div className={styles.sliderContainer}>
         <span>Выберите раздел</span>
         <SettingsSlider
@@ -80,7 +103,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }
           ValueLabelComponent={ValueLabel}
           onChange={onChange}
         />
-      </div>
+      </div> }
       <div className={styles.radioButtonsContainer}>
         <span>Выберите сложность</span>
         <RadioButtons setValues={setValues} />

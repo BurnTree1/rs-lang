@@ -65,3 +65,41 @@
     right: 11px;
     outline: none;
 }
+
+@media (max-width: 1200px) {
+  .games {
+    position: relative;
+    width: 470px;  
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-top: 27px;
+    margin: 30px auto;
+  }
+
+  .level {
+    margin: 0;
+    padding-left: 16px;
+  }
+
+  .games__icon {
+    margin-left: 46px;
+  }
+
+  .title {
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 28px;
+    max-width: 290px;
+  }
+
+  .games__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .games__item {
+    width: 50%;
+    margin-left: 0;
+  }
+}

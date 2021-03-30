@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { gameOver } from '../../../../store/reducers/sprintSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { difficulty, gameOver } from '../../../../store/reducers/sprintSlice';
 import styles from './Timer.module.scss'
 
 type PropsType = {
@@ -8,8 +8,8 @@ type PropsType = {
   gameIsDone: boolean
 }
 export const Timer: FC<PropsType> = ({ finished, gameIsDone }) => {
-  const GAME_TIME = 60;
-  const [time, setTime] = useState<number>(GAME_TIME);
+  const initTime = useSelector(difficulty)
+  const [time, setTime] = useState<number>(initTime);
   const dispatch = useDispatch();
   useEffect(() => {
     const timeId = setInterval(() => {
