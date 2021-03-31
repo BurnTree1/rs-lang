@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import _ from "lodash";
-import { Card, IconButton } from "@material-ui/core";
-import { ErrorOutlined, BlockOutlined } from "@material-ui/icons";
+import { Card } from "@material-ui/core";
+import ActionButtons from "./ActionButtons";
 
 type WordType = {
-  id: string,
+  _id: string,
   word: string,
   image: string,
   audio: string,
@@ -21,8 +21,8 @@ type WordType = {
   } | null
 }
 
-const CardItem: FC<WordType> = ({
-                                  id,
+const WordItem: FC<WordType> = ({
+                                  _id: id,
                                   word,
                                   image,
                                   audio,
@@ -39,17 +39,10 @@ const CardItem: FC<WordType> = ({
 
   const isHard = _.get(userWord, ["optional", "isHard"], false);
 
-  // @ts-ignore
   return <Card>
       {word}
-      {isHard ? "hard" : null}
-      <IconButton>
-        <ErrorOutlined/>
-      </IconButton>
-      <IconButton>
-        <BlockOutlined/>
-      </IconButton>
+      <ActionButtons id={id} isHard={isHard}/>
     </Card>
 };
 
-export default CardItem;
+export default WordItem;

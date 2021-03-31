@@ -1,5 +1,6 @@
 import axios from "axios";
 import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { and, choosePage, isDeleted } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
 
@@ -34,6 +35,21 @@ export const userWords = {
       },
       withCredentials: true
     });
+  },
+  makeUserWord(wordId: string, param: object) {
+    return axios({
+      url: `${URL_API}/users/${userId}/words/${wordId}`,
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      data: {
+        optional: param
+      },
+      withCredentials: true
+    });
   }
 
 };
@@ -51,9 +67,9 @@ export const userAggregateWords = {
       params: {
         group,
         wordsPerPage: WORD_PER_PAGE,
-        filter: { "$and": [{ "page": page, "userWord.optional.isDeleted": null }] }
+        filter: and(choosePage(page), isDeleted(null))
       },
       withCredentials: true
     });
-  }
+  },
 };

@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import Card from "./CardItem";
+import Card from "./WordItem/WordItem";
 import SectionHandler from "./SectionHandler";
 import { bookBuilder, COUNT_SECTION_PAGES } from "../../../helpers";
 import { userAggregateWords } from "../../../api";
@@ -14,8 +14,7 @@ import { GamesSection } from "./GamesSection/GamesSection";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const { sectionId } = useParams();
-  const { pageId = "1" } = useParams();
+  const { sectionId, pageId = "1" } = useParams();
 
   const sectionIdInt = parseInt(sectionId, 10);
   const pageIdInt = parseInt(pageId, 10);

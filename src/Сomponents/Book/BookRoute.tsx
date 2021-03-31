@@ -9,10 +9,10 @@ export default () => (
         <Route exact path={bookBuilder(':sectionId', ':pageId')}>
             <Page/>
         </Route>
-        <Route exact path={bookBuilder(':sectionId', null)}>
+        <Route exact path={bookBuilder(':sectionId')}>
             <Page/>
         </Route>
-        <Route exact path={bookBuilder(null, null)}>
+        <Route exact path={bookBuilder()}>
             <Book/>
         </Route>
     </Switch>
