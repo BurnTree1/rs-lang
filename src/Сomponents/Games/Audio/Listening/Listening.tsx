@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import sound from '../../../../assets/image/listen-btn.svg';
+import { URL_API } from '../../../../helpers/constants';
 import { useAudio } from '../../../../helpers/hooks';
 import { isAnswered, next, word } from '../../../../store/reducers/audioSlice';
 import styles from './Listening.module.scss'
@@ -9,7 +10,7 @@ export const Listening = () => {
   const learnedWord = useSelector(word);
   const nextWord = useSelector(next);
   const answered = useSelector(isAnswered);
-  const url = 'https://react-learnwords-example.herokuapp.com';
+  const url = URL_API;
   const playNext = useAudio(`${url}/${nextWord.audio}`);
   const playCurrent = useAudio(`${url}/${learnedWord.audio}`);
   useEffect(() => {

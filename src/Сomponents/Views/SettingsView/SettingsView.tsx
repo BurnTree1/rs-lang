@@ -10,6 +10,7 @@ import RadioButtons from './RadioButtons';
 import { fetchAllWords, hasDifficulty, setSprintDifficult } from '../../../store/reducers/sprintSlice';
 import { fetchAllAudioWords, word } from '../../../store/reducers/audioSlice';
 import { useRandomPage } from '../../../helpers/hooks';
+import { URL_API } from '../../../helpers/constants';
 
 type Props = {
   setSettings: Dispatch<SetStateAction<{ section: string; difficult: string }>>;
@@ -54,7 +55,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }
   const LOADER_TIME = 3;
   const learnedWord = useSelector(word)
   const dispatch = useDispatch()
-  const url = 'https://react-learnwords-example.herokuapp.com';
+  const url = URL_API
   const [play] = useSound(`${url}/${learnedWord.audio}`)
   const path = useLocation().pathname
   const difficulty = useSelector(hasDifficulty)

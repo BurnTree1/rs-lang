@@ -11,13 +11,13 @@ export const fetchWords = {
       url: `${WORD_API}`,
       params: {
         group, page
-      }
+      },
     });
   }
 };
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzEzNTI2MiwiZXhwIjoxNjE3MTQ5NjYyfQ.aDaK6Ogo80CEltlHMWkqOM3f2LUjLWiZaYeOHD8_Ris";
-const userId = "605a44e22898bf35e44bff04";
+const token = "";
+const userId = "";
 
 export const userWords = {
   get(group: number, page: number) {
