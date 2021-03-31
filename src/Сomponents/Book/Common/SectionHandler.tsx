@@ -1,21 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import { head, last } from "lodash";
 import { Link, useParams } from "react-router-dom";
-import { bookBuilder, bookSections } from "../../../helpers";
+import { bookSections, urlBuilder } from "../../../helpers";
 
-export default () => {
+const SectionHandler: FC<{prefix: string}> = ({ prefix }) => {
   const { sectionId } = useParams();
   const sectionInt = parseInt(sectionId, 10);
 
   // @ts-ignore
   const leftLink = head(bookSections).id !== sectionInt ?
-    <Link to={bookBuilder(sectionInt - 1)}>
+    <Link to={urlBuilder(prefix, sectionInt - 1)}>
       (left)
     </Link> : null;
 
   // @ts-ignore
   const rightLink = last(bookSections).id !== sectionInt ?
-    <Link to={bookBuilder(sectionInt + 1)}>
+    <Link to={urlBuilder(prefix, sectionInt + 1)}>
       (right)
     </Link> : null;
 
@@ -25,3 +25,5 @@ export default () => {
     {rightLink}
   </div>;
 };
+
+export default SectionHandler;
