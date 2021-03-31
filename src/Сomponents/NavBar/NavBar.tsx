@@ -19,6 +19,7 @@ import dictionary from "../../assets/image/dictionary.svg";
 import statistic from "../../assets/image/statistic.svg";
 import settings from "../../assets/image/setings.svg";
 import './NavBar.css'
+import { urlBuilder, urlPrefix } from "../../helpers";
 
 const drawerWidth = 240;
 
@@ -104,7 +105,7 @@ export const NavBar: FC<PropsType> = (props) => {
             </ListItem>
             <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to='/dictionary/studied' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.studied, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -112,7 +113,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Изучаемые"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/dictionary/difficult' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.difficult, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -120,7 +121,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Сложные"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/dictionary/deleted' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.deleted, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>

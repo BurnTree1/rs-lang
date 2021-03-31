@@ -1,15 +1,15 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { get, map, head } from "lodash";
-import { useParams, Link } from "react-router-dom";
-import { Pagination, PaginationItem } from "@material-ui/lab";
+import { useParams } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "./WordItem/WordItem";
-import SectionHandler from "./SectionHandler";
-import { bookBuilder, COUNT_SECTION_PAGES } from "../../../helpers";
+import SectionHandler from "../Common/SectionHandler";
 import { userAggregateWords } from "../../../api";
 import { initPage } from "../../../store/reducers/book";
 import { RootState } from "../../../store/store.models";
+import { COUNT_SECTION_PAGES, urlPrefix } from "../../../helpers";
+import Pagination from "../Common/PaginationComponent";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,20 +41,15 @@ const Page: FC = () => {
     , [words, isLoaded]
   );
 
-  const pagination =
-    useMemo(() => <Pagination page={parseInt(pageId, 10)}
-                              count={COUNT_SECTION_PAGES}
-                              renderItem={(item) => (
-                                <PaginationItem
-                                  component={Link}
-                                  to={bookBuilder(sectionId, item.page)}
-                                  {...item}
-                                />
-                              )}
-    />, [pageId]);
+  const pagination = useMemo(() =>
+      <Pagination prefix={urlPrefix.book}
+                  sectionId={sectionId}
+                  pageId={pageId}
+                  count={COUNT_SECTION_PAGES}/>,
+    [sectionId, pageId]);
 
   return <div>
-    <SectionHandler/>
+    <SectionHandler prefix={urlPrefix.book}/>
     <h3>Page</h3>
     {pagination}
     {cards}

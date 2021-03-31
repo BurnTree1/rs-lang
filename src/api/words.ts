@@ -1,6 +1,6 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API, MAX_WORDS_IN_GROUP } from "../helpers";
-import { and, choosePage, isDeleted } from "../helpers/filterBuilder";
+import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { and, choosePage, isDeleted, isHard, isStudied, or } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
 
@@ -76,7 +76,13 @@ export const userAggregateWords = {
   getForBook(group: number, pageId: number) {
     return this.get(group, null, WORD_PER_PAGE, and(choosePage(pageId), isDeleted(null)))
   },
-  getAllByFilter(group: number, filter: object) {
-    return this.get(group, null, MAX_WORDS_IN_GROUP, filter)
-  }
+  getForStudied(group: number, pageId: number) {
+    return this.get(group, pageId, WORD_PER_PAGE, or(isStudied(true), isHard(true)))
+  },
+  getForHard(group: number, pageId: number) {
+    return this.get(group, pageId, WORD_PER_PAGE, isHard(true))
+  },
+  getForDeleted(group: number, pageId: number) {
+    return this.get(group, pageId, WORD_PER_PAGE, isDeleted(true))
+  },
 };
