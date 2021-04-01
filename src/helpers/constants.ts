@@ -30,10 +30,32 @@ export const bookSections: Array<SectionType> = [
   }
 ];
 
-export const URL_API = "https://rs-lang2021.herokuapp.com"
+export const settingsMap = {
+  translate: {
+    id: "isNeedTranslate",
+    text: "Отображать перевод слова"
+  },
+  meaningTranslate: {
+    id: "isNeedMeaningTranslate",
+    text: "Отображать перевод пояснения"
+  },
+  hardButton: {
+    id: "isNeedHardButton",
+    text: "Отображать кнопку “Добавить в сложное”"
+  },
+  deleteButton: {
+    id: "isNeedDeleteButton",
+    text: "Отображать кнопку “Удалить слово”"
+  },
+};
+
+export const URL_API = "https://rs-lang2021.herokuapp.com";
 export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
-export const MAX_WORDS_IN_GROUP = 600
+export const MAX_WORDS_IN_GROUP = 600;
+
+export const token = "";
+export const userId = "";
 
 export const urlPrefix = {
   studied: "/dictionary/studied",
@@ -42,7 +64,7 @@ export const urlPrefix = {
   book: "/book"
 }
 
-export const urlParams= {
+export const urlParams = {
   section: ":sectionId",
   page: ":pageId",
 }

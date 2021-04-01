@@ -1,5 +1,5 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { WORD_PER_PAGE, URL_API, token, userId } from "../helpers";
 import { and, choosePage, isDeleted, isHard, isStudied, or } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
@@ -15,9 +15,6 @@ export const fetchWords = {
     });
   }
 };
-
-const token = "";
-const userId = "";
 
 export const userWords = {
   get(group: number, page: number) {
