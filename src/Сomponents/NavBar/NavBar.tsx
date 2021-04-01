@@ -19,6 +19,7 @@ import dictionary from "../../assets/image/dictionary.svg";
 import statistic from "../../assets/image/statistic.svg";
 import settings from "../../assets/image/setings.svg";
 import './NavBar.css'
+import { urlBuilder, urlPrefix } from "../../helpers";
 
 const drawerWidth = 240;
 
@@ -95,7 +96,6 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Учебник"/>
             </ListItem>
           </NavLink>
-          <NavLink to='/dictionary' activeClassName='active'>
             <ListItem button onClick={handleDictionaryClick}>
               <ListItemIcon>
                 <img src={dictionary} alt="dictionary"/>
@@ -105,7 +105,7 @@ export const NavBar: FC<PropsType> = (props) => {
             </ListItem>
             <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to='/studied' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.studied, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -113,7 +113,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Изучаемые"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/difficult' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.difficult, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -121,7 +121,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Сложные"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/deleted' activeClassName='active'>
+              <NavLink to={urlBuilder(urlPrefix.deleted, '1')} activeClassName='active'>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -132,7 +132,6 @@ export const NavBar: FC<PropsType> = (props) => {
             </List>
           </Collapse>
           <Divider/>
-          </NavLink>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
               <></>

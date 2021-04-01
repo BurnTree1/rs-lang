@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 });
 
 const RadioButtons: React.FC<Props> = ({ setValues }) => {
-  const [selectedValue, setSelectedValue] = useState('easy');
+  const [selectedValue, setSelectedValue] = useState('7000');
   const classes = useStyles();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
