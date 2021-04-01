@@ -1,32 +1,18 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/sort-comp */
-import React from 'react';
+import React, { Ref } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Button, IconButton } from '@material-ui/core';
-import { Close, Fullscreen, FullscreenExit, VolumeDown, VolumeUp } from '@material-ui/icons';
+import { IconButton } from '@material-ui/core';
+import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
 import { ICard, IGameData, IGameWinData, ISettings, IState } from '../../my-game.models';
 import Card from '../Card/Card';
-import './game.scss';
 import { formatTime, generateCards } from '../../my-game.helpers';
-import { IWord } from '../../../../models/common.models';
+import { IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
-// @ts-ignore
-// import flipCard from './assets/card_flip.mp3';
-// // @ts-ignore
-// import foundPair from './assets/cards_found.mp3';
+import GamePauseModal from '../../../../Modals/GamePauseModal';
+import { WinModal } from '../WinModal/WinModal';
+import './game.scss';
 
-// interface IProps extends RouteComponentProps {
-//   settings: ISettings;
-//   cards: ICard[];
-//   firstCard: ICard | null;
-//   secondCard: ICard | null;
-//   paused(data: IGameData): void;
-//   isResumed: boolean;
-//   attempts: number;
-//   time: number;
-//   soundsOn: boolean;
-//   autoPlay?: boolean;
-// }
 const DEFAULT_SETTINGS: ISettings = {
   width: 6,
   height: 4,
@@ -47,22 +33,26 @@ class MemoryGame extends React.Component<IProps, IState> {
 
   foundSound: any;
 
+  gameContainerRef: Ref<HTMLDivElement> | undefined;
+
   constructor(props: IProps) {
     super(props);
     const { words } = props;
-    const cards = generateCards(words, DEFAULT_SETTINGS)
+    const cards = generateCards(words, DEFAULT_SETTINGS);
+    console.log('words', words);
+    console.log('cards', cards);
     const settings = DEFAULT_SETTINGS;
     const time = 0;
     const attempts = 0;
     const firstCard = null;
     const secondCard = null;
     const isResumed = false;
-    // let { settings, cards, attempts, time } = props;
-    // const { firstCard, secondCard, isResumed } = props;
     const startTime = false;
 
     const { width, height } = settings;
-    const size: number = width * height;
+    const size: number = words.length * 2;
+    console.log('cards', cards);
+    // const size: number = width * height;
     this.state = {
       size,
       cards,
@@ -75,6 +65,7 @@ class MemoryGame extends React.Component<IProps, IState> {
       haveWin: false,
       fullScreen: false,
       soundToggle: true,
+      isPaused: false,
     };
 
     // this.flipSound = new Audio(flipCard);
@@ -83,6 +74,7 @@ class MemoryGame extends React.Component<IProps, IState> {
     // this.foundSound = new Audio(foundPair);
     this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
     // this.foundSound.volume = settings.soundsVolume;
+    this.gameContainerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -100,7 +92,8 @@ class MemoryGame extends React.Component<IProps, IState> {
 
   pauseHandler = () => {
     this.setState({
-      startTime: false,
+      startTime: !this.state.startTime,
+      isPaused: !this.state.isPaused,
     });
 
     const data: IGameData = {
@@ -174,10 +167,10 @@ class MemoryGame extends React.Component<IProps, IState> {
   getFieldSize() {
     const { size } = this.state;
 
-    if (size === 24) {
+    if (size >= 24) {
       return 'large';
     }
-    if (size === 18) {
+    if (size >= 16) {
       return 'medium';
     }
 
@@ -297,12 +290,16 @@ class MemoryGame extends React.Component<IProps, IState> {
     });
   }
 
+  onStopGameHandler = () => {
+    this.props.history.push('/my-game');
+  }
+
   render() {
     const { cards, fullScreen } = this.state;
     // const { autoPlay } = this.props;
 
     return (
-      <div className={`game ${fullScreen ? 'game_fullscreen' : ''}`}>
+      <div className={`game ${fullScreen ? 'game_fullscreen' : ''}`} ref={this.gameContainerRef}>
         <div className="statistics">
           <div className="volume-wrapper">
             <VolumeControl volumeIsOn={this.state.soundToggle} handler={this.onSoundToggle} />
@@ -328,7 +325,6 @@ class MemoryGame extends React.Component<IProps, IState> {
           </div>
         </div>
         <div className={`game-field game-field_${this.getFieldSize()}`}>
-          {/* {autoPlay && <div className="game__overlay" />} */}
           {cards.map((card: ICard) => (
             <div className="game-field__item" key={card.id}>
               <Card
@@ -337,14 +333,21 @@ class MemoryGame extends React.Component<IProps, IState> {
                   cardClick: () => this.changeFlipped(card.id),
                   animationOn: this.animationCheck(card)
                 }}
-                // isFlipped={card.isFlipped}
-                // imgName={card.image}
-                // found={card.found}
               />
             </div>
           ))}
         </div>
-        {this.state.haveWin && <h2>You win</h2>}
+        {this.state.haveWin && (
+          <div className="modal-overlay">
+            <WinModal cardsCount={this.state.size} attempts={this.state.attempts} submit={this.onStopGameHandler} />
+          </div>
+        )}
+        {this.state.isPaused
+          && (
+          <div className="modal-overlay">
+            <GamePauseModal setGameIsPaused={this.pauseHandler} setGameIsDone={this.onStopGameHandler} />
+          </div>
+        )}
       </div>
     );
   }

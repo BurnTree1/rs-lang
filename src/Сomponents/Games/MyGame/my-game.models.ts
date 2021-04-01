@@ -1,4 +1,4 @@
-import { IWord } from "../../models/common.models";
+import { IWord } from "../../../models/common.models";
 
 export interface IState {
   cards: ICard[];
@@ -12,6 +12,7 @@ export interface IState {
   haveWin: boolean;
   fullScreen: boolean;
   soundToggle: boolean;
+  isPaused: boolean;
 }
 
 export interface ICard extends IWord {
@@ -22,19 +23,18 @@ export interface ICard extends IWord {
   isSecondCard?: boolean;
 }
 
-export enum Cards {
-  'card1' = 'card1',
-  'card2' = 'card2',
-  'card3' = 'card3',
-  'card4' = 'card4',
-  'card5' = 'card5',
-  'card6' = 'card6',
-  'card7' = 'card7',
-  'card8' = 'card8',
-  'card9' = 'card9',
-  'card10' = 'card10',
-  'card11' = 'card11',
-  'card12' = 'card12'
+export const bookPath: { [k: string]: number } = {
+  'Начальный': 0,
+  'Легкий': 1,
+  'Средний': 2,
+  'Сложный': 3,
+  'Великий': 4,
+  'Невероятный': 5
+};
+
+export interface IGameSettings {
+  section: string;
+  difficult: string;
 }
 
 export interface ISettings {

@@ -1,6 +1,6 @@
 import shortid from "shortid";
-import { IWord } from "../../models/common.models";
-import { Cards, ICard, ISettings } from "./my-game.models";
+import { IWord } from "../../../models/common.models";
+import { ICard, ISettings } from "./my-game.models";
 
 const generateUniqCards = (words: IWord[], count: number): ICard[] => {
   const wordsCopy: IWord[] = [...words];
@@ -12,7 +12,6 @@ const generateUniqCards = (words: IWord[], count: number): ICard[] => {
     mixedCards = [
       ...mixedCards,
       {
-        // image: word,
         isFlipped: true,
         found: false,
         ...word,
@@ -25,13 +24,17 @@ const generateUniqCards = (words: IWord[], count: number): ICard[] => {
 const addMarker = (cards: ICard[]) => cards.map((card) => ({ ...card, isSecondCard: true }));
 
 export const generateCards = (words: IWord[], settings: ISettings): ICard[] => {
-  const size = settings.width * settings.height;
-  const count = size / 2;
+  // const size = settings.width * settings.height;
+  const size = words.length * 2;
+  const count = words.length;
 
   const uniqCards: ICard[] = generateUniqCards(words, count);
+  console.log('words', words);
+  console.log('uniqCards', uniqCards);
 
   const tempCards: ICard[] = [...uniqCards, ...addMarker(uniqCards)];
   let mixedCards: ICard[] = [];
+  console.log('tempCards', tempCards);
 
   for (let i = 0; i < size; i += 1) {
     const cardToInsert: number = Math.floor(Math.random() * tempCards.length);

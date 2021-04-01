@@ -1,4 +1,5 @@
 .game {
+  padding-top: 50px;
   position: relative;
   height: 100%;
 }
@@ -14,18 +15,15 @@
   background-image: url('../../assets/background.png');
   background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .game-field {
   width: 100%;
   margin: 0 auto;
+  margin-bottom: 50px;
   display: grid;
   justify-content: center;
-}
-
-.game-field__item {
-  margin-right: 20px;
-  margin-bottom: 20px;
 }
 
 .game-field {
@@ -80,6 +78,10 @@
 }
 
 .statistics {
+  position: relative;
+  max-width: 870px;
+  min-width: 320px;
+  margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 20px;
   display: flex;
@@ -160,4 +162,13 @@
 .statistics__inner_controls {
   position: absolute;
   right: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
 }
