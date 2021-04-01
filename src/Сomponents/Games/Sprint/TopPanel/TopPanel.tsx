@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC } from 'react'
 import fullscreen from '../../../../assets/image/fullscreen.svg';
 import close from '../../../../assets/image/close.svg';
 import styles from './TopPanel.module.scss'

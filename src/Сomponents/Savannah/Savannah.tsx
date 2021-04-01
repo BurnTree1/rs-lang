@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
-import words from './mockData';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
 import { ReactComponent as RockIcon } from './assets/stone 1.svg';
@@ -16,6 +17,7 @@ import GamePauseModal from '../Modals/GamePauseModal';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
+  const words = useSelector(wordsArr)
   const [currentWords, setCurrentWords] = useState<typeof words>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string>();
   const [wrongAnswers, setWrongAnswers] = useState<typeof words>([]);
@@ -57,7 +59,7 @@ const Savannah = () => {
 
   const setHearth = () => {
     setLives((state) => state - 1);
-    setWrongAnswers((prevState) => [...prevState, words[currentLevel]]);
+    setWrongAnswers((prevState: any) => [...prevState, words[currentLevel]]);
   };
 
   const checkAnswer = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
@@ -65,7 +67,7 @@ const Savannah = () => {
     if (word && word.slice(2) !== currentAnswer) {
       setHearth();
     } else {
-      setRightAnswers((prevState) => [...prevState, words[currentLevel]]);
+      setRightAnswers((prevState: any) => [...prevState, words[currentLevel]]);
     }
     setNextLevel();
   };
