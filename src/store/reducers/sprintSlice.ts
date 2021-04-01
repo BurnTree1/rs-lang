@@ -89,6 +89,9 @@ const sprintSlice = createSlice({
     },
     setSprintDifficult: (state, { payload: difficulty }) => {
       state.difficulty = difficulty / 100
+    },
+    setHasDifficulty: (state) => {
+      state.hasDifficulty = true
     }
   },
 });
@@ -104,7 +107,7 @@ export function fetchAllWords(g: number,p: number) {
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult } = actions;
+export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult, setHasDifficulty } = actions;
 
 export const wordsArr = (state: RootState) => state.sprint.wordsArr;
 export const word = (state: RootState) => state.sprint.word;

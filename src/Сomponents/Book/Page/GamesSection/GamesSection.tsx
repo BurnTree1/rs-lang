@@ -19,8 +19,10 @@ export const GamesSection = () => {
     const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
     const dispatch = useDispatch()
     const onWordsSet = () => {
-        dispatch(setSprintWords(words))
-        dispatch(setAudioWords(words))
+        setTimeout(()=> {
+            dispatch(setSprintWords(words))
+            dispatch(setAudioWords(words))
+        },0)
     }
     return (
     <div className={styles.games}>

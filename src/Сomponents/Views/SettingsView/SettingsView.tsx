@@ -16,6 +16,7 @@ type Props = {
   setSettings: Dispatch<SetStateAction<{ section: string; difficult: string }>>;
   setGameStatus: Dispatch<SetStateAction<{ startView: boolean; getReadyView: boolean; settingsView: boolean }>>;
   startPlay?: () => void
+  difficultType: string
 };
 
 const SettingsSlider = withStyles({
@@ -47,7 +48,7 @@ const SettingsSlider = withStyles({
 
 const sections = ['Начальный', 'Легкий', 'Средний', 'Сложный', 'Великий', 'Невероятный'];
 
-const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }) => {
+const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, difficultType }) => {
   const [values, setValues] = useState<{ section: number; difficult: string }>({
     section: 0,
     difficult: '7000',
@@ -106,7 +107,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay }
         />
       </div> }
       <div className={styles.radioButtonsContainer}>
-        <span>Выберите сложность</span>
+        <span>Выберите сложность (влияет на {difficultType})</span>
         <RadioButtons setValues={setValues} />
       </div>
       <button type="button" onClick={onConfirm}>

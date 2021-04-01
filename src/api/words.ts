@@ -16,8 +16,8 @@ export const fetchWords = {
   }
 };
 
-const token = "";
-const userId = "";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzI4MTg1MCwiZXhwIjoxNjE3Mjk2MjUwfQ.iPbKt54-OimYDqEdDp0RyWvcoMs2GTyjkxhphF-Mdso";
+const userId = "605a44e22898bf35e44bff04";
 
 export const userWords = {
   get(group: number, page: number) {

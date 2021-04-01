@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { wordsArr } from '../../store/reducers/sprintSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
@@ -36,6 +36,11 @@ const Savannah = () => {
     getReadyView: true,
     settingsView: true,
   });
+
+  const dispatch = useDispatch()
+  useEffect(()=> {
+    dispatch(setHasDifficulty()) 
+   },[])
 
   useEffect(() => {
     const wordsWithoutCurrentWord = [...words.slice(0, currentLevel), ...words.slice(currentLevel + 1, words.length)];
@@ -78,7 +83,7 @@ const Savannah = () => {
 
   const conditionalRender = () => {
     if (gameView.startView) return <StartView setGameStatus={setGameView} />;
-    if (gameView.settingsView) return <SettingsView setSettings={setSettings} setGameStatus={setGameView} />;
+    if (gameView.settingsView) return <SettingsView difficultType='время ответа' setSettings={setSettings} setGameStatus={setGameView} />;
     if (gameView.getReadyView) return <GetReadyView setGameStatus={setGameView} />;
 
     return (

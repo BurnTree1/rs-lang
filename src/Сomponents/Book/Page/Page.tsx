@@ -11,6 +11,7 @@ import { RootState } from "../../../store/store.models";
 import { COUNT_SECTION_PAGES, urlPrefix } from "../../../helpers";
 import Pagination from "../Common/PaginationComponent";
 import { GamesSection } from "./GamesSection/GamesSection";
+import styles from './Page.module.scss'
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,11 +49,11 @@ const Page: FC = () => {
                   count={COUNT_SECTION_PAGES}/>,
     [sectionId, pageId]);
 
-  return <div>
+  return <div className={styles.page}>
     <SectionHandler prefix={urlPrefix.book}/>
     <h3>Page</h3>
-    {pagination}
     <GamesSection/>
+    {pagination}
     {cards}
     {pagination}
   </div>;

@@ -7,6 +7,7 @@ import styles from './GameLayer.module.scss'
 type PropsType = {
     children: ReactNode
     setIsGameStarted: (value: boolean)=> void
+    difficultType: string
   }
 export const GameLayer: FC<PropsType> = (props) => {
   const LOADER_TIME = 3;
@@ -57,7 +58,7 @@ export const GameLayer: FC<PropsType> = (props) => {
               </button>
             </div>
           )}
-          {isGameSetings && <SettingsView setSettings={setSettings} setGameStatus={setGameView} startPlay={startPlay}/>}
+          {isGameSetings && <SettingsView difficultType={props.difficultType} setSettings={setSettings} setGameStatus={setGameView} startPlay={startPlay}/>}
           {gameLoader && <div className={styles.loader}>{loaderSec}</div>}
           </div>
     )
