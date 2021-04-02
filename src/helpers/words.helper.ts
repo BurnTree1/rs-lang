@@ -1,1 +1,3 @@
-export const getSrcUrl = (path: string) => `${process.env.REACT_APP_BACKEND}/${path}`;
+import { URL_API } from "./constants";
+
+export const getSrcUrl = (path: string) => `${URL_API}/${path}`;
