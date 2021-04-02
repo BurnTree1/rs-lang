@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Intro.module.scss";
 import titleImg from "../../../assets/image/title.svg";
+import RegistrationForm from '../Modals/RegistrationFrom';
 
 export const  Intro =() => <div className={styles.intro}>
     <div className={styles.title}>
@@ -15,6 +16,8 @@ export const  Intro =() => <div className={styles.intro}>
     </div>
     <div className={styles.intro__btns}>
       <button type='button' className={styles.enter}>Войти</button>
-      <button type='button' className={styles.registration}>Зарегистрирвоаться</button>
+      <button type='button' className={styles.registration}>Зарегистрироваться</button>
     </div>
+  <RegistrationForm/>
   </div>
+
