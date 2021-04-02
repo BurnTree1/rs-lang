@@ -43,24 +43,15 @@ class MemoryGame extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     const { words } = props;
-    const cards = generateCards(words, DEFAULT_SETTINGS);
-    const time = 0;
-    const attempts = 0;
-    const firstCard = null;
-    const secondCard = null;
-    const isResumed = false;
-    const startTime = false;
-
-    const size: number = words.length * 2;
     this.state = {
-      size,
-      cards,
-      firstCard,
-      secondCard,
-      isResumed,
-      startTime,
-      attempts,
-      time,
+      size: words.length * 2,
+      cards: generateCards(words, DEFAULT_SETTINGS),
+      firstCard: null,
+      secondCard: null,
+      isResumed: false,
+      startTime: false,
+      attempts: 0,
+      time: 0,
       haveWin: false,
       fullScreen: false,
       soundToggle: true,
