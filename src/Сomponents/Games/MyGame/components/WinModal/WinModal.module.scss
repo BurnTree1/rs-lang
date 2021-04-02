@@ -1,0 +1,118 @@
+.endModalContainer {
+  border-radius: 5px;
+  width: 600px;
+  height: 400px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 785px) {
+    width: calc(100% - 30px);
+    max-width: 600px;
+    min-width: 450px;
+    // margin: 0 15px;
+  }
+}
+
+.endModalContent {
+  width: 380px;
+  height: 100%;
+  padding-top: 40px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  & > p:first-of-type {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+.endModalResultContainer {
+  width: 100%;
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+}
+
+.endModalWordsContainer {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 13px;
+
+  & > span {
+    padding-right: 260px;
+    padding-top: 8px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #2196f3;
+    border-radius: 7px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: rgba(163, 181, 229, 0.5);
+    border-radius: 7px;
+  }
+}
+
+.endModalWordContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 46px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 24px;
+  padding-left: 20px;
+
+  & > p > span:nth-of-type(1) {
+    color: #2196f3;
+  }
+}
+
+.endModalButton {
+  width: 209px;
+  height: 36px;
+  margin: 29px 0 15px 0;
+  background-color: #2196F3;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1.25px;
+  color: #FFFFFF;
+  text-align: center;
+  padding: 0 9px 0 12px;
+  cursor: pointer;
+}

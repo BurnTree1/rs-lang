@@ -11,6 +11,7 @@ import item4 from '../../../../assets/image/game-item4.svg'
 import styles from './GamesSection.module.scss'
 import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
 import { setAudioWords } from '../../../../store/reducers/audioSlice';
+import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
 import Settings from "../Setting/Settings";
 
 export const GamesSection = () => {
@@ -19,8 +20,9 @@ export const GamesSection = () => {
     const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
     const dispatch = useDispatch()
     const onWordsSet = () => {
-        dispatch(setSprintWords(words))
-        dispatch(setAudioWords(words))
+        dispatch(setSprintWords(words));
+        dispatch(setAudioWords(words));
+        dispatch(setMemoryGameWords(words));
     }
     return (
     <div className={styles.games}>
@@ -44,7 +46,7 @@ export const GamesSection = () => {
             </div>
             <div className={styles.games__item}>
                 <img src={item4} alt="my game" className={styles.item__img}/>
-                <Link to='/my-game'>Своя игра</Link>
+                <Link onClick={onWordsSet} to='/my-game'>Memory Game</Link>
             </div>
         </div>
         </div>
