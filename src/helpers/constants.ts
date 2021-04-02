@@ -30,24 +30,24 @@ export const bookSections: Array<SectionType> = [
   }
 ];
 
-export const settingsMap = {
-  translate: {
+export const settingsMap = [
+   {
     id: "isNeedTranslate",
     text: "Отображать перевод слова"
   },
-  meaningTranslate: {
+  {
     id: "isNeedMeaningTranslate",
     text: "Отображать перевод пояснения"
   },
-  hardButton: {
+  {
     id: "isNeedHardButton",
     text: "Отображать кнопку “Добавить в сложное”"
   },
-  deleteButton: {
+  {
     id: "isNeedDeleteButton",
     text: "Отображать кнопку “Удалить слово”"
   },
-};
+]
 
 export const URL_API = "https://rs-lang2021.herokuapp.com";
 export const COUNT_SECTION_PAGES = 30;

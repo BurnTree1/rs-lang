@@ -1,26 +1,45 @@
 import React, { FC, useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, IconButton, Switch, FormControlLabel } from "@material-ui/core";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  IconButton,
+  Switch,
+  FormControlLabel
+} from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { useDispatch, useSelector } from "react-redux";
 import { settingsMap } from "../../../../helpers";
+import { settingsApi } from "../../../../api/settings";
+import { currentSettings, setSettings } from "../../../../store/reducers/settings";
 
 const Settings: FC = () => {
   const [open, setOpen] = useState(false);
+  const [params, setParams] = useState({});
+  const currentParams = useSelector(currentSettings);
+  const dispatch = useDispatch();
 
-  const [translate, setTranslate] = useState(false);
-  const [meaning, setMeaning] = useState(false);
-  const [hard, setHard] = useState(false);
-  const [deleting, setDeleting] = useState(false);
-
-  const onClose = () => {
-    setOpen(false)
-  };
   const onOpen = () => {
-    setOpen(true)
+    settingsApi.get()
+      .then(({ data: { optional } }) => {
+        setParams({ ...currentParams, ...optional });
+        setOpen(true);
+      })
+      .catch(() => setParams(currentParams));
   };
 
-  const sendSettings = () => {
+  const onClose = () => setOpen(false);
 
-  }
+  const setParamsById = (id: string, value: boolean) => setParams({ ...params, [id]: value });
+
+  const sendSettings = () =>
+    settingsApi.set(params)
+      .then(() => {
+        dispatch(setSettings(params));
+        onClose();
+      });
 
   return (<div>
       <IconButton onClick={onOpen}>
@@ -29,26 +48,10 @@ const Settings: FC = () => {
       <Dialog open={open} onClose={onClose} maxWidth="xs">
         <DialogTitle>Настройки</DialogTitle>
         <DialogContent>
-          <FormControlLabel
-            key={settingsMap.translate.id}
-            control={<Switch checked={translate} onChange={(e, checked) => setTranslate(checked)} color="primary"/>}
-            label={settingsMap.translate.text}
-          />
-          <FormControlLabel
-            key={settingsMap.meaningTranslate.id}
-            control={<Switch checked={meaning} onChange={(e, checked) => setMeaning(checked)} color="primary"/>}
-            label={settingsMap.meaningTranslate.text}
-          />
-          <FormControlLabel
-            key={settingsMap.hardButton.id}
-            control={<Switch checked={hard} onChange={(e, checked) => setHard(checked)} color="primary"/>}
-            label={settingsMap.hardButton.text}
-          />
-          <FormControlLabel
-            key={settingsMap.deleteButton.id}
-            control={<Switch checked={deleting} onChange={(e, checked) => setDeleting(checked)} color="primary"/>}
-            label={settingsMap.deleteButton.text}
-          />
+          {settingsMap.map(({ id, text }) =>
+            // @ts-ignore
+            <SettingLabel key={id} id={id} value={params[id]} text={text} setValue={setParamsById}/>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={sendSettings} variant="contained" color="primary">Ок</Button>
@@ -58,5 +61,19 @@ const Settings: FC = () => {
     </div>
   );
 };
+
+type LabelType = {
+  id: string,
+  value: boolean,
+  text: string,
+  setValue: (id: string, e: boolean) => void
+}
+
+const SettingLabel: FC<LabelType> = ({ id, value, text, setValue }) => (
+  <FormControlLabel
+    control={<Switch checked={value} onChange={(e, checked) => setValue(id, checked)} color="primary"/>}
+    label={text}
+  />
+);
 
 export default Settings;

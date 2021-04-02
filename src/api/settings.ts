@@ -17,7 +17,7 @@ export const settingsApi = {
   set(params: object) {
     return axios({
       url: `${URL_API}/users/${userId}/settings`,
-      method: "POST",
+      method: "PUT",
       headers: {
         "Authorization": `Bearer ${token}`,
         "Accept": "application/json",
