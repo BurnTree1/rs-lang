@@ -12,7 +12,7 @@ import { MyGame } from "./Сomponents/Games/MyGame/MyGame";
 import BookRoute from "./Сomponents/Book/BookRoute";
 import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
 
-function App() {
+export function App() {
   return (
     <div className="app">
       <AppWrapper>
@@ -57,5 +57,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
