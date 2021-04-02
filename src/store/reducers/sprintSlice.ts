@@ -101,7 +101,6 @@ export function fetchAllWords(g: number,p: number) {
   return async dispatch => {
       const response = await fetchWords.get(g, p)
       dispatch(setSprintWords(response.data))
-   
   }
 }
 

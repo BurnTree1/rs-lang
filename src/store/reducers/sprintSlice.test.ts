@@ -1,11 +1,25 @@
+import { createSlice } from '@reduxjs/toolkit';
 import words from '../../Сomponents/Savannah/mockData'
 import { WordsType } from './audioSlice';
-import {
-    sprintSlice, nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult, setHasDifficulty
+import reducer, { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult, setHasDifficulty
 } from './sprintSlice';
 
 const state = {
-    wordsArr: [] as Array<WordsType>,
+    wordsArr: [{
+        audio: "files/01_0005.mp3",
+       audioExample: "files/01_0005_example.mp3",
+       audioMeaning: "files/01_0005_meaning.mp3",
+       group: 111,
+       image: "files/01_0005.jpg",
+       page: 0,
+       textExample: "There is a small boat on the lake.",
+       textExampleTranslate: "На озере есть маленькая лодка",
+       textMeaning: "A boat is a vehicle that moves across water.",
+       textMeaningTranslate: "Лодка - это транспортное средство, которое движется по воде",
+       transcription: "[bout]",
+       word: "",
+       wordTranslate: "лодка", 
+     }] as Array<WordsType>,
     word: {} as WordsType,
     translation: '',
     score: 0,
@@ -19,23 +33,9 @@ const state = {
 };
 
 test('receive words for games', () => {
-    const newState = sprintSlice(state, setSprintWords({
-        '5e9f5ee35eb9e72bc21af4a2':
-        { audio: "files/01_0005.mp3",
-        audioExample: "files/01_0005_example.mp3",
-        audioMeaning: "files/01_0005_meaning.mp3",
-        group: 0,
-        image: "files/01_0005.jpg",
-        page: 0,
-        textExample: "There is a small boat on the lake.",
-        textExampleTranslate: "На озере есть маленькая лодка",
-        textMeaning: "A boat is a vehicle that moves across water.",
-        textMeaningTranslate: "Лодка - это транспортное средство, которое движется по воде",
-        transcription: "[bout]",
-        userWord: {},
-        word: "boat",
-        wordTranslate: "лодка",
-        _id: "5e9f5ee35eb9e72bc21af4a2" }
+    const newState = reducer(state, setSprintWords( {
+        foo: {
+        group: 0 }
       }))
-  expect(newState.wordsArr[0].word).toBe("boat");
+   expect(newState.wordsArr[0].group).toBe(0);
 });
