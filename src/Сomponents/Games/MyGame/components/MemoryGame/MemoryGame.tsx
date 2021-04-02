@@ -14,6 +14,7 @@ import GamePauseModal from '../../../../Modals/GamePauseModal';
 import { WinModal } from '../WinModal/WinModal';
 import { clearWords } from '../../../../../store/reducers/memoryGameSlice';
 import './game.scss';
+import { URL_API } from '../../../../../helpers/constants';
 
 const DEFAULT_SETTINGS: ISettings = {
   width: 6,
@@ -33,9 +34,9 @@ interface IProps extends RouteComponentProps {
 }
 
 class MemoryGame extends React.Component<IProps, IState> {
-  flipSound: any;
+  flipSound: HTMLAudioElement;
 
-  foundSound: any;
+  foundSound: HTMLAudioElement;
 
   gameContainerRef: Ref<HTMLDivElement> | undefined;
 
@@ -66,8 +67,8 @@ class MemoryGame extends React.Component<IProps, IState> {
       isPaused: false,
     };
 
-    this.flipSound = new Audio(`${process.env.PUBLIC_URL}/card_flip.mp3`);
-    this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
+    this.flipSound = new Audio(`${URL_API}/card_flip.mp3`);
+    this.foundSound = new Audio(`${URL_API}/cards_found.mp3`);
     this.gameContainerRef = React.createRef();
   }
 
@@ -142,8 +143,7 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   checkWin() {
-    const haveWin = this.state.cards.filter((card: ICard) => !card.found).length === 0;
-    return haveWin;
+    return this.state.cards.filter((card: ICard) => !card.found).length === 0;
   }
 
   changeFlipped(cardId: string) {
@@ -300,5 +300,3 @@ const mapStateToProps = (_state: any, props: IProps) => ({
 const mapDispatchToProps = { clearWords };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MemoryGame));
-// export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
-// export default withRouter(MemoryGame);

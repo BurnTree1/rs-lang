@@ -23,7 +23,6 @@ export default function Card(props: IProps) {
         <div className="card__front">
           <img src={getSrcUrl(image)} className="card__image" alt="card__image" />
           <p className="card__description card__description_bold">{isSecondCard ? wordTranslate : word}</p>
-          {/* <p className="card__description">{wordTranslate}</p> */}
         </div>
       </div>
     </div>

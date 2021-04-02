@@ -16,9 +16,7 @@ export interface IState {
 }
 
 export interface ICard extends IWord {
-  // image: Cards;
   isFlipped: boolean;
-  // id: string;
   found: boolean;
   isSecondCard?: boolean;
 }

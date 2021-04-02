@@ -24,7 +24,6 @@ const generateUniqCards = (words: IWord[], count: number): ICard[] => {
 const addMarker = (cards: ICard[]) => cards.map((card) => ({ ...card, isSecondCard: true }));
 
 export const generateCards = (words: IWord[], settings: ISettings): ICard[] => {
-  // const size = settings.width * settings.height;
   const size = words.length * 2;
   const count = words.length;
 
