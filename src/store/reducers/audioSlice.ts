@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchWords } from '../../api/words';
 import { RootState } from '../store.models';
-import words from '../../Сomponents/Savannah/mockData'
 
 export interface WordsType {
   id: string;
@@ -20,13 +20,14 @@ export interface WordsType {
 }
 
 const initialState = {
-  wordsArr: words as Array<WordsType>,
-  word: words[0],
-  next: words[1],
+  wordsArr: [] as Array<WordsType>,
+  word: {} as WordsType,
+  next: {} as WordsType,
   isFinished: false,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
-  isAnswered: false
+  isAnswered: false,
+  hasDifficulty: true
 };
 
 const sprintSlice = createSlice({
@@ -34,7 +35,17 @@ const sprintSlice = createSlice({
   initialState,
   reducers: {
     setWord: (state) => {
-      state.word = { ...words[0] }
+      
+    },
+    setAudioWords: (state, { payload: words }) => {
+      for (const key in words) {
+        if (Object.prototype.hasOwnProperty.call(words, key)) {
+        state.wordsArr = [...state.wordsArr, words[key]]
+        }
+      }
+      state.word = { ...state.wordsArr[0] }
+      state.next = { ...state.wordsArr[1] }
+      state.hasDifficulty = false
     },
     nextWord: (state, { payload: word }) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === word.word);
@@ -66,9 +77,18 @@ const sprintSlice = createSlice({
   },
 });
 
+export function fetchAllAudioWords(g: number,p: number) {
+  // @ts-ignore
+  return async dispatch => {
+      const response = await fetchWords.get(g, p)
+      dispatch(setAudioWords(response.data))
+   
+  }
+}
+
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, gameOver, setWord, makeAnswer, setAnswered } = actions;
+export const { nextWord, gameOver, setWord, makeAnswer, setAnswered, setAudioWords } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;
@@ -81,5 +101,6 @@ export const pointsToAdd = (state: RootState) => state.audio.pointsToAdd;
 export const isAnswered = (state: RootState) => state.audio.isAnswered;
 export const correctAnswers = (state: RootState) => state.audio.correctAnswers;
 export const wrongAnswers = (state: RootState) => state.audio.wrongAnswers;
+export const hasDifficulty = (state: RootState) => state.audio.hasDifficulty;
 
 export default reducer;

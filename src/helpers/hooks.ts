@@ -20,3 +20,8 @@ shuffledArr[2].wordTranslate,
 word
 ].sort(()=> Math.random() - 0.5)
 }
+
+export const useRandomPage = () => {
+    const MAX_PAGE = 29
+    return Math.floor(Math.random() * MAX_PAGE);
+}
