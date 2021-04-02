@@ -34,7 +34,7 @@ const initialState = {
   difficulty: 0
 };
 
-const sprintSlice = createSlice({
+export const sprintSlice = createSlice({
   name: 'sprint',
   initialState,
   reducers: {

@@ -3,7 +3,7 @@ import { get, map, head } from "lodash";
 import { useParams } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import Card from "./WordItem/WordItem";
+import Card from "../Common/WordItem/WordItem";
 import SectionHandler from "../Common/SectionHandler";
 import { userAggregateWords } from "../../../api";
 import { initPage } from "../../../store/reducers/book";
