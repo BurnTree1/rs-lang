@@ -12,6 +12,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import { useDispatch } from "react-redux";
 import HomeIcon from '@material-ui/icons/Home';
 import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
 import BookIcon from '@material-ui/icons/Book';
@@ -19,9 +20,9 @@ import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from "react-router-dom";
-import settings from "../../assets/image/setings.svg";
 import './NavBar.css'
 import { urlBuilder, urlPrefix } from "../../helpers";
+import { clearWords } from "../../store/reducers/memoryGameSlice";
 
 const drawerWidth = 240;
 
@@ -63,6 +64,8 @@ export const NavBar: FC<PropsType> = (props) => {
   const handleDictionaryClick = () => {
     setDictionaryOpen(!dictionaryOpen)
   }
+
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.root}>
@@ -172,7 +175,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
-                  <ListItemText primary="Моя игра"/>
+                  <ListItemText onClick={() => {dispatch(clearWords())}} primary="Memory Game"/>
                 </ListItem>
               </NavLink>
             </List>

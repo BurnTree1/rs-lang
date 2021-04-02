@@ -1,0 +1,20 @@
+.spinnerOverlay {
+  z-index: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  height: 100px;
+  background: #3C1463;
+  filter: blur(20px);
+}
+
+.spinnerWrapper {
+  position: relative;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+}
