@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Link, Route, Router, Switch, useHistory, useRouteMatch } from "react-router-dom";
-import SettingsView from "../../Views/SettingsView/SettingsView";
+import { useSelector } from "react-redux";
+import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
+import { IWord } from "../../../models/common.models";
+import { loading, wordsArr } from "../../../store/reducers/memoryGameSlice";
 import { GameScreen } from "./components/GameScreen/GameScreen";
-import MemoryGame from "./components/MemoryGame/MemoryGame";
+import { Preloading } from "./components/Preloading/Preloading";
 import { Settings } from "./components/Settings/Settings";
 import { StartScreen } from "./components/StartScreen/StartScreen";
 import { IGameSettings } from "./my-game.models";
 import styles from './MyGame.module.scss';
-// ['Начальный', 'Легкий', 'Средний', 'Сложный', 'Великий', 'Невероятный']
 
 const defaultSettings: IGameSettings = {
   section: 'Начальный',
@@ -16,17 +17,19 @@ const defaultSettings: IGameSettings = {
 
 export const MyGame = () => {
   const [settings, setSettingsState] = useState<IGameSettings>(defaultSettings);
+  const allWords: IWord[] = useSelector(wordsArr);
   const { path, url } = useRouteMatch();
   const history = useHistory();
 
   const setSettings = (value: IGameSettings) => {
-    console.log('setSettings', settings);
     setSettingsState(value);
   };
 
   const setGameView = () => {
     history.push(`${url}/game`);
   };
+
+  const gameLoading = useSelector(loading);
   return (
     <div className={styles.startScreen}>
       <Switch>
@@ -40,7 +43,7 @@ export const MyGame = () => {
           />
         </Route>
         <Route path={`${path}/game`}>
-          <GameScreen settings={settings} />
+          {gameLoading ? <Preloading /> : <GameScreen settings={settings} words={allWords}/>}
         </Route>
       </Switch>
     </div>

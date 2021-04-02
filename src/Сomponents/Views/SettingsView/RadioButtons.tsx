@@ -73,7 +73,6 @@ const RadioButtons: React.FC<Props> = ({ setValues }) => {
           control={<Radio color="default" className={classes.root} />}
           label="средний"
           labelPlacement="bottom"
-          checked
         />
         <FormControlLabel
           classes={{

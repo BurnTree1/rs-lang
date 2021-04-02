@@ -1,6 +1,6 @@
 import React from "react";
-import SettingsView from "../../../../Views/SettingsView/SettingsView";
 import { IGameSettings } from "../../my-game.models";
+import SettingsModal from "../SettingsModal/SettingsModal";
 
 interface IProps {
   setSettings(event: IGameSettings): void;
@@ -9,7 +9,6 @@ interface IProps {
 
 export const Settings = (props: IProps) => {
   const setSettings = (event: any) => {
-    console.log('setSettings', event);
     props.setSettings(event);
   };
   const setGameView = () => {
@@ -17,7 +16,7 @@ export const Settings = (props: IProps) => {
   };
   return (
     <div style={{ position: 'relative' }}>
-      <SettingsView setSettings={setSettings} setGameStatus={setGameView} />
+      <SettingsModal setSettings={setSettings} setGameStatus={setGameView} />
     </div>
   );
 };

@@ -29,12 +29,9 @@ export const generateCards = (words: IWord[], settings: ISettings): ICard[] => {
   const count = words.length;
 
   const uniqCards: ICard[] = generateUniqCards(words, count);
-  console.log('words', words);
-  console.log('uniqCards', uniqCards);
 
   const tempCards: ICard[] = [...uniqCards, ...addMarker(uniqCards)];
   let mixedCards: ICard[] = [];
-  console.log('tempCards', tempCards);
 
   for (let i = 0; i < size; i += 1) {
     const cardToInsert: number = Math.floor(Math.random() * tempCards.length);

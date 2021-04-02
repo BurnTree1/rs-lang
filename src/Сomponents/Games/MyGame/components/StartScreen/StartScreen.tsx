@@ -1,6 +1,6 @@
 import { Button, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import React from "react";
-import { blue } from '@material-ui/core/colors';
+import { blue } from '@material-ui/core/colors'; // @ts-ignore
 import { useHistory } from "react-router";
 import { useRouteMatch } from "react-router-dom";
 import styles from './StartScreen.module.scss';
@@ -12,12 +12,10 @@ const theme = createMuiTheme({
 });
 
 export const StartScreen = () => {
-  const { path, url } = useRouteMatch();
+  const { url } = useRouteMatch();
   const history = useHistory();
 
   const startGameHandler = () => {
-    console.log(path);
-    console.log(history);
     history.push(`${url}/settings`);
   };
   return (

@@ -4,13 +4,15 @@ import React, { Ref } from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
-import { ICard, IGameData, IGameWinData, ISettings, IState } from '../../my-game.models';
+import { connect } from 'react-redux';
+import { ICard, ISettings, IState } from '../../my-game.models';
 import Card from '../Card/Card';
 import { formatTime, generateCards } from '../../my-game.helpers';
 import { IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
 import GamePauseModal from '../../../../Modals/GamePauseModal';
 import { WinModal } from '../WinModal/WinModal';
+import { clearWords } from '../../../../../store/reducers/memoryGameSlice';
 import './game.scss';
 
 const DEFAULT_SETTINGS: ISettings = {
@@ -25,7 +27,9 @@ const DEFAULT_SETTINGS: ISettings = {
 };
 
 interface IProps extends RouteComponentProps {
-  words: IWord[]
+  words: IWord[];
+  clearWords?(): void;
+  delay?: number;
 }
 
 class MemoryGame extends React.Component<IProps, IState> {
@@ -39,9 +43,6 @@ class MemoryGame extends React.Component<IProps, IState> {
     super(props);
     const { words } = props;
     const cards = generateCards(words, DEFAULT_SETTINGS);
-    console.log('words', words);
-    console.log('cards', cards);
-    const settings = DEFAULT_SETTINGS;
     const time = 0;
     const attempts = 0;
     const firstCard = null;
@@ -49,10 +50,7 @@ class MemoryGame extends React.Component<IProps, IState> {
     const isResumed = false;
     const startTime = false;
 
-    const { width, height } = settings;
     const size: number = words.length * 2;
-    console.log('cards', cards);
-    // const size: number = width * height;
     this.state = {
       size,
       cards,
@@ -68,17 +66,16 @@ class MemoryGame extends React.Component<IProps, IState> {
       isPaused: false,
     };
 
-    // this.flipSound = new Audio(flipCard);
     this.flipSound = new Audio(`${process.env.PUBLIC_URL}/card_flip.mp3`);
-    // this.flipSound.volume = settings.soundsVolume;
-    // this.foundSound = new Audio(foundPair);
     this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
-    // this.foundSound.volume = settings.soundsVolume;
     this.gameContainerRef = React.createRef();
   }
 
   componentDidMount() {
-    const { delay } = DEFAULT_SETTINGS;
+    let { delay } = this.props;
+    if (!delay || isNaN(delay)) {
+      delay = DEFAULT_SETTINGS.delay;
+    }
     setTimeout(() => {
       const flippedCards: ICard[] = this.state.cards.map((card) => ({ ...card, isFlipped: false }));
       this.setState({
@@ -95,14 +92,6 @@ class MemoryGame extends React.Component<IProps, IState> {
       startTime: !this.state.startTime,
       isPaused: !this.state.isPaused,
     });
-
-    const data: IGameData = {
-      cards: this.state.cards,
-      time: this.state.time,
-      attempts: this.state.attempts,
-      settings: DEFAULT_SETTINGS,
-    };
-    // this.props.paused(data);
   };
 
   getScore(): number {
@@ -110,21 +99,6 @@ class MemoryGame extends React.Component<IProps, IState> {
     const { time, attempts } = this.state;
     const points = ((settings.width * settings.height * settings.delay) ** 2) / (Math.sqrt(time * attempts));
     return Number(points.toFixed(0));
-  }
-
-  onWinHandler() {
-    const data: IGameWinData = {
-      time: this.state.time,
-      attempts: this.state.attempts,
-      score: this.getScore(),
-      fieldSize: this.getFieldSizeString(),
-    };
-  }
-
-  getFieldSizeString(): string {
-    console.log(this);
-    const settings = DEFAULT_SETTINGS;
-    return `${settings.width}x${settings.height}`;
   }
 
   tick() {
@@ -136,32 +110,6 @@ class MemoryGame extends React.Component<IProps, IState> {
       }
       this.tick();
     }, 1000);
-  }
-
-  saveGame() {
-    const data: IGameData = {
-      cards: this.state.cards,
-      time: this.state.time,
-      attempts: this.state.attempts,
-      settings: DEFAULT_SETTINGS,
-      startTime: this.state.startTime,
-    };
-
-    // this.storageService.saveGame(data);
-  }
-
-  autoPlaying() {
-    const { cards } = this.state;
-    const acceptedCards = cards.filter((item) => !item.found && !item.isFlipped);
-    if (acceptedCards.length > 0) {
-      const index = Math.floor(Math.random() * acceptedCards.length);
-      const card = acceptedCards[index];
-      this.changeFlipped(card.id);
-
-      setTimeout(() => {
-        this.autoPlaying();
-      }, 1000);
-    }
   }
 
   getFieldSize() {
@@ -199,10 +147,6 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   changeFlipped(cardId: string) {
-    // if (true) {
-    //   // this.flipSound.volume = this.storageService.settings.soundsVolume;
-    //   this.flipSound.play();
-    // }
     const cardIndex = this.state.cards.findIndex(({ id }) => id === cardId);
     if (this.state.cards[cardIndex].isFlipped) {
       return;
@@ -230,10 +174,6 @@ class MemoryGame extends React.Component<IProps, IState> {
           if (this.state.soundToggle) {
             this.foundSound.play();
           }
-          // if (this.props.soundsOn) {
-          //   this.flipSound.volume = this.storageService.settings.soundsVolume;
-          //   this.foundSound.play();
-          // }
           successGuess = true;
         }
         cardsCopy = cardsCopy.map((card) => {
@@ -277,8 +217,6 @@ class MemoryGame extends React.Component<IProps, IState> {
           this.setState({
             haveWin: win,
           });
-        } else {
-          this.saveGame();
         }
       })
     });
@@ -291,12 +229,14 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   onStopGameHandler = () => {
+    if (this.props.clearWords) {
+      this.props.clearWords();
+    }
     this.props.history.push('/my-game');
   }
 
   render() {
     const { cards, fullScreen } = this.state;
-    // const { autoPlay } = this.props;
 
     return (
       <div className={`game ${fullScreen ? 'game_fullscreen' : ''}`} ref={this.gameContainerRef}>
@@ -353,4 +293,12 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 }
 
-export default withRouter(MemoryGame);
+const mapStateToProps = (_state: any, props: IProps) => ({
+  ...props
+});
+
+const mapDispatchToProps = { clearWords };
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MemoryGame));
+// export default connect(mapStateToProps, mapDispatchToProps)(MyComponent);
+// export default withRouter(MemoryGame);
