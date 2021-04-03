@@ -1,15 +1,9 @@
-import { WordsType } from './audioSlice';
-import reducer, {
+import reducer, { audioSlice, WordsType ,
   nextWord,
-  setTranslated,
-  setScore,
   gameOver,
   makeAnswer,
-  setSprintWords,
-  setSprintDifficult,
-  setHasDifficulty,
-  sprintSlice,
-} from './sprintSlice';
+} from './audioSlice';
+
 
 const state = {
   wordsArr: [
@@ -59,63 +53,56 @@ const state = {
     word: 'hello',
     wordTranslate: 'привет',
   } as WordsType,
-  translation: 'привет',
-  score: 0,
-  pointsToAdd: 10,
+  next: {} as WordsType,
   isFinished: false,
-  correctSeries: 0,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
-  hasDifficulty: false,
-  difficulty: 0,
+  isAnswered: false,
+  hasDifficulty: true
 };
 
-test('set translation for word', () => {
-  const newState = sprintSlice.reducer(
+test('is question is answered', () => {
+  const newState = audioSlice.reducer(
     state,
-    sprintSlice.actions.setTranslated('лодка')
+    audioSlice.actions.setAnswered(true)
   );
-  expect(newState.translation).toBe('лодка');
+  expect(newState.isAnswered).toBe(true);
 });
 
-test('set next word', () => {
-  const newState = sprintSlice.reducer(
+test('is game over', () => {
+  const newState = audioSlice.reducer(
     state,
-    sprintSlice.actions.nextWord('boat')
-  );
-  expect(newState.word.word).toBe('hello');
-});
-
-test('set score for game', () => {
-  const newState = sprintSlice.reducer(
-    state,
-    sprintSlice.actions.setScore(true)
-  );
-  expect(newState.correctSeries).toEqual(1);
-});
-
-test('set game is over', () => {
-  const newState = sprintSlice.reducer(
-    state,
-    sprintSlice.actions.gameOver()
+    audioSlice.actions.gameOver()
   );
   expect(newState.isFinished).toBe(true);
 });
 
-test('set difficulty field for game settings', () => {
-  const newState = sprintSlice.reducer(
+test('set correct or incorrect answer', () => {
+  const newState = audioSlice.reducer(
     state,
-    sprintSlice.actions.setHasDifficulty()
+    audioSlice.actions.makeAnswer('привет')
   );
-  expect(newState.hasDifficulty).toBe(true);
+  expect(newState.correctAnswers[0].wordTranslate).toBe('привет');
 });
 
-test('set difficulty for sprint game', () => {
-  const newState = sprintSlice.reducer(
+test('set next word for audio game', () => {
+  const newState = audioSlice.reducer(
     state,
-    sprintSlice.actions.setSprintDifficult(7000)
+    audioSlice.actions.nextWord({
+      audio: 'files/01_0005.mp3',
+      audioExample: 'files/01_0005_example.mp3',
+      audioMeaning: 'files/01_0005_meaning.mp3',
+      group: 111,
+      image: 'files/01_0005.jpg',
+      page: 0,
+      textExample: 'There is a small boat on the lake.',
+      textExampleTranslate: 'На озере есть маленькая лодка',
+      textMeaning: 'A boat is a vehicle that moves across water.',
+      textMeaningTranslate: 'Лодка - это транспортное средство, которое движется по воде',
+      transcription: '[bout]',
+      word: 'boat',
+      wordTranslate: 'лодка',
+    })
   );
-  expect(newState.difficulty).toEqual(70);
+  expect(newState.word.word).toBe('hello');
 });
-
-
