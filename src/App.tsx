@@ -14,13 +14,12 @@ import BookRoute from "./Сomponents/Book/BookRoute";
 import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
 import { getUserData } from './store/reducers/authorizationSlice';
 
-function App() {
+export function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getUserData())
   }, [dispatch])
-
   return (
     <div className="app">
       <AppWrapper>
@@ -65,5 +64,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

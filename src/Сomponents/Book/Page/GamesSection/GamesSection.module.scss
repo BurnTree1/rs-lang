@@ -11,7 +11,7 @@
 }
 
 .games__content {
-    position: relative;
+  position: relative;
 }
 
 .level {
@@ -24,7 +24,7 @@
   margin: 28px auto;
 
   & span {
-      width: 100px;
+    width: 100px;
   }
 }
 
@@ -57,19 +57,19 @@
 }
 
 .settings {
-    border: 0;
-    background: none;
-    cursor: pointer;
-    position: absolute;
-    top: -13px;
-    right: 11px;
-    outline: none;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: absolute;
+  top: -13px;
+  right: 11px;
+  outline: none;
 }
 
 @media (max-width: 1200px) {
   .games {
     position: relative;
-    width: 470px;  
+    width: 470px;
     padding-bottom: 20px;
     padding-left: 20px;
     padding-top: 27px;

@@ -1,0 +1,174 @@
+.game {
+  padding-top: 50px;
+  position: relative;
+  height: 100%;
+}
+
+.game_fullscreen {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  width: 100%;
+  background: #fff;
+  background-image: url('../../assets/background.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.game-field {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  display: grid;
+  justify-content: center;
+}
+
+.game-field {
+  position: relative;
+  --cardWidth: 140px;
+  --cardHeight: 100px;
+  --smallRows: 2;
+  --smallColumns: 6;
+  --mediumRows: 3;
+  --mediumColumns: 6;
+  --largeRows: 3;
+  --largeColumns: 8;
+  --marginTop: -210px;
+
+  @media (max-width: 1023px) {
+    --cardWidth: 80px;
+    --cardHeight: 80px;
+  }
+
+  @media (max-width: 800px) {
+    // --cardWidth: 60px;
+    // --cardHeight: 60px;
+    --smallRows: 6;
+    --smallColumns: 2;
+    --mediumRows: 6;
+    --mediumColumns: 3;
+    --largeRows: 6;
+    --largeColumns: 4;
+    --marginTop: -200px;
+  }
+
+  &_small {
+    // margin-top: var(--marginTop);
+    grid-template-rows: repeat(var(--smallRows), var(--cardWidth));
+    grid-template-columns: repeat(var(--smallColumns), var(--cardHeight));
+    grid-gap: 10px;
+  }
+
+  &_medium {
+    // margin-top: var(--marginTop);
+    grid-template-rows: repeat(var(--mediumRows), var(--cardWidth));
+    grid-template-columns: repeat(var(--mediumColumns), var(--cardHeight));
+    grid-gap: 10px;
+  }
+
+  &_large {
+    // margin-top: var(--marginTop);
+    grid-template-rows: repeat(var(--largeRows), var(--cardWidth));
+    grid-template-columns: repeat(var(--largeColumns), var(--cardHeight));
+    grid-gap: 10px;
+  }
+}
+
+.statistics {
+  position: relative;
+  max-width: 870px;
+  min-width: 320px;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  // background: #273A7C;
+  // filter: blur(50px);
+}
+
+.statistics__inner {
+  margin-right: 20px;
+  color: #fff;
+}
+
+.statistics__inner:last-child {
+  margin-right: 0;
+}
+
+.score-wrapper {
+  margin-bottom: 10px;
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.score-wrapper__caption {
+  padding: 0;
+  margin: 0 5px 0 0;
+  font-weight: 500;
+}
+
+.score-wrapper__score {
+  padding: 0;
+  margin: 0;
+}
+
+.time-wrapper {
+  width: 150px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.time-wrapper__caption {
+  padding: 0;
+  margin: 0 5px 0 0;
+  font-weight: 500;
+}
+
+.time-wrapper__time {
+  padding: 0;
+  margin: 0;
+}
+
+.game__overlay {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.statistics .MuiIconButton-root {
+  color: #fff;
+}
+
+.volume-wrapper {
+  position: absolute;
+  left: 0;
+}
+
+.volume-wrapper {
+  position: absolute;
+  left: 0;
+}
+
+.statistics__inner_controls {
+  position: absolute;
+  right: 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}

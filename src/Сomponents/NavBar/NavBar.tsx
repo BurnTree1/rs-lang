@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch } from 'react-redux';
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -13,15 +13,17 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import HomeIcon from '@material-ui/icons/Home';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
+import BookIcon from '@material-ui/icons/Book';
+import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from "react-router-dom";
-import home from "../../assets/image/home.svg";
-import book from "../../assets/image/book.svg";
-import dictionary from "../../assets/image/dictionary.svg";
-import statistic from "../../assets/image/statistic.svg";
-import settings from "../../assets/image/setings.svg";
 import './NavBar.css'
 import { urlBuilder, urlPrefix } from "../../helpers";
 import { authImageSelector } from '../../store/reducers/authorizationSlice';
+import { clearWords } from "../../store/reducers/memoryGameSlice";
 
 const drawerWidth = 240;
 
@@ -65,6 +67,8 @@ export const NavBar: FC<PropsType> = (props) => {
   }
   const imageUrl = useSelector(authImageSelector)
 
+  const dispatch = useDispatch();
+
   return (
     <div className={classes.root}>
       <Drawer
@@ -86,7 +90,7 @@ export const NavBar: FC<PropsType> = (props) => {
           <NavLink exact to='/' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-                <img src={home} alt="home"/>
+              <HomeIcon style={{ color: 'black' }}/>
               </ListItemIcon>
               <ListItemText primary="Главная"/>
             </ListItem>
@@ -94,14 +98,14 @@ export const NavBar: FC<PropsType> = (props) => {
           <NavLink to='/book' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-                <img src={book} alt="book"/>
+              <LibraryBooksIcon style={{ color: 'black' }}/>
               </ListItemIcon>
               <ListItemText primary="Учебник"/>
             </ListItem>
           </NavLink>
             <ListItem button onClick={handleDictionaryClick}>
               <ListItemIcon>
-                <img src={dictionary} alt="dictionary"/>
+              <BookIcon style={{ color: 'black' }}/>
               </ListItemIcon>
               <ListItemText primary="Словарь"/>
               {dictionaryOpen ? <ExpandLess/> : <ExpandMore/>}
@@ -137,7 +141,7 @@ export const NavBar: FC<PropsType> = (props) => {
           <Divider/>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
-              <></>
+            <VideogameAssetIcon style={{ color: 'black' }}/>
             </ListItemIcon>
             <ListItemText primary="Мини-игры"/>
             {open ? <ExpandLess/> : <ExpandMore/>}
@@ -173,7 +177,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
-                  <ListItemText primary="Моя игра"/>
+                  <ListItemText onClick={() => {dispatch(clearWords())}} primary="Memory Game"/>
                 </ListItem>
               </NavLink>
             </List>
@@ -182,17 +186,17 @@ export const NavBar: FC<PropsType> = (props) => {
           <NavLink to='/statistics' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-                <img src={statistic} alt="statistics"/>
+              <EqualizerIcon style={{ color: 'black' }}/>
               </ListItemIcon>
               <ListItemText primary="Статистика"/>
             </ListItem>
           </NavLink>
-          <NavLink to='/settings' activeClassName='active'>
+          <NavLink to='/' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-                <img src={settings} alt="settings"/>
+              <ExitToAppIcon style={{ color: 'black' }}/>
               </ListItemIcon>
-              <ListItemText primary="Настройки"/>
+              <ListItemText primary="Выход"/>
             </ListItem>
           </NavLink>
           <ListItem>

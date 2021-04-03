@@ -8,10 +8,11 @@ import item1 from '../../../../assets/image/game-item1.svg'
 import item2 from '../../../../assets/image/game-item2.svg'
 import item3 from '../../../../assets/image/game-item3.svg'
 import item4 from '../../../../assets/image/game-item4.svg'
-import settings from '../../../../assets/image/book-settings.svg'
 import styles from './GamesSection.module.scss'
 import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
 import { setAudioWords } from '../../../../store/reducers/audioSlice';
+import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
+import Settings from "../Setting/Settings";
 
 export const GamesSection = () => {
     const { sectionId } = useParams();
@@ -19,14 +20,18 @@ export const GamesSection = () => {
     const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
     const dispatch = useDispatch()
     const onWordsSet = () => {
-        dispatch(setSprintWords(words))
-        dispatch(setAudioWords(words))
+        setTimeout(()=> {
+            dispatch(setSprintWords(words))
+            dispatch(setAudioWords(words))
+            dispatch(setMemoryGameWords(words))
+        },0)
     }
     return (
     <div className={styles.games}>
         <div className={styles.games__content}>
         <div className={styles.level}><span>Средний Уровень</span><img src={planets} alt="planets" className={styles.games__icon}/>
         </div>
+            <Settings/>
         <h2 className={styles.title}>Попробуй эту страницу с игрой:</h2>
         <div className={styles.games__inner}>
             <div className={styles.games__item}>
@@ -43,12 +48,9 @@ export const GamesSection = () => {
             </div>
             <div className={styles.games__item}>
                 <img src={item4} alt="my game" className={styles.item__img}/>
-                <Link to='/my-game'>Своя игра</Link>
+                <Link onClick={onWordsSet} to='/my-game'>Memory Game</Link>
             </div>
         </div>
-        <button type='button' className={styles.settings}>
-            <img src={settings} alt="settings" className={styles.settings__img}/>
-        </button>
         </div>
     </div>
 )}

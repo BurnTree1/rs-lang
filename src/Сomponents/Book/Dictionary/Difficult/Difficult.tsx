@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { get, map } from "lodash";
 import { urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
-import Card from "../../Page/WordItem/WordItem";
+import Card from "../../Common/WordItem/WordItem";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 
