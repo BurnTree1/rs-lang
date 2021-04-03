@@ -75,7 +75,7 @@ class MemoryGame extends React.Component<IProps, IState> {
         startTime: true,
       }, () => {
       });
-    }, delay * 1000);
+    }, delay);
     this.tick();
   }
 
