@@ -10,6 +10,7 @@
   .app .makeStyles-contentShift-4 {
     margin-left: 0;
     filter: blur(5px);
+    pointer-events: none;
   }
 
   .app .makeStyles-content-3 {
