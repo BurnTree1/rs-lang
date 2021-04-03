@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+import { useSelector } from 'react-redux';
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
@@ -20,6 +21,7 @@ import statistic from "../../assets/image/statistic.svg";
 import settings from "../../assets/image/setings.svg";
 import './NavBar.css'
 import { urlBuilder, urlPrefix } from "../../helpers";
+import { authImageSelector } from '../../store/reducers/authorizationSlice';
 
 const drawerWidth = 240;
 
@@ -61,6 +63,7 @@ export const NavBar: FC<PropsType> = (props) => {
   const handleDictionaryClick = () => {
     setDictionaryOpen(!dictionaryOpen)
   }
+  const imageUrl = useSelector(authImageSelector)
 
   return (
     <div className={classes.root}>
@@ -192,6 +195,9 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Настройки"/>
             </ListItem>
           </NavLink>
+          <ListItem>
+            <img src={imageUrl} alt="avatar"/>
+          </ListItem>
         </List>
       </Drawer>
     </div>

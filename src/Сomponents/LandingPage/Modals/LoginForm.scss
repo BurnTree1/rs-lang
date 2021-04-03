@@ -1,7 +1,7 @@
-.formContainer {
+.formContainerLogIn {
   z-index: 3;
   width: 600px;
-  height: 500px;
+  height: 400px;
   background-color: #b1dbff;
   position: absolute;
   top: 50%;
@@ -11,6 +11,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  & > form {
+    height: 200px;
+    margin-top: 55px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+
+    & > p {
+      min-height: 12px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      color: red;
+    }
+
+    & > input {
+      border: none;
+      border-radius: 10px;
+      height: 30px;
+      margin-bottom: 15px;
+      outline: none;
+    }
+  }
 
   & > div {
     width: 100%;
@@ -29,36 +54,10 @@
       color: #FFF;
     }
   }
-
-  & > form {
-    height: 400px;
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 500px;
-
-    & > input {
-      border: none;
-      border-radius: 10px;
-      height: 30px;
-      margin-bottom: 15px;
-      outline: none;
-    }
-
-    & > p {
-      min-height: 12px;
-      font-family: 'Roboto', sans-serif;
-      font-size: 12px;
-      color: red;
-    }
-  }
 }
 
 .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-  margin-bottom: 5px;
-  margin-top: 5px
+  padding-top: 0;
 }
 
 .MuiButton-label {
@@ -68,10 +67,3 @@
 .MuiButton-startIcon.MuiButton-iconSizeMedium {
   margin-right: 0;
 }
-
-
-
-
-
-
-
