@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { userWords } from "../../../../api";
 import { setWord, deleteWord } from "../../../../store/reducers/book";
+import styles from './WordItem.module.scss'
 
 const ActionButtons: FC<{ id: string, isHard: boolean }> = ({ id, isHard }) => {
   const { sectionId, pageId = "1" } = useParams();
@@ -29,8 +30,8 @@ const ActionButtons: FC<{ id: string, isHard: boolean }> = ({ id, isHard }) => {
   };
 
   return (
-    <div>
-      {isHard ? <b> (hard)</b> : null}
+    <div className={styles.actions}>
+      {isHard ? <b className={styles.actions__difficult}>Сложное</b> : null}
       <IconButton onClick={makeHard}>
         <ErrorOutlined/>
       </IconButton>

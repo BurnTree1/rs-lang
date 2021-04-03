@@ -1,32 +1,46 @@
+import image1 from '../assets/image/categories-1.svg'
+import image2 from '../assets/image/categories-2.svg'
+import image3 from '../assets/image/categories-3.svg'
+import image4 from '../assets/image/categories-4.svg'
+import image5 from '../assets/image/categories-5.svg'
+import image6 from '../assets/image/categories-6.svg'
+
 type SectionType = {
   id: number,
-  name: string
+  name: string,
+  image: string
 }
 
 export const bookSections: Array<SectionType> = [
   {
     id: 1,
-    name: "Начальный"
+    name: "Начальный",
+    image: image1
   },
   {
     id: 2,
-    name: "Легкий"
+    name: "Легкий",
+    image: image2
   },
   {
     id: 3,
-    name: "Средний"
+    name: "Средний",
+    image: image3
   },
   {
     id: 4,
-    name: "Сложный"
+    name: "Сложный",
+    image: image4
   },
   {
     id: 5,
-    name: "Великий"
+    name: "Великий",
+    image: image5
   },
   {
     id: 6,
-    name: "Нереальный"
+    name: "Нереальный",
+    image: image6
   }
 ];
 

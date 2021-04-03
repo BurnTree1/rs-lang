@@ -6,7 +6,7 @@ import { urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
-import Card from "../../Page/WordItem/WordItem";
+import Card from "../../Common/WordItem/WordItem";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);

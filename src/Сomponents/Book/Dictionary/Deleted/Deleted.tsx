@@ -5,7 +5,7 @@ import { CircularProgress } from "@material-ui/core";
 import SectionHandler from "../../Common/SectionHandler";
 import { urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
-import Card from "../../Page/WordItem/WordItem";
+import Card from "../../Common/WordItem/WordItem";
 import Pagination from "../../Common/PaginationComponent";
 
 export const Deleted = () => {

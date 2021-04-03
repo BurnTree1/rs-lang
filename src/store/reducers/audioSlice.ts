@@ -30,13 +30,10 @@ const initialState = {
   hasDifficulty: true
 };
 
-const sprintSlice = createSlice({
+export const audioSlice = createSlice({
   name: 'audio',
   initialState,
   reducers: {
-    setWord: (state) => {
-      
-    },
     setAudioWords: (state, { payload: words }) => {
       for (const key in words) {
         if (Object.prototype.hasOwnProperty.call(words, key)) {
@@ -86,9 +83,9 @@ export function fetchAllAudioWords(g: number,p: number) {
   }
 }
 
-const { actions, reducer } = sprintSlice;
+const { actions, reducer } = audioSlice;
 
-export const { nextWord, gameOver, setWord, makeAnswer, setAnswered, setAudioWords } = actions;
+export const { nextWord, gameOver, makeAnswer, setAnswered, setAudioWords } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;
