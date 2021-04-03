@@ -1,5 +1,5 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { WORD_PER_PAGE, URL_API, token, userId } from "../helpers";
 import { and, choosePage, isDeleted, isHard, isStudied, or } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
@@ -15,9 +15,6 @@ export const fetchWords = {
     });
   }
 };
-
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzQ4NDg5NSwiZXhwIjoxNjE3NDk5Mjk1fQ.8CU-_1F_Ah7LVQ-xXehYXJv8O2qN5KU3mxn5V7Fn0po";
-const userId = "605a44e22898bf35e44bff04";
 
 export const userWords = {
   get(group: number, page: number) {
