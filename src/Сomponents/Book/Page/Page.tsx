@@ -51,7 +51,6 @@ const Page: FC = () => {
 
   return <div className={styles.page}>
     <SectionHandler prefix={urlPrefix.book}/>
-    <h3>Page</h3>
     <GamesSection/>
     {pagination}
     {cards}
