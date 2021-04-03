@@ -7,8 +7,8 @@ import { withStyles } from '@material-ui/core';
 import styles from '../../Savannah/Savannah.module.scss';
 import ValueLabel from './ValueLabel';
 import RadioButtons from './RadioButtons';
-import { fetchAllWords, hasDifficulty, setSprintDifficult } from '../../../store/reducers/sprintSlice';
-import { fetchAllAudioWords, word } from '../../../store/reducers/audioSlice';
+import { fetchAllWords, gameOver, hasDifficulty, setSprintDifficult } from '../../../store/reducers/sprintSlice';
+import { audioGameOver, fetchAllAudioWords, word } from '../../../store/reducers/audioSlice';
 import { useRandomPage } from '../../../helpers/hooks';
 import { URL_API } from '../../../helpers/constants';
 
@@ -83,6 +83,8 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
     }));
     dispatch(fetchAllWords(values.section, randomPage))
     dispatch(setSprintDifficult(values.difficult))
+    dispatch(gameOver(false))
+    dispatch(audioGameOver(false))
     if(path === '/audio') {
       setTimeout(()=> {
         play()

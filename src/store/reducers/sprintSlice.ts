@@ -39,6 +39,7 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     setSprintWords: (state, { payload: fetchedWords }) => {
+      state.wordsArr = []
       for (const key in words) {
         if (Object.prototype.hasOwnProperty.call(fetchedWords, key)) {
         state.wordsArr = [...state.wordsArr, fetchedWords[key]]
@@ -77,8 +78,8 @@ export const sprintSlice = createSlice({
         state.wrongAnswers = [...state.wrongAnswers, state.word]
       }
     },
-    gameOver: (state) => {
-      state.isFinished = true;
+    gameOver: (state, { payload: isFinished }) => {
+      state.isFinished = isFinished;
     },
     makeAnswer: (state, { payload: word }) => {
       if (state.word.wordTranslate === word.wordTranslate) {

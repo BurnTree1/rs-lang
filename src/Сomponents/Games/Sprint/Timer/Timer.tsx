@@ -15,7 +15,7 @@ export const Timer: FC<PropsType> = ({ finished, gameIsDone }) => {
     const timeId = setInterval(() => {
       setTime(time - 1);
       if (time === 0) {
-        dispatch(gameOver());
+        dispatch(gameOver(true));
         setTime(0);
       }
     }, 1000);

@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSound from 'use-sound';
 import {
   word,
   nextWord,
@@ -24,6 +25,7 @@ import { Spacemen } from './Spacemen/Spacemen';
 import { TopPanel } from './TopPanel/TopPanel';
 import EndGameModal from '../../Modals/EndGameModal';
 import GamePauseModal from '../../Modals/GamePauseModal';
+import { URL_API } from '../../../helpers';
 
 export const Sprint: FC = () => {
   const words = useSelector(wordsArr);
@@ -37,6 +39,7 @@ export const Sprint: FC = () => {
   const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [play] = useSound(`${URL_API}/${learnedWord.audio}`)
   const { random, randomIndex } = useRandom(words.length);
   useEffect(() => {
     if (random > 0.6) {
@@ -102,7 +105,9 @@ export const Sprint: FC = () => {
           <img src={arrow} alt="arrow" className={styles.arrow} />
           <img src={arrow} alt="arrow" className={styles.arrow} />
         </div>
+        <button type='button' onClick={()=> play()} className={styles.volume__btn}>
         <img src={volume} alt="volume" className={styles.volume} />
+        </button>
         <div className={styles.score}>
           Score<span>{gameScore}</span>
         </div>

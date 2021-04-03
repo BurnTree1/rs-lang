@@ -16,7 +16,7 @@ export const fetchWords = {
   }
 };
 
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzQ2Njg2NCwiZXhwIjoxNjE3NDgxMjY0fQ.h5EJj1apBUcyJZfGsvVWH_izdD6oWKTXhRTnRuhfMkI";
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzQ4NDg5NSwiZXhwIjoxNjE3NDk5Mjk1fQ.8CU-_1F_Ah7LVQ-xXehYXJv8O2qN5KU3mxn5V7Fn0po";
 const userId = "605a44e22898bf35e44bff04";
 
 export const userWords = {
