@@ -1,6 +1,5 @@
 import React, { FC, ReactNode, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { setWord } from '../../../store/reducers/audioSlice';
 import SettingsView from '../../Views/SettingsView/SettingsView';
 import styles from './GameLayer.module.scss'
 
@@ -40,7 +39,6 @@ export const GameLayer: FC<PropsType> = (props) => {
         };
       }, [gameLoader, loaderSec, props]);
       const onGameStart = () => {
-        dispatch(setWord())
         setStartGame(false);
         setIsGameSetings(true);
       };
