@@ -38,6 +38,8 @@
 .diagram {
     margin: 0 auto 20px;
     text-align: center;
+    width: 150px;
+    height: 150px;
 }
 
 @media (max-width: 1200px) {
@@ -48,6 +50,7 @@
         padding-left: 20px;
         padding-top: 27px;
         margin: 30px auto;
+        z-index: 0;
       }
     
       .level {
