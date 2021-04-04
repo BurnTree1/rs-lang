@@ -53,7 +53,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
     section: 0,
     difficult: '7000',
   });
-  const LOADER_TIME = 3;
+  const LOADER_TIME = 4;
   const learnedWord = useSelector(word)
   const dispatch = useDispatch()
   const url = URL_API
@@ -81,8 +81,10 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
       ...prevState,
       settingsView: false,
     }));
-    dispatch(fetchAllWords(values.section, randomPage))
-    dispatch(setSprintDifficult(values.difficult))
+    if(difficulty) {
+      dispatch(fetchAllWords(values.section, randomPage))
+      dispatch(setSprintDifficult(values.difficult))
+    }
     dispatch(gameOver(false))
     dispatch(audioGameOver(false))
     if(path === '/audio') {

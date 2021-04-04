@@ -36,6 +36,8 @@ export const audioSlice = createSlice({
   reducers: {
     setAudioWords: (state, { payload: words }) => {
       state.wordsArr = []
+      state.correctAnswers = []
+      state.wrongAnswers = []
       for (const key in words) {
         if (Object.prototype.hasOwnProperty.call(words, key)) {
         state.wordsArr = [...state.wordsArr, words[key]]

@@ -3,6 +3,10 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { isAnswered, makeAnswer, setAnswered, word } from '../../../../store/reducers/audioSlice';
 import styles from './Variants.module.scss';
+// @ts-ignore
+import wrong from '../../../../assets/sounds/sprint-wrong.wav'
+// @ts-ignore
+import correct from '../../../../assets/sounds/sprint-correct.mp3'
 
 type PropsType = {
   shuffledWords: Array<string>;
@@ -13,6 +17,8 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
   const [correctWord, setCorrectWord] = useState('');
   const [wrongWord, setWrongWord] = useState('');
   const dispatch = useDispatch();
+  const playWrong = new Audio(wrong)
+  const playCorrect = new Audio(correct)
   useEffect(() => {
     setCorrectWord('');
     setWrongWord('');
@@ -22,6 +28,9 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
     dispatch(makeAnswer(w));
     if (w !== learnedWord.wordTranslate) {
       setWrongWord(w);
+      playWrong.play()
+    } else {
+      playCorrect.play()
     }
     setCorrectWord(learnedWord.wordTranslate);
   };

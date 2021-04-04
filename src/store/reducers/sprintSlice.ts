@@ -40,6 +40,11 @@ export const sprintSlice = createSlice({
   reducers: {
     setSprintWords: (state, { payload: fetchedWords }) => {
       state.wordsArr = []
+      state.score = 0
+      state.correctSeries = 0
+      state.correctAnswers = []
+      state.wrongAnswers = []
+      state.pointsToAdd = 10
       for (const key in fetchedWords) {
         if (Object.prototype.hasOwnProperty.call(fetchedWords, key)) {
         state.wordsArr = [...state.wordsArr, fetchedWords[key]]
