@@ -191,7 +191,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
             }}
           />
           <label htmlFor="icon-button-file">
-            <Button color="primary" aria-label="upload picture" component="span" startIcon={<AccountCircleIcon style={{ fontSize: 40 }}/>} />
+            <Button  aria-label="upload picture" variant="contained" color="primary" component="span" startIcon={<AccountCircleIcon style={{ fontSize: 40 }}/>} />
           </label>
           <p>{validationFields.image ? "Размер не должен превышать 500Kb": ' '}</p>
         <Button type="submit" color="primary" style={{

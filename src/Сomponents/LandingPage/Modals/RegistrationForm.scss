@@ -61,9 +61,14 @@
   margin-top: 5px
 }
 
-.MuiButton-label {
-  margin-top: 10px;
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+  margin: 10px 0 20px 0;
+
+  & > .MuiButton-label {
+    margin: 0;
+  }
 }
+
 
 .MuiButton-startIcon.MuiButton-iconSizeMedium {
   margin-right: 0;
