@@ -16,7 +16,3 @@ export const LocalStorageService = {
     return null
   }
 }
-
-
-
-
