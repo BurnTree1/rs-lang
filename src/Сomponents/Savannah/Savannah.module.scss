@@ -112,6 +112,11 @@
   background-color: #FFF;
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 480px;
+  }
 }
 
 .endModalContent {

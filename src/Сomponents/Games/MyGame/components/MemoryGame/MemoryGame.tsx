@@ -5,16 +5,17 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { IconButton } from '@material-ui/core';
 import { Close, Fullscreen, FullscreenExit } from '@material-ui/icons';
 import { connect } from 'react-redux';
+import shortid from 'shortid';
 import { ICard, ISettings, IState } from '../../my-game.models';
 import Card from '../Card/Card';
-import { formatTime, generateCards } from '../../my-game.helpers';
+import { formatTime, generateCards, getWord } from '../../my-game.helpers';
 import { IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
 import GamePauseModal from '../../../../Modals/GamePauseModal';
 import { WinModal } from '../WinModal/WinModal';
 import { clearWords } from '../../../../../store/reducers/memoryGameSlice';
 import './game.scss';
-import { URL_API } from '../../../../../helpers/constants';
+import EndGameModal from '../../../../Modals/EndGameModal';
 
 const DEFAULT_SETTINGS: ISettings = {
   width: 6,
@@ -38,6 +39,8 @@ class MemoryGame extends React.Component<IProps, IState> {
 
   foundSound: HTMLAudioElement;
 
+  mistakeSound: HTMLAudioElement;
+
   gameContainerRef: Ref<HTMLDivElement> | undefined;
 
   constructor(props: IProps) {
@@ -56,10 +59,15 @@ class MemoryGame extends React.Component<IProps, IState> {
       fullScreen: false,
       soundToggle: true,
       isPaused: false,
+      wrongAnswers: [],
+      rightAnswers: [],
+      longestSeries: 0,
+      rightAnswersCount: 0,
     };
 
     this.flipSound = new Audio(`${process.env.PUBLIC_URL}/card_flip.mp3`);
     this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
+    this.mistakeSound = new Audio(`${process.env.PUBLIC_URL}/wrong_answer.mp3`);
     this.gameContainerRef = React.createRef();
   }
 
@@ -69,7 +77,7 @@ class MemoryGame extends React.Component<IProps, IState> {
       delay = DEFAULT_SETTINGS.delay;
     }
     setTimeout(() => {
-      const flippedCards: ICard[] = this.state.cards.map((card) => ({ ...card, isFlipped: false }));
+      const flippedCards: ICard[] = this.state.cards.map((card) => ({ ...card, isShown: false, isFlipped : false }));
       this.setState({
         cards: flippedCards,
         startTime: true,
@@ -126,7 +134,13 @@ class MemoryGame extends React.Component<IProps, IState> {
   animationCheck = (currentCard: ICard): boolean => {
     const { firstCard, secondCard } = this.state;
     if (firstCard && secondCard) {
-      if (firstCard.image === secondCard.image && firstCard.image === currentCard.image) {
+      if (firstCard.id === secondCard.id && firstCard.id === currentCard.id) {
+        setTimeout(() => {
+          this.setState({
+            firstCard: null,
+            secondCard: null,
+          })
+        }, 700);
         return true;
       }
     }
@@ -137,8 +151,8 @@ class MemoryGame extends React.Component<IProps, IState> {
     return this.state.cards.filter((card: ICard) => !card.found).length === 0;
   }
 
-  changeFlipped(cardId: string) {
-    const cardIndex = this.state.cards.findIndex(({ id }) => id === cardId);
+  changeFlipped(cardKey: string) {
+    const cardIndex = this.state.cards.findIndex(({ key }) => key === cardKey);
     if (this.state.cards[cardIndex].isFlipped) {
       return;
     }
@@ -160,30 +174,59 @@ class MemoryGame extends React.Component<IProps, IState> {
         return { ...newState, firstCard: changedCard };
       }
       if (!prevState.secondCard && changedCard.isFlipped) {
-        let successGuess: boolean = false;
+        let secondCard = null;
+        let firstCard = null;
+        let rightAnswers = [...this.state.rightAnswers];
+        let wrongAnswers = [...this.state.wrongAnswers, getWord(this.props.words, changedCard)];
+        let { rightAnswersCount, longestSeries } = this.state;
+
         if (prevState.firstCard && prevState.firstCard.image === changedCard.image) {
           if (this.state.soundToggle) {
             this.foundSound.play();
           }
-          successGuess = true;
-        }
-        cardsCopy = cardsCopy.map((card) => {
-          if (card.id === (prevState.firstCard as ICard).id || card.id === (changedCard as ICard).id) {
-            return { ...card, found: successGuess };
+
+          secondCard = { ...changedCard, found: true };
+          firstCard = { ...prevState.firstCard, found: true };
+          rightAnswers = [...this.state.rightAnswers, getWord(this.props.words, prevState.firstCard)];
+          wrongAnswers = [...this.state.wrongAnswers];
+          rightAnswersCount += 1;
+
+          cardsCopy = cardsCopy.map((card) => {
+            if (card.key === (prevState.firstCard as ICard).key || card.key === (changedCard as ICard).key) {
+              return { ...card, found: true };
+            }
+            return card;
+          });
+  
+        } else {
+          longestSeries = rightAnswersCount > longestSeries ? rightAnswersCount : longestSeries;
+          rightAnswersCount = 0;
+          cardsCopy = cardsCopy.map((card) => {
+            if (card.key === (prevState.firstCard as ICard).key || card.key === (changedCard as ICard).key) {
+              return { ...card, isFlipped: false };
+            }
+            return card;
+          });
+          if (this.state.soundToggle) {
+            this.mistakeSound.play();
           }
-          return card;
-        });
+        }
+
         return {
           ...prevState,
           cards: cardsCopy,
-          secondCard: { ...changedCard, found: successGuess },
-          firstCard: { ...prevState.firstCard, found: successGuess },
+          secondCard,
+          firstCard,
+          rightAnswers,
+          wrongAnswers,
+          rightAnswersCount,
+          longestSeries,
         };
       }
 
       if (prevState.firstCard && prevState.secondCard) {
         cardsCopy = cardsCopy.map((card) => {
-          if (card.id === (prevState.firstCard as ICard).id || card.id === (prevState.secondCard as ICard).id) {
+          if (card.key === (prevState.firstCard as ICard).key || card.key === (prevState.secondCard as ICard).key) {
             return { ...card, isFlipped: false };
           }
           return card;
@@ -208,6 +251,7 @@ class MemoryGame extends React.Component<IProps, IState> {
           this.setState({
             haveWin: win,
           });
+          this.saveStatistics();
         }
       })
     });
@@ -224,6 +268,10 @@ class MemoryGame extends React.Component<IProps, IState> {
       this.props.clearWords();
     }
     this.props.history.push('/my-game');
+  }
+
+  saveStatistics() {
+    console.log(this.state);
   }
 
   render() {
@@ -257,11 +305,11 @@ class MemoryGame extends React.Component<IProps, IState> {
         </div>
         <div className={`game-field game-field_${this.getFieldSize()}`}>
           {cards.map((card: ICard) => (
-            <div className="game-field__item" key={card.id}>
+            <div className="game-field__item" key={shortid()}>
               <Card
                 {...{
                   ...card,
-                  cardClick: () => this.changeFlipped(card.id),
+                  cardClick: () => this.changeFlipped(card.key),
                   animationOn: this.animationCheck(card)
                 }}
               />
@@ -270,7 +318,10 @@ class MemoryGame extends React.Component<IProps, IState> {
         </div>
         {this.state.haveWin && (
           <div className="modal-overlay">
-            <WinModal cardsCount={this.state.size} attempts={this.state.attempts} submit={this.onStopGameHandler} />
+            <EndGameModal
+              wrongAnswers={this.state.wrongAnswers}
+              rightAnswers={this.state.rightAnswers}
+              submit={this.onStopGameHandler} />
           </div>
         )}
         {this.state.isPaused

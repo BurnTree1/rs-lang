@@ -1,5 +1,6 @@
 import shortid from "shortid";
 import { IWord } from "../../../models/common.models";
+import { WordType } from "../../Savannah/types";
 import { ICard, ISettings } from "./my-game.models";
 
 const generateUniqCards = (words: IWord[], count: number): ICard[] => {
@@ -13,8 +14,10 @@ const generateUniqCards = (words: IWord[], count: number): ICard[] => {
       ...mixedCards,
       {
         isFlipped: true,
+        isShown: true,
         found: false,
         ...word,
+        key: '',
       }
     ];
   }
@@ -38,7 +41,7 @@ export const generateCards = (words: IWord[], settings: ISettings): ICard[] => {
     mixedCards = [...mixedCards, card];
   }
 
-  mixedCards = mixedCards.map(card => ({ ...card, id: shortid() }));
+  mixedCards = mixedCards.map(card => ({ ...card, key: shortid() }));
   return mixedCards;
 };
 
@@ -49,3 +52,5 @@ export const formatTime = (sec: number): string => {
   const minutes = (sec - seconds) / 60;
   return `${addZero(minutes)} : ${addZero(seconds)}`;
 };
+
+export const getWord = (words: IWord[], card: ICard): WordType => (words.find(({ id }) => id === card.id) as WordType);
