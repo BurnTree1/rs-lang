@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './LoginForm.scss'
 import { Button, TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { useDispatch, useSelector } from 'react-redux';
-import { authIsSignInSuccessfully, signInUser } from '../../../store/reducers/authorizationSlice';
+import { useDispatch } from 'react-redux';
+import {  signInUser } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean

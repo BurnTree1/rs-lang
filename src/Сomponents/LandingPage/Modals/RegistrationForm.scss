@@ -3,10 +3,10 @@
   width: 600px;
   height: 500px;
   background-color: #b1dbff;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-75%, -4%);
+  transform: translate(-50%, -50%);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
