@@ -36,7 +36,7 @@ export const LandingPage = () => {
     }
 
     useEffect(() => {
-        if (isSignInSuccessfully) {
+        if (!isSignInSuccessfully) {
             setOverlay(false);
             setModalControls({
                 signUp: false,
