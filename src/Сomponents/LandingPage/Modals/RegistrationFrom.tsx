@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./RegistrationForm.scss"
 import { useDispatch } from 'react-redux';
 import { TextField, Button } from '@material-ui/core';
@@ -60,6 +60,23 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
 
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    if (!open) {
+      setFormData({
+        email: '',
+        password: '',
+        name: '',
+        image: new Blob()
+      })
+    }
+    setValidationFields({
+      email: false,
+      name: false,
+      password: false,
+      image: false
+    })
+  }, [open])
+
   const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     const target = e.target as HTMLInputElement
@@ -105,7 +122,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
   return (
     <div className="formContainer" style ={{
       display: open? "flex": "none"
-    }} > 
+    }} >
        <div>
         <span>Sign Up</span>
        </div>

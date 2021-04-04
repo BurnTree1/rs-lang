@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './LoginForm.scss'
 import { Button, TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useDispatch } from 'react-redux';
-import {  signInUser } from '../../../store/reducers/authorizationSlice';
+import {  signInUser, updateSignInSuccessfullyStatus } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean
@@ -30,11 +30,17 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
    e.preventDefault()
     dispatch(signInUser(formData))
-     setFormData({
-       email: '',
-       password: ''
-     })
-  }
+ }
+
+  useEffect(() => {
+    if (!open) {
+      setFormData({
+        email: '',
+        password: ''
+      })
+      dispatch(updateSignInSuccessfullyStatus())
+    }
+  }, [open, dispatch])
 
   return (
     <div className="formContainerLogIn" style={{
@@ -76,7 +82,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
             ),
           }}
         />
-        <p>{(formData.email.length > 1 || isSignInSuccessfully) ? '' : "Проверьте правильность введеных данных"}</p>
+        <p>{ isSignInSuccessfully ? '' : "Проверьте правильность введеных данных"}</p>
         <Button type="submit" color="primary" style={{
         }}>Войти</Button>
       </form>
@@ -85,3 +91,4 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
 }
 
 export default LoginForm
+

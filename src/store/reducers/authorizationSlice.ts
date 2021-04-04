@@ -10,7 +10,7 @@ const initialState: AuthorizationState = {
   password: "",
   image: '',
   isAuthorized: false,
-  isSignInSuccessfully: false
+  isSignInSuccessfully: true
 };
 
 export type UserDataResponse = {
@@ -73,6 +73,9 @@ const AuthorizationSlice = createSlice({
     updateAuthImage: (state, action) => {
       state.image = action.payload
     },
+    updateSignInSuccessfullyStatus: (state) => {
+      state.isSignInSuccessfully = true
+    }
   },
   extraReducers: builder => {
     builder
@@ -103,7 +106,7 @@ export const authImageSelector = (state: RootState) => state.auth.image;
 export const authIsAuthorized = (state: RootState) => state.auth.isAuthorized;
 export const authIsSignInSuccessfully = (state: RootState) => state.auth.isSignInSuccessfully;
 
-export const { updateAuthImage } = AuthorizationSlice.actions;
+export const { updateAuthImage, updateSignInSuccessfullyStatus } = AuthorizationSlice.actions;
 
 export default AuthorizationSlice.reducer
 
