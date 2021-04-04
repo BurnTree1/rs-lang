@@ -14,3 +14,4 @@ export const Start: React.FC<Props> = ({  onOpenModal }) => (
         </div>
       </div>
     )
+
