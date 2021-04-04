@@ -1,28 +1,24 @@
 import React, { FC, useState } from "react";
+import { Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
+import { createStyles, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import {
+  Book,
+  ChevronLeft,
+  ChevronRight,
+  Equalizer,
+  ExitToApp,
+  ExpandLess,
+  ExpandMore,
+  Home,
+  LibraryBooks,
+  SportsEsports,
+  Lock
+} from "@material-ui/icons";
 import { useSelector , useDispatch } from 'react-redux';
-import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import IconButton from "@material-ui/core/IconButton";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles, useTheme, Theme, createStyles } from "@material-ui/core/styles";
-import Collapse from "@material-ui/core/Collapse";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import HomeIcon from '@material-ui/icons/Home';
-import LibraryBooksIcon from '@material-ui/icons/LibraryBooks';
-import BookIcon from '@material-ui/icons/Book';
-import VideogameAssetIcon from '@material-ui/icons/VideogameAsset';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { NavLink } from "react-router-dom";
-import './NavBar.css'
-import { urlBuilder, urlPrefix } from "../../helpers";
 import { authImageSelector } from '../../store/reducers/authorizationSlice';
+import "./NavBar.css";
+import { isAuth, PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
 import { clearWords } from "../../store/reducers/memoryGameSlice";
 
 const drawerWidth = 240;
@@ -31,22 +27,22 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      flexDirection: "column",
+      flexDirection: "column"
     },
     drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
+      width: drawerWidth,
+      flexShrink: 0
     },
     drawerPaper: {
       width: drawerWidth,
-      boxShadow: '0px 9px 18px rgba(0, 0, 0, 0.18), 0px 5.5px 5px rgba(0, 0, 0, 0.24)',
+      boxShadow: "0px 9px 18px rgba(0, 0, 0, 0.18), 0px 5.5px 5px rgba(0, 0, 0, 0.24)"
     },
     drawerHeader: {
       display: "flex",
       alignItems: "center",
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
-      justifyContent: "flex-end",
+      justifyContent: "flex-end"
     }
   })
 );
@@ -54,20 +50,22 @@ const useStyles = makeStyles((theme: Theme) =>
 type PropsType = {
   open: boolean
   menuOpen: boolean
-  handleClick: ()=> void
-  handleDrawerToggle: ()=> void
+  handleClick: () => void
+  handleDrawerToggle: () => void
 }
 export const NavBar: FC<PropsType> = (props) => {
   const { open, menuOpen, handleClick, handleDrawerToggle } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [dictionaryOpen, setDictionaryOpen] = useState<boolean>(true)
+  const [dictionaryOpen, setDictionaryOpen] = useState<boolean>(true);
   const handleDictionaryClick = () => {
     setDictionaryOpen(!dictionaryOpen)
   }
   const imageUrl = useSelector(authImageSelector)
 
   const dispatch = useDispatch();
+
+  const noAuthActive = (match: any, location: any) => (location.pathname !== PAGE_AUTH && match)
 
   return (
     <div className={classes.root}>
@@ -82,7 +80,7 @@ export const NavBar: FC<PropsType> = (props) => {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerToggle}>
-            {theme.direction === "ltr" ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+            {theme.direction === "ltr" ? <ChevronLeft/> : <ChevronRight/>}
           </IconButton>
         </div>
         <Divider/>
@@ -90,7 +88,7 @@ export const NavBar: FC<PropsType> = (props) => {
           <NavLink exact to='/' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-              <HomeIcon style={{ color: 'black' }}/>
+                <Home style={{ color: "black" }}/>
               </ListItemIcon>
               <ListItemText primary="Главная"/>
             </ListItem>
@@ -98,42 +96,48 @@ export const NavBar: FC<PropsType> = (props) => {
           <NavLink to='/book' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-              <LibraryBooksIcon style={{ color: 'black' }}/>
+                <LibraryBooks style={{ color: "black" }}/>
               </ListItemIcon>
               <ListItemText primary="Учебник"/>
             </ListItem>
           </NavLink>
-            <ListItem button onClick={handleDictionaryClick}>
-              <ListItemIcon>
-              <BookIcon style={{ color: 'black' }}/>
-              </ListItemIcon>
-              <ListItemText primary="Словарь"/>
-              {dictionaryOpen ? <ExpandLess/> : <ExpandMore/>}
-            </ListItem>
-            <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
+          <ListItem button onClick={handleDictionaryClick}>
+            <ListItemIcon>
+              <Book style={{ color: "black" }}/>
+            </ListItemIcon>
+            <ListItemText primary="Словарь"/>
+            {dictionaryOpen ? <ExpandLess/> : <ExpandMore/>}
+          </ListItem>
+          <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to={urlBuilder(urlPrefix.studied, '1')} activeClassName='active'>
+              <NavLink to={isAuth ? urlBuilder(urlPrefix.studied, "1") : PAGE_AUTH} activeClassName='active'
+                       isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Изучаемые"/>
+                  {!isAuth && <Lock/>}
                 </ListItem>
               </NavLink>
-              <NavLink to={urlBuilder(urlPrefix.difficult, '1')} activeClassName='active'>
+              <NavLink to={isAuth ? urlBuilder(urlPrefix.difficult, "1") : PAGE_AUTH} activeClassName='active'
+                       isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Сложные"/>
+                  {!isAuth && <Lock/>}
                 </ListItem>
               </NavLink>
-              <NavLink to={urlBuilder(urlPrefix.deleted, '1')} activeClassName='active'>
+              <NavLink to={isAuth ? urlBuilder(urlPrefix.deleted, "1") : PAGE_AUTH} activeClassName='active'
+                       isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
                   <ListItemText primary="Удаленные"/>
+                  {!isAuth && <Lock/>}
                 </ListItem>
               </NavLink>
             </List>
@@ -141,7 +145,7 @@ export const NavBar: FC<PropsType> = (props) => {
           <Divider/>
           <ListItem button onClick={handleClick}>
             <ListItemIcon>
-            <VideogameAssetIcon style={{ color: 'black' }}/>
+              <SportsEsports style={{ color: "black" }}/>
             </ListItemIcon>
             <ListItemText primary="Мини-игры"/>
             {open ? <ExpandLess/> : <ExpandMore/>}
@@ -177,28 +181,31 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemIcon>
                     <></>
                   </ListItemIcon>
-                  <ListItemText onClick={() => {dispatch(clearWords())}} primary="Memory Game"/>
+                  <ListItemText onClick={() => {
+                    dispatch(clearWords());
+                  }} primary="Memory Game"/>
                 </ListItem>
               </NavLink>
             </List>
           </Collapse>
           <Divider/>
-          <NavLink to='/statistics' activeClassName='active'>
+          <NavLink to={isAuth ? "/statistics" : PAGE_AUTH} activeClassName='active' isActive={noAuthActive}>
             <ListItem button>
               <ListItemIcon>
-              <EqualizerIcon style={{ color: 'black' }}/>
+                <Equalizer style={{ color: "black" }}/>
               </ListItemIcon>
               <ListItemText primary="Статистика"/>
+              {!isAuth && <Lock/>}
             </ListItem>
           </NavLink>
-          <NavLink to='/' activeClassName='active'>
+          {isAuth && <NavLink to='/' activeClassName='active'>
             <ListItem button>
               <ListItemIcon>
-              <ExitToAppIcon style={{ color: 'black' }}/>
+                <ExitToApp style={{ color: "black" }}/>
               </ListItemIcon>
               <ListItemText primary="Выход"/>
             </ListItem>
-          </NavLink>
+          </NavLink>}
           <ListItem>
             <img src={imageUrl} alt="avatar"/>
           </ListItem>

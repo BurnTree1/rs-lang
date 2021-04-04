@@ -27,7 +27,6 @@
 
 .team__inner {
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
   column-gap: 76px;
@@ -46,6 +45,7 @@
   width: 209px;
   height: 209px;
   border-radius: 50%;
+  margin: auto;
 }
 
 .text {
