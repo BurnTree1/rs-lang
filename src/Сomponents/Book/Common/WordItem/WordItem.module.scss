@@ -80,12 +80,29 @@
   margin-bottom: 29px;
 }
 
-.word__explain {
+.word__explain, .word__mean {
   font-size: 18px;
   line-height: 21px;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
+}
+
+.word__mean {
+  margin-bottom: 5px;
+
+  & span {
+    padding-left: 3px;
+
+    &:first-child {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.word__inner {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .actions {
@@ -108,6 +125,11 @@
   color: #ffffff;
   font-size: 13px;
   line-height: 20px;
+}
+
+.word__bold {
+  color: #0062B1 !important;
+  font-weight: 500;
 }
 
 @media (max-width: 1370px) {

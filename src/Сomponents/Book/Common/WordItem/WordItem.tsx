@@ -44,11 +44,33 @@ const WordItem: FC<WordType> = ({
 }) => {
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
   const isDeleted = _.get(userWord, ['optional', 'isDeleted'], false);
-
-  const [playWord] = useSound(`${URL_API}/${audio}`)
-  const [playExplain] = useSound(`${URL_API}/${audioMeaning}`)
-  const [playExample] = useSound(`${URL_API}/${audioExample}`)
-
+  const [playWord] = useSound(`${URL_API}/${audio}`);
+  const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);
+  const [playExample] = useSound(`${URL_API}/${audioExample}`);
+  const meaning = textMeaning
+    .toLowerCase()
+    .split(' ')
+    .map((w) =>
+      w === word ? (
+        <span key={w} className={styles.word__bold}>
+          {w}
+        </span>
+      ) : (
+        <span>{w}</span>
+      )
+    );
+  const examples = textExample
+    .toLowerCase()
+    .split(' ')
+    .map((w) =>
+      w === word ? (
+        <span key={w} className={styles.word__bold}>
+          {w}
+        </span>
+      ) : (
+        <span>{w}</span>
+      )
+    );
   return (
     <div className={styles.card__wrapper}>
       <Card className={styles.card}>
@@ -62,23 +84,25 @@ const WordItem: FC<WordType> = ({
             <div className={styles.word__title}>{word}</div>
             <div className={styles.word__transcription}>
               {transcription}
-              <button onClick={()=>playWord()} type="button" className={styles.listen}>
+              <button onClick={() => playWord()} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
             <div className={styles.word__translation}>{wordTranslate}</div>
-            <div className={styles.word__explain}>
-              {textMeaning}
-              <button onClick={()=>playExplain()} type="button" className={styles.listen}>
+            <div className={styles.word__mean}>
+              <div className={styles.word__inner}>{meaning}</div>
+              <button onClick={() => playExplain()} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            <div className={styles.word__explain}>
-              {textExample}
-              <button onClick={()=>playExample()} type="button" className={styles.listen}>
+            <div className={styles.word__explain}>{textMeaningTranslate}</div>
+            <div className={styles.word__mean}>
+            <div className={styles.word__inner}>{examples}</div>
+              <button onClick={() => playExample()} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
+            <div className={styles.word__explain}>{textExampleTranslate}</div>
           </div>
         </div>
         {isAuth && <ActionButtons id={id} isHard={isHard} refresh={refresh}/>}

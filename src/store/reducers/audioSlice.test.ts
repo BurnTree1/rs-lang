@@ -1,6 +1,6 @@
 import reducer, { audioSlice, WordsType ,
   nextWord,
-  gameOver,
+  audioGameOver,
   makeAnswer,
 } from './audioSlice';
 
@@ -72,7 +72,7 @@ test('is question is answered', () => {
 test('is game over', () => {
   const newState = audioSlice.reducer(
     state,
-    audioSlice.actions.gameOver()
+    audioSlice.actions.audioGameOver(true)
   );
   expect(newState.isFinished).toBe(true);
 });

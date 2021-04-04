@@ -35,6 +35,9 @@ export const audioSlice = createSlice({
   initialState,
   reducers: {
     setAudioWords: (state, { payload: words }) => {
+      state.wordsArr = []
+      state.correctAnswers = []
+      state.wrongAnswers = []
       for (const key in words) {
         if (Object.prototype.hasOwnProperty.call(words, key)) {
         state.wordsArr = [...state.wordsArr, words[key]]
@@ -68,8 +71,8 @@ export const audioSlice = createSlice({
         state.wrongAnswers = [...state.wrongAnswers, state.word]
       }
     },
-    gameOver: (state) => {
-      state.isFinished = true;
+    audioGameOver: (state, { payload: finished }) => {
+      state.isFinished = finished;
     },
   },
 });
@@ -85,7 +88,7 @@ export function fetchAllAudioWords(g: number,p: number) {
 
 const { actions, reducer } = audioSlice;
 
-export const { nextWord, gameOver, makeAnswer, setAnswered, setAudioWords } = actions;
+export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;

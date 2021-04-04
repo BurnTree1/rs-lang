@@ -2,7 +2,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  z-index: 99999;
+  z-index: 1300;
   width: 343px;
   background: #ffffff;
   box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.25), 0px -4px 4px rgba(0, 0, 0, 0.3);
@@ -25,6 +25,7 @@
 
   & span {
     width: 100px;
+    margin-right: 20px;
   }
 }
 
@@ -74,6 +75,7 @@
     padding-left: 20px;
     padding-top: 27px;
     margin: 30px auto;
+    z-index: 0;
   }
 
   .level {

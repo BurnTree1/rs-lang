@@ -8,6 +8,7 @@ import { PAGE_DELETED, urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
 import Card from "../../Common/WordItem/WordItem";
 import Pagination from "../../Common/PaginationComponent";
+import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { setType } from "../../../../store/reducers/book";
 
 export const Deleted = () => {
@@ -61,7 +62,7 @@ export const Deleted = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.deleted}/>
-      <h3>Stud</h3>
+      <GamesSection words={words}/>
       {pagination}
       {cards}
       {pagination}

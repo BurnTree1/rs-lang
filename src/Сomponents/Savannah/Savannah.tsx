@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
+import { fetchAllWords, setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
@@ -18,6 +18,7 @@ import GamePauseModal from '../Modals/GamePauseModal';
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
   const words = useSelector(wordsArr)
+  const dispatch = useDispatch()
   const [currentWords, setCurrentWords] = useState<typeof words>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string>();
   const [wrongAnswers, setWrongAnswers] = useState<typeof words>([]);
@@ -37,11 +38,9 @@ const Savannah = () => {
     settingsView: true,
   });
 
-  const dispatch = useDispatch()
   useEffect(()=> {
     dispatch(setHasDifficulty())
    },[])
-
   useEffect(() => {
     const wordsWithoutCurrentWord = [...words.slice(0, currentLevel), ...words.slice(currentLevel + 1, words.length)];
     const newWords = getThreeRandomWords(wordsWithoutCurrentWord);

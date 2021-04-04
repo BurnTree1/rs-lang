@@ -1,5 +1,6 @@
 import React, { FC, ReactNode, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
+import GetReadyView from '../../Views/GetReadyView/GetReadyView';
 import SettingsView from '../../Views/SettingsView/SettingsView';
 import styles from './GameLayer.module.scss'
 
@@ -25,18 +26,12 @@ export const GameLayer: FC<PropsType> = (props) => {
 })
   const dispatch = useDispatch()
     useEffect(() => {
-        const loaderId = setInterval(() => {
+        setTimeout(()=> {
           if (gameLoader) {
-            setLoaderSec(loaderSec - 1);
-            if (loaderSec === 1) {
-              props.setIsGameStarted(true);
-              setGameLoader(false);
-            }
+          props.setIsGameStarted(true);
+               setGameLoader(false);
           }
-        }, 1000);
-        return () => {
-          clearInterval(loaderId);
-        };
+        },4000)
       }, [gameLoader, loaderSec, props]);
       const onGameStart = () => {
         setStartGame(false);
@@ -57,7 +52,7 @@ export const GameLayer: FC<PropsType> = (props) => {
             </div>
           )}
           {isGameSetings && <SettingsView difficultType={props.difficultType} setSettings={setSettings} setGameStatus={setGameView} startPlay={startPlay}/>}
-          {gameLoader && <div className={styles.loader}>{loaderSec}</div>}
+          {gameLoader && <GetReadyView/>}
           </div>
     )
 }

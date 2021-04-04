@@ -1,9 +1,6 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { get } from "lodash";
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../../store/store.models'
-import planets from '../../../../assets/image/planets.svg'
+import { useDispatch } from 'react-redux'
 import item1 from '../../../../assets/image/game-item1.svg'
 import item2 from '../../../../assets/image/game-item2.svg'
 import item3 from '../../../../assets/image/game-item3.svg'
@@ -13,12 +10,16 @@ import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
 import { setAudioWords } from '../../../../store/reducers/audioSlice';
 import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
 import Settings from "../Setting/Settings";
+import { bookSections } from '../../../../helpers/constants';
 import { isAuth } from "../../../../helpers";
 
-export const GamesSection = () => {
+type PropsType = {
+    words: object
+}
+export const GamesSection: FC<PropsType> = ({ words }) => {
     const { sectionId } = useParams();
     const { pageId = "1" } = useParams();
-    const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
+    const [level, image] = [bookSections[sectionId - 1].name, bookSections[sectionId - 1].image]
     const dispatch = useDispatch()
     const onWordsSet = () => {
         setTimeout(()=> {
@@ -30,7 +31,7 @@ export const GamesSection = () => {
     return (
     <div className={styles.games}>
         <div className={styles.games__content}>
-        <div className={styles.level}><span>Средний Уровень</span><img src={planets} alt="planets" className={styles.games__icon}/>
+        <div className={styles.level}><span>{level} Уровень</span><img src={image} alt="planets" className={styles.games__icon}/>
         </div>
         <h2 className={styles.title}>Попробуй эту страницу с игрой:</h2>
         <div className={styles.games__inner}>
