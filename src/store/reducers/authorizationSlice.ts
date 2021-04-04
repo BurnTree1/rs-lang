@@ -109,6 +109,3 @@ export const authIsSignInSuccessfully = (state: RootState) => state.auth.isSignI
 export const { updateAuthImage, updateSignInSuccessfullyStatus } = AuthorizationSlice.actions;
 
 export default AuthorizationSlice.reducer
-
-
-
