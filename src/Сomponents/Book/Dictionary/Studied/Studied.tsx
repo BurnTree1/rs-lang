@@ -7,6 +7,7 @@ import { userAggregateWords } from "../../../../api";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import Card from "../../Common/WordItem/WordItem";
+import { StudiedStatistics } from "./StudiedStatistics";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +49,7 @@ export const Studied = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.studied}/>
+      <StudiedStatistics/>
       {pagination}
       {cards}
       {pagination}

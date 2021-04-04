@@ -7,6 +7,7 @@ import { userAggregateWords } from "../../../../api";
 import Card from "../../Common/WordItem/WordItem";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
+import { GamesSection } from "../../Page/GamesSection/GamesSection";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -48,6 +49,7 @@ export const Difficult = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.difficult}/>
+      <GamesSection words={words}/>
       {pagination}
       {cards}
       {pagination}
