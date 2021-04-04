@@ -44,7 +44,7 @@ export const LandingPage = () => {
                 signIn: false
             })
         }
-    }, [isAuthIsAuthorized])
+    }, [isAuthIsAuthorized, isSignInSuccessfully])
 
     return (
           <div>
