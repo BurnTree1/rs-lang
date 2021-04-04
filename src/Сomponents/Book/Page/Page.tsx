@@ -1,17 +1,17 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
-import { get, map, head } from "lodash";
+import { get, map } from "lodash";
 import { useParams } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import Card from "../Common/WordItem/WordItem";
 import SectionHandler from "../Common/SectionHandler";
-import { userAggregateWords } from "../../../api";
-import { initPage } from "../../../store/reducers/book";
+import { userAggregateWords, fetchWords } from "../../../api";
+import { initPage, setType } from "../../../store/reducers/book";
 import { RootState } from "../../../store/store.models";
-import { COUNT_SECTION_PAGES, urlPrefix } from "../../../helpers";
+import { COUNT_SECTION_PAGES, isAuth, PAGE_BOOK, urlPrefix } from "../../../helpers";
 import Pagination from "../Common/PaginationComponent";
 import { GamesSection } from "./GamesSection/GamesSection";
-import styles from './Page.module.scss'
+import styles from "./Page.module.scss";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,18 +21,24 @@ const Page: FC = () => {
   const pageIdInt = parseInt(pageId, 10);
   const dispatch = useDispatch();
   const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
+
+  useEffect(() => {
+    dispatch(setType(PAGE_BOOK))
+  }, [])
+
   useEffect(() => {
     if (!words) {
       setIsLoaded(false);
-      userAggregateWords.getForBook(sectionIdInt - 1, pageIdInt - 1)
+      const getWords = isAuth ? userAggregateWords.getForBook : fetchWords.get;
+      getWords(sectionIdInt - 1, pageIdInt - 1)
         .then(({ data }) => {
           // @ts-ignore
-          dispatch(initPage({ sectionId, pageId, words: head(data).paginatedResults }));
+          dispatch(initPage({ sectionId, pageId, words: data }));
           setIsLoaded(true);
         })
         .catch(() => setIsLoaded(true));
     }
-  }, [words]);
+  }, [sectionId, pageId, words]);
 
   const cards = useMemo(() =>
       isLoaded ?

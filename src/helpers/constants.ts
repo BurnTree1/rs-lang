@@ -1,9 +1,30 @@
-import image1 from '../assets/image/categories-1.svg'
-import image2 from '../assets/image/categories-2.svg'
-import image3 from '../assets/image/categories-3.svg'
-import image4 from '../assets/image/categories-4.svg'
-import image5 from '../assets/image/categories-5.svg'
-import image6 from '../assets/image/categories-6.svg'
+import image1 from "../assets/image/categories-1.svg";
+import image2 from "../assets/image/categories-2.svg";
+import image3 from "../assets/image/categories-3.svg";
+import image4 from "../assets/image/categories-4.svg";
+import image5 from "../assets/image/categories-5.svg";
+import image6 from "../assets/image/categories-6.svg";
+
+export const URL_API = "https://rs-lang2021.herokuapp.com";
+export const COUNT_SECTION_PAGES = 30;
+export const WORD_PER_PAGE = 20;
+export const MAX_WORDS_IN_GROUP = 600;
+
+export const token = "";
+export const userId = "";
+export const isAuth = false;
+
+export const urlPrefix = {
+  studied: "/dictionary/studied",
+  difficult: "/dictionary/difficult",
+  deleted: "/dictionary/deleted",
+  book: "/book"
+};
+
+export const urlParams = {
+  section: ":sectionId",
+  page: ":pageId"
+};
 
 type SectionType = {
   id: number,
@@ -45,7 +66,7 @@ export const bookSections: Array<SectionType> = [
 ];
 
 export const settingsMap = [
-   {
+  {
     id: "isNeedTranslate",
     text: "Отображать перевод слова"
   },
@@ -60,25 +81,13 @@ export const settingsMap = [
   {
     id: "isNeedDeleteButton",
     text: "Отображать кнопку “Удалить слово”"
-  },
-]
+  }
+];
 
-export const URL_API = "https://rs-lang2021.herokuapp.com";
-export const COUNT_SECTION_PAGES = 30;
-export const WORD_PER_PAGE = 20;
-export const MAX_WORDS_IN_GROUP = 600;
+export const PAGE_BOOK = "book";
+export const PAGE_STUDIED = "studied";
+export const PAGE_HARD = "hard";
+export const PAGE_DELETED = "deleted";
+export const PAGE_AUTH = "/auth";
 
-export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzUxNjY5NiwiZXhwIjoxNjE3NTMxMDk2fQ.Bpco21t8ow0vaWSaknN2nbdjc9F-gQhIEZbIv0GLNs8";
-export const userId = "605a44e22898bf35e44bff04";
 
-export const urlPrefix = {
-  studied: "/dictionary/studied",
-  difficult: "/dictionary/difficult",
-  deleted: "/dictionary/deleted",
-  book: "/book"
-}
-
-export const urlParams = {
-  section: ":sectionId",
-  page: ":pageId",
-}

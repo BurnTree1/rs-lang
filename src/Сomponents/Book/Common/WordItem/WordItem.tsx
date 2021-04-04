@@ -3,7 +3,7 @@ import _ from 'lodash';
 import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
 import ActionButtons from './ActionButtons';
-import { URL_API } from '../../../../helpers/constants';
+import { URL_API, isAuth } from '../../../../helpers';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
 
@@ -20,9 +20,10 @@ type WordType = {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-  userWord: {
+  userWord?: {
     optional: object;
-  } | null;
+  };
+  refresh?: () => void;
 };
 
 const WordItem: FC<WordType> = ({
@@ -39,8 +40,11 @@ const WordItem: FC<WordType> = ({
   textMeaningTranslate,
   textExampleTranslate,
   userWord,
+  refresh
 }) => {
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
+  const isDeleted = _.get(userWord, ['optional', 'isDeleted'], false);
+
   const [playWord] = useSound(`${URL_API}/${audio}`)
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`)
   const [playExample] = useSound(`${URL_API}/${audioExample}`)
@@ -77,7 +81,7 @@ const WordItem: FC<WordType> = ({
             </div>
           </div>
         </div>
-        <ActionButtons id={id} isHard={isHard} />
+        {isAuth && <ActionButtons id={id} isHard={isHard} refresh={refresh}/>}
       </Card>
     </div>
   );
