@@ -53,7 +53,7 @@ const WordItem: FC<WordType> = ({
           {w}
         </span>
       ) : (
-        <span key={w}>{w}</span>
+        <span>{w}</span>
       )
     );
   const examples = textExample
@@ -65,7 +65,7 @@ const WordItem: FC<WordType> = ({
           {w}
         </span>
       ) : (
-        <span key={w}>{w}</span>
+        <span>{w}</span>
       )
     );
   return (
