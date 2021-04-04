@@ -29,9 +29,3 @@ export const AppGetUserData = async () => axiosInstance.get(`users/${LocalStorag
 })
 
 export const AppSignInUser = async (userData: SignIn) => axiosInstance.post("signin", userData).catch(err => err)
-
-
-
-
-
-
