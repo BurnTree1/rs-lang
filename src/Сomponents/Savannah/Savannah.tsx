@@ -4,7 +4,7 @@ import { setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
-import { ReactComponent as RockIcon } from './assets/stone 1.svg';
+import { ReactComponent as RockIcon } from './assets/astronomy.svg';
 import { ReactComponent as FullScreenIcon } from './assets/fullscreen_24px.svg';
 import { ReactComponent as CloseIcon } from './assets/close_24px_outlined.svg';
 import getThreeRandomWords, { shuffleArray } from '../../helpers/shuffleArray';
@@ -39,7 +39,7 @@ const Savannah = () => {
 
   const dispatch = useDispatch()
   useEffect(()=> {
-    dispatch(setHasDifficulty()) 
+    dispatch(setHasDifficulty())
    },[])
 
   useEffect(() => {
