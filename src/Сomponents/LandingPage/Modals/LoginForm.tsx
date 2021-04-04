@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useDispatch } from 'react-redux';
-import {  signInUser, updateSignInSuccessfullyStatus } from '../../../store/reducers/authorizationSlice';
+import { signInUser, updateSignInSuccessfullyStatus } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean
@@ -38,9 +38,8 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
         email: '',
         password: ''
       })
-      dispatch(updateSignInSuccessfullyStatus())
     }
-  }, [open, dispatch])
+  }, [open])
 
   return (
     <div className="formContainerLogIn" style={{
@@ -82,9 +81,8 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
             ),
           }}
         />
-        <p>{ isSignInSuccessfully ? '' : "Проверьте правильность введеных данных"}</p>
-        <Button type="submit" color="primary" style={{
-        }}>Войти</Button>
+        <p>{ isSignInSuccessfully ? '' : "Введите данные или убедитесь в их валидности"}</p>
+        <Button type="submit" color="primary">Войти</Button>
       </form>
     </div>
   )

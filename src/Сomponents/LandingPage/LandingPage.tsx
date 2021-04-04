@@ -5,7 +5,7 @@ import { Benefits } from "./Benefits/Benefits";
 import { Team } from "./Team/Team";
 import { Start } from "./Start/Start";
 import { Footer } from "../Footer/Footer";
-import { authIsSignInSuccessfully } from '../../store/reducers/authorizationSlice';
+import { authIsAuthorized, authIsSignInSuccessfully } from '../../store/reducers/authorizationSlice';
 import styles from './Intro/Intro.module.scss';
 import RegistrationForm from './Modals/RegistrationFrom';
 import LoginForm from './Modals/LoginForm';
@@ -16,6 +16,7 @@ export const LandingPage = () => {
         signIn: false
     });
     const [overlay, setOverlay] = useState(false);
+    const isAuthIsAuthorized = useSelector(authIsAuthorized)
     const isSignInSuccessfully = useSelector(authIsSignInSuccessfully)
 
     const onOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,14 +37,14 @@ export const LandingPage = () => {
     }
 
     useEffect(() => {
-        if (!isSignInSuccessfully) {
+        if (isAuthIsAuthorized) {
             setOverlay(false);
             setModalControls({
                 signUp: false,
                 signIn: false
             })
         }
-    }, [isSignInSuccessfully])
+    }, [isAuthIsAuthorized])
 
     return (
           <div>

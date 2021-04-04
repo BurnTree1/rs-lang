@@ -17,7 +17,8 @@ type FormData = {
   email: string,
   name: string,
   password: string,
-  image: Blob
+  image: Blob,
+  base64Image: ArrayBuffer | null
 }
 
 type ValidationFields = {
@@ -48,7 +49,8 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
     email: '',
     name: '',
     password: '',
-    image: new Blob()
+    image: new Blob(),
+    base64Image: null,
   })
 
   const [validationFields, setValidationFields] = useState<ValidationFields>({
@@ -66,7 +68,8 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
         email: '',
         password: '',
         name: '',
-        image: new Blob()
+        image: new Blob(),
+        base64Image: null
       })
     }
     setValidationFields({
@@ -95,10 +98,16 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
     }
     if (isImageFileInputEmpty(target)) return;
 
+    const imageReader = new FileReader();
+    imageReader.readAsDataURL(target!.files![0])
+    imageReader.onloadend = () => {
+      const base64Image = imageReader.result as ArrayBuffer
       setFormData((prevFormData) => ({
         ...prevFormData,
-        image: target!.files![0]
+        image: target!.files![0],
+        base64Image
       }))
+    }
   }
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -148,7 +157,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
         <TextField
           name="password"
           error={validationFields.password}
-          helperText={validationFields.password ? "Пароль должен соотвествовать регулярке: ^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$": ' '}
+          helperText={validationFields.password ? "Пароль должен состоять из латицины. Как минимум 1 заглавная и 1 цифра. ": ' '}
           value={formData.password}
           onChange={onChangeInputValue}
           style={{
@@ -191,7 +200,18 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
             }}
           />
           <label htmlFor="icon-button-file">
-            <Button  aria-label="upload picture" variant="contained" color="primary" component="span" startIcon={<AccountCircleIcon style={{ fontSize: 40 }}/>} />
+            <Button
+              aria-label="upload picture"
+              variant="contained"
+              color="primary"
+              component="span"
+              startIcon={formData.base64Image
+                ? (
+                  <div className="registrationAvatar">
+                    <img  src={(formData.base64Image) as unknown as string} alt="avatar"/>
+                  </div>
+                )
+                : <AccountCircleIcon style={{ fontSize: 80 }}/>} />
           </label>
           <p>{validationFields.image ? "Размер не должен превышать 500Kb": ' '}</p>
         <Button type="submit" color="primary" style={{

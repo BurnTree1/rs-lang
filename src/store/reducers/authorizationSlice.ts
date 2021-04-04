@@ -10,7 +10,7 @@ const initialState: AuthorizationState = {
   password: "",
   image: '',
   isAuthorized: false,
-  isSignInSuccessfully: true
+  isSignInSuccessfully: false
 };
 
 export type UserDataResponse = {
@@ -33,21 +33,29 @@ export type SignInReject = {
 
 export const createNewUser = createAsyncThunk(
   'authorization/createNewUser',
-  async (userData: CreateNewUserType) => {
-    const formData = new FormData();
-    formData.append('email', userData.email)
-    formData.append('password', userData.password)
-    formData.append('image', userData.image)
-    await AppCreateNewUser(formData)
-    return userData
+  async (userData: CreateNewUserType, thunkAPI) => {
+    try {
+      const formData = new FormData();
+      formData.append('email', userData.email)
+      formData.append('password', userData.password)
+      formData.append('image', userData.image)
+      await AppCreateNewUser(formData)
+      return userData
+    } catch (error) {
+      return thunkAPI.rejectWithValue({ error: error.messages })
+    }
   }
 )
 
 export const getUserData = createAsyncThunk(
   'authorization/getUserData',
-  async () => {
-      const userData: AxiosResponse<UserDataResponse> = await AppGetUserData();
-      return userData.data
+  async (_, thunkAPI) => {
+      try {
+        const userData: AxiosResponse<UserDataResponse> = await AppGetUserData();
+        return userData.data
+      } catch (error) {
+        return thunkAPI.rejectWithValue({ error: error.messages })
+      }
   }
 )
 
@@ -59,6 +67,7 @@ export const signInUser = createAsyncThunk(
       LocalStorageService.setToken(response.data.token)
       LocalStorageService.setUserId(response.data.userId)
       thunkAPI.dispatch(await getUserData())
+      thunkAPI.dispatch(updateSignInSuccessfullyStatus())
       return response.data
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: error.messages })
@@ -83,14 +92,13 @@ const AuthorizationSlice = createSlice({
         state.password = action.payload.password;
         state.email = action.payload.email;
         state.isAuthorized = true;
-        state.isSignInSuccessfully = !state.isSignInSuccessfully;
+        state.isSignInSuccessfully = true;
       })
       .addCase(getUserData.fulfilled, (state, action: PayloadAction<UserDataResponse>) => {
         state.password = action.payload.id;
         state.email = action.payload.email;
         state.image = action.payload.photo;
         state.isAuthorized = true;
-        state.isSignInSuccessfully = !state.isSignInSuccessfully;
       })
       .addCase(signInUser.fulfilled, (state, action) => {
         state.isSignInSuccessfully = true;

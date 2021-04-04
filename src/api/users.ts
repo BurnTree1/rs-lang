@@ -12,11 +12,7 @@ type AuthorizationResponse = {
 }
 
 
-export const AppCreateNewUser = async (userData: FormData) => axiosInstance.post('signup', userData, {
-    headers: {
-      "Content-type": "application/json"
-    }
-})
+export const AppCreateNewUser = async (userData: FormData) => axiosInstance.post('signup', userData)
     .then((user: AxiosResponse<AuthorizationResponse>) => {
       LocalStorageService.setToken(user.data.token)
       LocalStorageService.setUserId(user.data.userId)
