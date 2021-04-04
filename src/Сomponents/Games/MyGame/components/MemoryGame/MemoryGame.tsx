@@ -58,8 +58,8 @@ class MemoryGame extends React.Component<IProps, IState> {
       isPaused: false,
     };
 
-    this.flipSound = new Audio(`${URL_API}/card_flip.mp3`);
-    this.foundSound = new Audio(`${URL_API}/cards_found.mp3`);
+    this.flipSound = new Audio(`${process.env.PUBLIC_URL}/card_flip.mp3`);
+    this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
     this.gameContainerRef = React.createRef();
   }
 
@@ -75,7 +75,7 @@ class MemoryGame extends React.Component<IProps, IState> {
         startTime: true,
       }, () => {
       });
-    }, delay * 1000);
+    }, delay);
     this.tick();
   }
 
