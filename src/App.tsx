@@ -11,48 +11,52 @@ import { SprintContainer } from "./Сomponents/Games/Sprint/SprintContainer/Spri
 import { MyGame } from "./Сomponents/Games/MyGame/MyGame";
 import BookRoute from "./Сomponents/Book/BookRoute";
 import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
+import { PAGE_AUTH } from "./helpers";
+import Auth from "./Сomponents/Auth/Auth";
 
 export function App() {
   return (
     <div className="app">
       <AppWrapper>
-      <Switch>
-        <Route path="/book" component={BookRoute} />
+        <Switch>
+          <Route path="/book" component={BookRoute}/>
 
-        <Route path="/dictionary" component={DictionaryRoute} />
+          <Route path="/dictionary" component={DictionaryRoute}/>
 
-        <Route path="/statistics">
+          <Route path="/statistics">
             <Statistics/>
-        </Route>
+          </Route>
 
           <Route path="/settings">
-            <Settings />
+            <Settings/>
           </Route>
 
           <Route path="/savannah">
-            <Savannah />
+            <Savannah/>
           </Route>
 
-        <Route path="/audio">
+          <Route path="/audio">
             <AudioContainer/>
-        </Route>
+          </Route>
 
-        <Route path="/sprint">
+          <Route path="/sprint">
             <SprintContainer/>
-        </Route>
+          </Route>
 
-        <Route path="/my-game">
+          <Route path="/my-game">
             <MyGame/>
-        </Route>
+          </Route>
 
-        <Route exact path="/">
+          <Route path={PAGE_AUTH} component={Auth}/>
+
+          <Route exact path="/">
             <LandingPage/>
-        </Route>
+          </Route>
 
-        <Route>
-          <div>404 Not Found</div>
-        </Route>
-      </Switch>
+          <Route>
+            <div>404 Not Found</div>
+          </Route>
+        </Switch>
       </AppWrapper>
     </div>
   );
