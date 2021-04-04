@@ -6,44 +6,52 @@ import WrongAnswerList from '../Savannah/WrongAnswerList';
 type Props = {
   wrongAnswers: WordsType;
   rightAnswers: WordsType;
+  submit?(): void;
 };
 
-const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers }) => (
-  <div className={styles.endModalContainer}>
-    <div className={styles.endModalContent}>
-      {wrongAnswers.length ? <p>Неплохо, но есть над чем поработать</p> : <p>Поздравляем, отличный результат!</p>}
-      <div className={styles.endModalResultContainer}>
-        <div className={styles.endModalWordsContainer}>
-          {wrongAnswers.length ? (
-            <>
-              <span style={{ color: '#E10050' }}>ОШИБОК: {wrongAnswers.length}</span>
-              {wrongAnswers.map((word) => (
-                <WrongAnswerList word={word} key={word.id} />
-              ))}
-            </>
-          ) : null}
-          {rightAnswers.length ? (
-            <>
-              <span
-                style={{
-                  color: '#4CAF50',
-                  paddingRight: 285,
-                }}
-              >
-                ЗНАЮ: {rightAnswers.length}
-              </span>
-              {rightAnswers.map((word) => (
-                <WrongAnswerList word={word} key={word.id} />
-              ))}
-            </>
-          ) : null}
+const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) => {
+  const submitHandler = () => {
+    if (submit) {
+      submit();
+    }
+  };
+
+  return (
+    <div className={styles.endModalContainer}>
+      <div className={styles.endModalContent}>
+        {wrongAnswers.length ? <p>Неплохо, но есть над чем поработать</p> : <p>Поздравляем, отличный результат!</p>}
+        <div className={styles.endModalResultContainer}>
+          <div className={styles.endModalWordsContainer}>
+            {wrongAnswers.length ? (
+              <>
+                <span style={{ color: '#E10050' }}>ОШИБОК: {wrongAnswers.length}</span>
+                {wrongAnswers.map((word) => (
+                  <WrongAnswerList word={word} key={word.id} />
+                ))}
+              </>
+            ) : null}
+            {rightAnswers.length ? (
+              <>
+                <span
+                  style={{
+                    color: '#4CAF50',
+                    paddingRight: 285,
+                  }}
+                >
+                  ЗНАЮ: {rightAnswers.length}
+                </span>
+                {rightAnswers.map((word) => (
+                  <WrongAnswerList word={word} key={word.id} />
+                ))}
+              </>
+            ) : null}
+          </div>
         </div>
-      </div>
-      <button type="button" className={styles.endModalButton}>
-        Продолжить тренировку
+        <button type="button" className={styles.endModalButton} onClick={submitHandler}>
+          Продолжить тренировку
       </button>
-      <a className={styles.endModalLink}>К списку тренировок</a>
+      </div>
     </div>
-  </div>
-);
+  );
+}
 export default EndGameModal;

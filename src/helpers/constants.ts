@@ -68,8 +68,8 @@ export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
 export const MAX_WORDS_IN_GROUP = 600;
 
-export const token = "";
-export const userId = "";
+export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzUxNjY5NiwiZXhwIjoxNjE3NTMxMDk2fQ.Bpco21t8ow0vaWSaknN2nbdjc9F-gQhIEZbIv0GLNs8";
+export const userId = "605a44e22898bf35e44bff04";
 
 export const urlPrefix = {
   studied: "/dictionary/studied",

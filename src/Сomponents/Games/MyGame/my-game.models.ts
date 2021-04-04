@@ -1,4 +1,5 @@
 import { IWord } from "../../../models/common.models";
+import { WordsType } from "../../Savannah/types";
 
 export interface IState {
   cards: ICard[];
@@ -13,12 +14,18 @@ export interface IState {
   fullScreen: boolean;
   soundToggle: boolean;
   isPaused: boolean;
+  wrongAnswers: WordsType,
+  rightAnswers: WordsType,
+  longestSeries: number,
+  rightAnswersCount: number,
 }
 
 export interface ICard extends IWord {
   isFlipped: boolean;
   found: boolean;
   isSecondCard?: boolean;
+  isShown: boolean;
+  key: string;
 }
 
 export const bookPath: { [k: string]: number } = {
