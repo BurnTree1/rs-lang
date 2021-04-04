@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from 'react';
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { AppWrapper } from "./Сomponents/AppWrapper/AppWrapper";
 import { LandingPage } from "./Сomponents/LandingPage/LandingPage";
 import { Statistics } from "./Сomponents/Statistics/Statictics";
@@ -11,10 +12,16 @@ import { SprintContainer } from "./Сomponents/Games/Sprint/SprintContainer/Spri
 import { MyGame } from "./Сomponents/Games/MyGame/MyGame";
 import BookRoute from "./Сomponents/Book/BookRoute";
 import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
+import { getUserData } from './store/reducers/authorizationSlice';
 import { PAGE_AUTH } from "./helpers";
 import Auth from "./Сomponents/Auth/Auth";
 
 export function App() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserData())
+  }, [dispatch])
   return (
     <div className="app">
       <AppWrapper>

@@ -1,7 +1,6 @@
 import React, { FC, useState } from "react";
 import { Collapse, Divider, Drawer, IconButton, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { createStyles, makeStyles, Theme, useTheme } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
 import {
   Book,
   ChevronLeft,
@@ -15,7 +14,9 @@ import {
   SportsEsports,
   Lock
 } from "@material-ui/icons";
+import { useSelector , useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
+import { authImageSelector } from '../../store/reducers/authorizationSlice';
 import "./NavBar.css";
 import { isAuth, PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
 import { clearWords } from "../../store/reducers/memoryGameSlice";
@@ -58,8 +59,9 @@ export const NavBar: FC<PropsType> = (props) => {
   const theme = useTheme();
   const [dictionaryOpen, setDictionaryOpen] = useState<boolean>(true);
   const handleDictionaryClick = () => {
-    setDictionaryOpen(!dictionaryOpen);
-  };
+    setDictionaryOpen(!dictionaryOpen)
+  }
+  const imageUrl = useSelector(authImageSelector)
 
   const dispatch = useDispatch();
 
@@ -204,6 +206,9 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Выход"/>
             </ListItem>
           </NavLink>}
+          <ListItem>
+            <img src={imageUrl} alt="avatar"/>
+          </ListItem>
         </List>
       </Drawer>
     </div>

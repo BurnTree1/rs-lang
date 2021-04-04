@@ -9,7 +9,7 @@ import { Settings } from "./components/Settings/Settings";
 import { StartScreen } from "./components/StartScreen/StartScreen";
 import { IGameSettings } from "./my-game.models";
 import styles from './MyGame.module.scss';
-
+ 
 const defaultSettings: IGameSettings = {
   section: 'Начальный',
   difficult: '7000',
