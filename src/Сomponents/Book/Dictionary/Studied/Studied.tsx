@@ -48,7 +48,6 @@ export const Studied = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.studied}/>
-      <h3>Stud</h3>
       {pagination}
       {cards}
       {pagination}

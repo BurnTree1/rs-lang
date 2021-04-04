@@ -48,7 +48,6 @@ export const Difficult = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.difficult}/>
-      <h3>Stud</h3>
       {pagination}
       {cards}
       {pagination}

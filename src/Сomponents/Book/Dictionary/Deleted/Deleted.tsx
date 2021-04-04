@@ -49,7 +49,6 @@ export const Deleted = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.deleted}/>
-      <h3>Stud</h3>
       {pagination}
       {cards}
       {pagination}
