@@ -58,9 +58,7 @@ export const LandingPage = () => {
               <Footer/>
               <RegistrationForm open={modalControls.signUp} />
               <LoginForm open={modalControls.signIn} isSignInSuccessfully={isSignInSuccessfully}/>
-              <div className={styles.overlay} onClick={onCloseModal} style={{
-                  display: overlay ? "block" : "none"
-              }}/>
+              <div className={styles.overlay} onClick={onCloseModal} />
           </div>
       )
 

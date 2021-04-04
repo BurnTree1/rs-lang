@@ -10,7 +10,7 @@ export const Start: React.FC<Props> = ({  onOpenModal }) => (
         <h2 className={styles.title}>Начать изучение</h2>
         <div className={styles.start__btns}>
           <button type='button' className={styles.enter} name="signIn" onClick={onOpenModal}>Войти</button>
-          <button type='button' className={styles.registration} name="signUp" onClick={onOpenModal}>Зарегестрироваться</button>
+          <button type='button' className={styles.registration} name="signUp" onClick={onOpenModal}>Зарегистрироваться</button>
         </div>
       </div>
     )
