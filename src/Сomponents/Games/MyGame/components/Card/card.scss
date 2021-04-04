@@ -56,13 +56,6 @@
   transform-style: preserve-3d;
 }
 
-.card.shown {
-
-  & .card__image_first {
-    display: inline;
-  }
-}
-
 .card {
   transform: rotateY(180deg);
 }
@@ -70,7 +63,8 @@
 .card.flipped {
 
   & .card__front {
-    border: 4px solid #2196f3;
+    box-shadow: inset 0 0 0px 2px #2196f3;
+    background-color: #fafafa;
   }
 }
 
@@ -87,12 +81,20 @@
   display: none;
 }
 
+.card.shown {
+
+  & .card__image-wrapper_first {
+    display: inline;
+  }
+}
+
 .card__image {
   width: 100px;
   height: auto;
 }
 
 .card__front {
+  padding: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;

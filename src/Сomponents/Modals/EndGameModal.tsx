@@ -1,4 +1,5 @@
 import React from 'react';
+import shortid from 'shortid';
 import styles from '../Savannah/Savannah.module.scss';
 import { WordsType } from '../Savannah/types';
 import WrongAnswerList from '../Savannah/WrongAnswerList';
@@ -26,7 +27,7 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
               <>
                 <span style={{ color: '#E10050' }}>ОШИБОК: {wrongAnswers.length}</span>
                 {wrongAnswers.map((word) => (
-                  <WrongAnswerList word={word} key={word.id} />
+                  <WrongAnswerList word={word} key={shortid()} />
                 ))}
               </>
             ) : null}
@@ -41,7 +42,7 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
                   ЗНАЮ: {rightAnswers.length}
                 </span>
                 {rightAnswers.map((word) => (
-                  <WrongAnswerList word={word} key={word.id} />
+                  <WrongAnswerList word={word} key={shortid()} />
                 ))}
               </>
             ) : null}

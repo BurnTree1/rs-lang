@@ -134,7 +134,7 @@ class MemoryGame extends React.Component<IProps, IState> {
   animationCheck = (currentCard: ICard): boolean => {
     const { firstCard, secondCard } = this.state;
     if (firstCard && secondCard) {
-      if (firstCard.image === secondCard.image && firstCard.image === currentCard.image) {
+      if (firstCard.id === secondCard.id && firstCard.id === currentCard.id) {
         setTimeout(() => {
           this.setState({
             firstCard: null,
