@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import useSound from 'use-sound';
 import {
   word,
   nextWord,
@@ -24,6 +25,11 @@ import { Spacemen } from './Spacemen/Spacemen';
 import { TopPanel } from './TopPanel/TopPanel';
 import EndGameModal from '../../Modals/EndGameModal';
 import GamePauseModal from '../../Modals/GamePauseModal';
+import { URL_API } from '../../../helpers';
+// @ts-ignore
+import correct from '../../../assets/sounds/sprint-correct.mp3';
+// @ts-ignore
+import wrong from '../../../assets/sounds/sprint-wrong.wav';
 
 export const Sprint: FC = () => {
   const words = useSelector(wordsArr);
@@ -37,6 +43,9 @@ export const Sprint: FC = () => {
   const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [play] = useSound(`${URL_API}/${learnedWord.audio}`);
+  const playCorrect = new Audio(correct);
+  const playWrong = new Audio(wrong);
   const { random, randomIndex } = useRandom(words.length);
   useEffect(() => {
     if (random > 0.6) {
@@ -47,10 +56,15 @@ export const Sprint: FC = () => {
   }, [learnedWord]);
   const onTranslationConfirm = useCallback(
     (isRight: boolean) => {
+      if ((learnedWord.wordTranslate === translatedWord) === isRight) {
+        playCorrect.play();
+      } else {
+        playWrong.play();
+      }
       dispatch(setScore(isRight));
       dispatch(nextWord(learnedWord.word));
     },
-    [learnedWord.word, dispatch]
+    [learnedWord.word, translatedWord, dispatch]
   );
   const onAnswerSelect = useCallback(
     (e: KeyboardEvent): void => {
@@ -102,11 +116,13 @@ export const Sprint: FC = () => {
           <img src={arrow} alt="arrow" className={styles.arrow} />
           <img src={arrow} alt="arrow" className={styles.arrow} />
         </div>
-        <img src={volume} alt="volume" className={styles.volume} />
+        <button type="button" onClick={() => play()} className={styles.volume__btn}>
+          <img src={volume} alt="volume" className={styles.volume} />
+        </button>
         <div className={styles.score}>
           Score<span>{gameScore}</span>
         </div>
-        <Timer finished={finished} gameIsDone={gameIsDone}/>
+        <Timer finished={finished} gameIsDone={gameIsDone} />
       </div>
       <TopPanel setGameIsPaused={setGameIsPaused} />
       {gameIsPaused && (

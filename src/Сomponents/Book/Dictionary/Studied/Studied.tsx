@@ -9,6 +9,7 @@ import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import Card from "../../Common/WordItem/WordItem";
 import { setType } from "../../../../store/reducers/book";
+import { StudiedStatistics } from "./StudiedStatistics";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -56,7 +57,7 @@ export const Studied = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.studied}/>
-      <h3>Stud</h3>
+      <StudiedStatistics/>
       {pagination}
       {cards}
       {pagination}

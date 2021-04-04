@@ -9,6 +9,7 @@ import Card from "../../Common/WordItem/WordItem";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import { setType } from "../../../../store/reducers/book";
+import { GamesSection } from "../../Page/GamesSection/GamesSection";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -59,7 +60,7 @@ export const Difficult = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.difficult}/>
-      <h3>Stud</h3>
+      <GamesSection words={words}/>
       {pagination}
       {cards}
       {pagination}

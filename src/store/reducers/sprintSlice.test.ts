@@ -97,7 +97,7 @@ test('set score for game', () => {
 test('set game is over', () => {
   const newState = sprintSlice.reducer(
     state,
-    sprintSlice.actions.gameOver()
+    sprintSlice.actions.gameOver(true)
   );
   expect(newState.isFinished).toBe(true);
 });

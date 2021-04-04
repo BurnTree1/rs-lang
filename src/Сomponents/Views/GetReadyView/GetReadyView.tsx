@@ -3,7 +3,7 @@ import { useSpring, animated } from 'react-spring';
 import styles from '../../Savannah/Savannah.module.scss';
 
 type Props = {
-  setGameStatus: Dispatch<SetStateAction<{ startView: boolean; getReadyView: boolean; settingsView: boolean }>>;
+  setGameStatus?: Dispatch<SetStateAction<{ startView: boolean; getReadyView: boolean; settingsView: boolean }>>;
 };
 const GetReadyView: React.FC<Props> = ({ setGameStatus }) => {
   const EllipseProps = useSpring({
@@ -12,7 +12,7 @@ const GetReadyView: React.FC<Props> = ({ setGameStatus }) => {
     reset: true,
     config: { duration: 4000 },
     onRest: () => {
-      setGameStatus((prevState) => ({
+      setGameStatus && setGameStatus((prevState) => ({
         ...prevState,
         getReadyView: false,
       }));

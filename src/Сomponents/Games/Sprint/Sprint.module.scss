@@ -80,14 +80,6 @@
   }
 }
 
-.volume {
-    position: absolute;
-    top: 43px;
-    right: 20px;
-    z-index: 1;
-    cursor: pointer;
-}
-
 .points {
   text-align: center;
   padding-top: 15px;
@@ -108,6 +100,17 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.volume__btn {
+  position: absolute;
+  top: 43px;
+  right: 20px;
+  z-index: 1;
+  cursor: pointer;
+  border: 0;
+  background: none;
+  outline: none;
 }
 
 .overlay {
