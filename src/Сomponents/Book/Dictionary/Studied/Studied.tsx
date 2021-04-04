@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get, map } from "lodash";
 import { CircularProgress } from "@material-ui/core";
-import { urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
+import { useDispatch } from "react-redux";
+import { PAGE_STUDIED, urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
 import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import Card from "../../Common/WordItem/WordItem";
+import { setType } from "../../../../store/reducers/book";
 import { StudiedStatistics } from "./StudiedStatistics";
 
 export const Studied = () => {
@@ -18,6 +20,12 @@ export const Studied = () => {
 
   const [words, setWords] = useState([])
   const [pagesCount, setPagesCount] = useState(1)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setType(PAGE_STUDIED))
+  }, [])
 
   useEffect(() => {
     setIsLoaded(false);

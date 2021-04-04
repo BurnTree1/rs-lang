@@ -11,6 +11,7 @@ import { setAudioWords } from '../../../../store/reducers/audioSlice';
 import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
 import Settings from "../Setting/Settings";
 import { bookSections } from '../../../../helpers/constants';
+import { isAuth } from "../../../../helpers";
 
 type PropsType = {
     words: object
@@ -32,9 +33,6 @@ export const GamesSection: FC<PropsType> = ({ words }) => {
         <div className={styles.games__content}>
         <div className={styles.level}><span>{level} Уровень</span><img src={image} alt="planets" className={styles.games__icon}/>
         </div>
-        <div className={styles.settings}>
-        <Settings/>
-        </div>
         <h2 className={styles.title}>Попробуй эту страницу с игрой:</h2>
         <div className={styles.games__inner}>
             <div className={styles.games__item}>
@@ -52,6 +50,9 @@ export const GamesSection: FC<PropsType> = ({ words }) => {
             <div className={styles.games__item}>
                 <img src={item4} alt="my game" className={styles.item__img}/>
                 <Link onClick={onWordsSet} to='/my-game'>Memory Game</Link>
+            </div>
+            <div className={styles.settings}>
+                {isAuth && <Settings/>}
             </div>
         </div>
         </div>

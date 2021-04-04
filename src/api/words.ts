@@ -71,7 +71,8 @@ export const userAggregateWords = {
     });
   },
   getForBook(group: number, pageId: number) {
-    return this.get(group, null, WORD_PER_PAGE, and(choosePage(pageId), isDeleted(null)))
+    return userAggregateWords.get(group, null, WORD_PER_PAGE, and(choosePage(pageId), isDeleted(null)))
+      .then(({ data }) => ({ data: data[0].paginatedResults }))
   },
   getForStudied(group: number, pageId: number) {
     return this.get(group, pageId, WORD_PER_PAGE, or(isStudied(true), isHard(true)))
