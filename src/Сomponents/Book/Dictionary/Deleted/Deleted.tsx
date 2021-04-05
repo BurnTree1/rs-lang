@@ -10,6 +10,7 @@ import Card from "../../Common/WordItem/WordItem";
 import Pagination from "../../Common/PaginationComponent";
 import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { setType } from "../../../../store/reducers/book";
+import { Footer } from "../../../Footer/Footer";
 
 export const Deleted = () => {
 
@@ -66,6 +67,7 @@ export const Deleted = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 }

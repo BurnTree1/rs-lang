@@ -10,6 +10,7 @@ import Pagination from "../../Common/PaginationComponent";
 import Card from "../../Common/WordItem/WordItem";
 import { setType } from "../../../../store/reducers/book";
 import { StudiedStatistics } from "./StudiedStatistics";
+import { Footer } from "../../../Footer/Footer";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -61,6 +62,7 @@ export const Studied = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 };

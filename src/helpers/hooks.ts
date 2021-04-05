@@ -28,18 +28,16 @@ export const useRandomPage = () => {
   return Math.floor(Math.random() * MAX_PAGE);
 };
 
-export const useIconsArray = (gameScore: number) => {
+export const useIconsArray = (points: number) => {
   const array = [cosmo_1, cosmo_2, cosmo_3, cosmo_4];
-  if (gameScore >= 200) {
+  if (points === 80) {
     array.length = 4;
-  } else if (gameScore >= 100) {
+  } else if (points === 40) {
     array.length = 3;
-  } else if (gameScore >= 40) {
+  } else if (points === 20) {
     array.length = 2;
-  } else if (gameScore >= 20) {
+  } else if (points === 10) {
     array.length = 1;
-  } else if (gameScore < 20) {
-    array.length = 0;
   }
   return array;
 };

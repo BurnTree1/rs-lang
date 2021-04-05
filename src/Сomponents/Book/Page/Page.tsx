@@ -12,6 +12,7 @@ import { COUNT_SECTION_PAGES, isAuth, PAGE_BOOK, urlPrefix } from "../../../help
 import Pagination from "../Common/PaginationComponent";
 import { GamesSection } from "./GamesSection/GamesSection";
 import styles from "./Page.module.scss";
+import { Footer } from "../../Footer/Footer";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -61,6 +62,7 @@ const Page: FC = () => {
     {pagination}
     {cards}
     {pagination}
+    <Footer/>
   </div>;
 };
 

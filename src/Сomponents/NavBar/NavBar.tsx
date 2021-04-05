@@ -206,7 +206,7 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Выход"/>
             </ListItem>
           </NavLink>}
-          <ListItem>
+          <ListItem className='avatar'>
             <img src={imageUrl} alt="avatar"/>
           </ListItem>
         </List>

@@ -9,3 +9,11 @@
 .app .active .MuiTypography-displayBlock {
     font-weight: bold;
 }
+
+.app .avatar {
+    position: absolute;
+    top: -68px;
+    left: 0;
+    width: 70px;
+    height: 70px;
+}
