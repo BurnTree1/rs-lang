@@ -1,45 +1,11 @@
 import React from "react";
 import shortid from "shortid";
-import { IGameStatistic } from "./dayStatistic.model";
-import item1 from '../../../../assets/image/game-item1.svg'
-import item2 from '../../../../assets/image/game-item2.svg'
-import item3 from '../../../../assets/image/game-item3.svg'
-import item4 from '../../../../assets/image/game-item4.svg'
 import { GameStatistic } from "./GameStatistic/GameStatistic";
 import styles from './DayStatistics.module.scss';
+import { IGamesStatistics } from "../../../../models/common.models";
+import { getGameStatistics } from "./dayStatistic.helpers";
 
-export const DayStatistics = () => {
-  const gameStatisticsList: IGameStatistic[] = [
-    {
-      title: 'Саванна',
-      logo: item1,
-      learnedWords: 1000,
-      rightAttempts: 1000,
-      longestLine: 1000,
-    },
-    {
-      title: 'Спринт',
-      logo: item2,
-      learnedWords: 1000,
-      rightAttempts: 1000,
-      longestLine: 1000,
-    },
-    {
-      title: 'Аудиовызов',
-      logo: item3,
-      learnedWords: 1000,
-      rightAttempts: 1000,
-      longestLine: 1000,
-    },
-    {
-      title: 'Memory Game',
-      logo: item4,
-      learnedWords: 1000,
-      rightAttempts: 1000,
-      longestLine: 1000,
-    },
-  ];
-  return (
+export const DayStatistics: React.FC<{statistics: { [k: string]: IGamesStatistics; }}> = ({ statistics }) => (
     <div className={styles.wrapper}>
       <header className={styles.header}>
         <h2 className={styles.title}>Статистика дня</h2>
@@ -60,7 +26,7 @@ export const DayStatistics = () => {
       </header>
       <div className={styles.main}>
         <div className={styles.gamesStatistics}>
-          {gameStatisticsList.map((item) => (
+          {getGameStatistics(statistics).map((item) => (
             <div key={shortid()} className={styles.gamesStatistics__game}>
               <GameStatistic {...item} />
             </div>
@@ -69,4 +35,3 @@ export const DayStatistics = () => {
       </div>
     </div>
   );
-};

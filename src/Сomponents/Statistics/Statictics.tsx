@@ -1,30 +1,29 @@
-import React, { useEffect } from "react";
-import { userStatistics } from "../../api/statistics";
+import React, { useEffect, useState } from "react";
+import { IGamesStatistics } from "../../models/common.models";
+import { StatisticsService } from "../../services/statistics.service";
 import { DayStatistics } from "./components/DayStatistics/DayStatistics";
 import { LongStatistics } from "./components/LongStatistics/LongStatistics";
 import styles from './Statistics.module.scss';
 
-export const Statistics = () => {
+export const Statistics: React.FC<{ service: StatisticsService }> = ({ service }) => {
+  const [gameStatistics, setGameStatistics] = useState<{ [k: string]: IGamesStatistics; } | null>();
+
   useEffect(() => {
     const getData = async () => {
       try {
-        const statistics = await userStatistics.get();
-        console.log(statistics);
+        const statistics = await service.getGameStatistics();
+        setGameStatistics(statistics);
       } catch (e) {
         console.log(e);
       }
     };
 
     getData();
-  });
+  }, [service]);
 
-  const addStatistics = () => {
-    userStatistics.put();
-  };
   return (
       <div className={styles.statistics}>
-        <button type="button" onClick={addStatistics}>Submit</button>
-        <DayStatistics />
+        {gameStatistics && <DayStatistics statistics={gameStatistics} />}
         <LongStatistics />
       </div>
     )

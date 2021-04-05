@@ -1,5 +1,6 @@
 import axios from "axios";
 import { URL_API, token, userId } from "../helpers";
+import { IStatistics } from "../models/common.models";
 
 export const userStatistics = {
   get() {
@@ -13,7 +14,7 @@ export const userStatistics = {
       url: `${URL_API}/users/${userId}/statistics`,
     });
   },
-  put() {
+  put(value: IStatistics) {
     return axios({
       method: "PUT",
       headers: {
@@ -22,12 +23,7 @@ export const userStatistics = {
         "Content-Type": "application/json"
       },
       url: `${URL_API}/users/${userId}/statistics`,
-      data: {
-        learnedWords: 0,
-        optional: {
-          learnedWords: 10,
-        }
-      },
+      data: value
     });
   }
 };

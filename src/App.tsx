@@ -15,9 +15,11 @@ import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
 import { getUserData } from './store/reducers/authorizationSlice';
 import { PAGE_AUTH } from "./helpers";
 import Auth from "./Сomponents/Auth/Auth";
+import { StatisticsService } from './services/statistics.service';
 
 export function App() {
   const dispatch = useDispatch()
+  const statisticsService = new StatisticsService();
 
   useEffect(() => {
     dispatch(getUserData())
@@ -31,7 +33,7 @@ export function App() {
           <Route path="/dictionary" component={DictionaryRoute}/>
 
           <Route path="/statistics">
-            <Statistics/>
+            <Statistics service={statisticsService} />
           </Route>
 
           <Route path="/settings">
