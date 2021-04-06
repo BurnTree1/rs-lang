@@ -56,7 +56,7 @@ const WordItem: FC<WordType> = ({
     .toLowerCase()
     .split(' ')
     .map((w) =>
-      w === word ? (
+      w.toLowerCase().includes(word.toLowerCase()) ? (
         <span key={w} className={styles.word__bold}>
           {w}
         </span>
@@ -68,7 +68,7 @@ const WordItem: FC<WordType> = ({
     .toLowerCase()
     .split(' ')
     .map((w) =>
-      w === word ? (
+    w.toLowerCase().includes(word.toLowerCase()) ? (
         <span key={w} className={styles.word__bold}>
           {w}
         </span>

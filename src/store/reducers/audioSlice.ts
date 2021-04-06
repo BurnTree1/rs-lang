@@ -35,6 +35,7 @@ export const audioSlice = createSlice({
   initialState,
   reducers: {
     setAudioWords: (state, { payload: words }) => {
+      state.hasDifficulty = false
       state.wordsArr = []
       state.correctAnswers = []
       state.wrongAnswers = []
@@ -45,7 +46,6 @@ export const audioSlice = createSlice({
       }
       state.word = { ...state.wordsArr[0] }
       state.next = { ...state.wordsArr[1] }
-      state.hasDifficulty = false
     },
     nextWord: (state, { payload: word }) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === word.word);
@@ -74,6 +74,9 @@ export const audioSlice = createSlice({
     audioGameOver: (state, { payload: finished }) => {
       state.isFinished = finished;
     },
+    setToWrongWords: (state, { payload: word }) => {
+      state.wrongAnswers = [...state.wrongAnswers, state.word]
+    }
   },
 });
 
@@ -88,7 +91,7 @@ export function fetchAllAudioWords(g: number,p: number) {
 
 const { actions, reducer } = audioSlice;
 
-export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords } = actions;
+export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords, setToWrongWords } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;

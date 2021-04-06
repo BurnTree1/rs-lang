@@ -8,6 +8,7 @@ type PropsType = {
     children: ReactNode
     setIsGameStarted: (value: boolean)=> void
     difficultType: string
+    isGameStarted?: boolean
   }
 export const GameLayer: FC<PropsType> = (props) => {
   const LOADER_TIME = 3;
@@ -32,7 +33,7 @@ export const GameLayer: FC<PropsType> = (props) => {
                setGameLoader(false);
           }
         },4000)
-      }, [gameLoader, loaderSec, props]);
+      }, [gameLoader, loaderSec]);
       const onGameStart = () => {
         setStartGame(false);
         setIsGameSetings(true);
@@ -41,6 +42,9 @@ export const GameLayer: FC<PropsType> = (props) => {
         setIsGameSetings(false)
         setGameLoader(true) 
       }
+      useEffect(() => {
+        setStartGame(!props.isGameStarted)
+      }, [props.isGameStarted]);
     return (
         <div>
         {startGame && (

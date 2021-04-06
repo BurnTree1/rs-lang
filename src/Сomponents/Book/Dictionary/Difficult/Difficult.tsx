@@ -10,6 +10,7 @@ import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import { setType } from "../../../../store/reducers/book";
 import { GamesSection } from "../../Page/GamesSection/GamesSection";
+import { Footer } from "../../../Footer/Footer";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,6 +65,7 @@ export const Difficult = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 };

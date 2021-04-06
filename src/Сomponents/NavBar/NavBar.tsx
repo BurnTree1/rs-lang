@@ -17,6 +17,7 @@ import {
 import { useSelector , useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import { authImageSelector } from '../../store/reducers/authorizationSlice';
+import user from '../../assets/image/user.png'
 import "./NavBar.css";
 import { isAuth, PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
 import { clearWords } from "../../store/reducers/memoryGameSlice";
@@ -206,8 +207,8 @@ export const NavBar: FC<PropsType> = (props) => {
               <ListItemText primary="Выход"/>
             </ListItem>
           </NavLink>}
-          <ListItem>
-            <img src={imageUrl} alt="avatar"/>
+          <ListItem className='avatar'>
+            { isAuth && imageUrl ? <img src={imageUrl} alt="avatar"/> : <img src={user} alt="avatar"/>}
           </ListItem>
         </List>
       </Drawer>

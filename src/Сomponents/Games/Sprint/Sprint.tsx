@@ -31,7 +31,10 @@ import correct from '../../../assets/sounds/sprint-correct.mp3';
 // @ts-ignore
 import wrong from '../../../assets/sounds/sprint-wrong.wav';
 
-export const Sprint: FC = () => {
+type PropsType = {
+  submitGameOver: ()=> void
+}
+export const Sprint: FC<PropsType> = ({ submitGameOver }) => {
   const words = useSelector(wordsArr);
   const learnedWord = useSelector(word);
   const translatedWord = useSelector(translation);
@@ -54,6 +57,11 @@ export const Sprint: FC = () => {
       dispatch(setTranslated(words[randomIndex].wordTranslate));
     }
   }, [learnedWord]);
+  useEffect(() => {
+    if(gameIsDone) {
+      submitGameOver()
+    }
+  }, [gameIsDone]);
   const onTranslationConfirm = useCallback(
     (isRight: boolean) => {
       if ((learnedWord.wordTranslate === translatedWord) === isRight) {
@@ -133,7 +141,7 @@ export const Sprint: FC = () => {
       {(gameIsDone || finished) && (
         <>
           <div className={styles.overlay} />
-          <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} />
+          <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} submit={submitGameOver}/>
         </>
       )}
     </div>
