@@ -83,8 +83,8 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
     }));
     if(difficulty) {
       dispatch(fetchAllWords(values.section, randomPage))
-      dispatch(setSprintDifficult(values.difficult))
     }
+    dispatch(setSprintDifficult(values.difficult))
     dispatch(gameOver(false))
     dispatch(audioGameOver(false))
     if(path === '/audio') {
