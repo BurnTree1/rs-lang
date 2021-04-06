@@ -15,13 +15,17 @@ import DictionaryRoute from "./Сomponents/Book/Dictionary/DictionaryRoute";
 import { getUserData } from './store/reducers/authorizationSlice';
 import { PAGE_AUTH } from "./helpers";
 import Auth from "./Сomponents/Auth/Auth";
+import { settingsApi } from "./api/settings";
+import { setSettings } from "./store/reducers/settings";
 
 export function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(getUserData())
+    settingsApi.get().then(({ data: { optional } }) => dispatch(setSettings(optional)))
   }, [dispatch])
+
   return (
     <div className="app">
       <AppWrapper>

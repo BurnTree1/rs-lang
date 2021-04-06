@@ -2,10 +2,12 @@ import React, { FC } from 'react';
 import _ from 'lodash';
 import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
+import { useSelector } from "react-redux";
 import ActionButtons from './ActionButtons';
 import { URL_API, isAuth } from '../../../../helpers';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
+import { isNeedTranslate, isNeedMeaningTranslate } from "../../../../store/reducers/settings";
 
 type WordType = {
   _id: string;
@@ -42,11 +44,14 @@ const WordItem: FC<WordType> = ({
   userWord,
   refresh
 }) => {
+  const isShowTranslate = useSelector(isNeedTranslate);
+  const isShowMeaningTranslate = useSelector(isNeedMeaningTranslate);
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
-  const isDeleted = _.get(userWord, ['optional', 'isDeleted'], false);
+
   const [playWord] = useSound(`${URL_API}/${audio}`);
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);
   const [playExample] = useSound(`${URL_API}/${audioExample}`);
+
   const meaning = textMeaning
     .toLowerCase()
     .split(' ')
@@ -88,14 +93,14 @@ const WordItem: FC<WordType> = ({
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            <div className={styles.word__translation}>{wordTranslate}</div>
+            {isShowTranslate && <div className={styles.word__translation}>{wordTranslate}</div>}
             <div className={styles.word__mean}>
               <div className={styles.word__inner}>{meaning}</div>
               <button onClick={() => playExplain()} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            <div className={styles.word__explain}>{textMeaningTranslate}</div>
+            {isShowMeaningTranslate && <div className={styles.word__explain}>{textMeaningTranslate}</div>}
             <div className={styles.word__mean}>
             <div className={styles.word__inner}>{examples}</div>
               <button onClick={() => playExample()} type="button" className={styles.listen}>
