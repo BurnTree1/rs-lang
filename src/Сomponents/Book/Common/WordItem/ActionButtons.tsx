@@ -7,17 +7,20 @@ import { userWords } from "../../../../api";
 import { setWord, deleteWord, pageType } from "../../../../store/reducers/book";
 import styles from "./WordItem.module.scss";
 import { PAGE_DELETED, PAGE_HARD, PAGE_STUDIED } from "../../../../helpers";
+import { isNeedHardButton, isNeedDeleteButton } from "../../../../store/reducers/settings";
 
-const ActionButtons: FC<{ id: string, isHard: boolean, refresh?: () => void }> = ({ id, isHard , refresh }) => {
+const ActionButtons: FC<{ id: string, isHard: boolean, refresh?: () => void }> = ({ id, isHard, refresh }) => {
   const { sectionId, pageId = "1" } = useParams();
   const dispatch = useDispatch();
   const typePage = useSelector(pageType);
+  const isShowHard = useSelector(isNeedHardButton);
+  const isShowDelete = useSelector(isNeedDeleteButton);
 
   const setParamsWithCallback = (params: object, callback?: () => void) => {
     userWords.makeUserWord(id, params)
       .then(({ status }) => {
         if (status === 200 && callback)
-            callback();
+          callback();
       });
   };
 
@@ -36,26 +39,26 @@ const ActionButtons: FC<{ id: string, isHard: boolean, refresh?: () => void }> =
   const revertHard = () => {
     const params = { isStudied: true };
     setParamsWithCallback(params, refresh);
-  }
+  };
 
   const revertDeleted = () => {
     const params = {};
     setParamsWithCallback(params, refresh);
-  }
+  };
 
   const hardMark = <b className={styles.actions__difficult}>Сложное</b>;
 
-  const hardButton = <Tooltip key="hard" title="Пометить как 'сложное'">
+  const hardButton = isShowHard ? <Tooltip key="hard" title="Пометить как 'сложное'">
     <IconButton onClick={makeHard} color="primary">
       <ErrorOutlined/>
     </IconButton>
-  </Tooltip>;
+  </Tooltip> : null;
 
-  const deleteButton = <Tooltip key="delete" title="Удалить слово">
+  const deleteButton = isShowDelete ? <Tooltip key="delete" title="Удалить слово">
     <IconButton onClick={makeDeleted} color="secondary">
       <BlockOutlined/>
     </IconButton>
-  </Tooltip>;
+  </Tooltip> : null;
 
   switch (typePage) {
     case PAGE_HARD:
