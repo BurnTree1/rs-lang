@@ -48,7 +48,6 @@ const Page: FC = () => {
         : <CircularProgress/>
     , [words, isLoaded]
   );
-
   const pagination = useMemo(() =>
       <Pagination prefix={urlPrefix.book}
                   sectionId={sectionId}

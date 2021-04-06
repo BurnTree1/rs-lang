@@ -14,6 +14,10 @@ import StartView from '../Views/StartView/StartView';
 import GetReadyView from '../Views/GetReadyView/GetReadyView';
 import SettingsView from '../Views/SettingsView/SettingsView';
 import GamePauseModal from '../Modals/GamePauseModal';
+// @ts-ignore
+import correct from '../../assets/sounds/sprint-correct.mp3';
+// @ts-ignore
+import wrong from '../../assets/sounds/sprint-wrong.wav';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
@@ -37,6 +41,8 @@ const Savannah = () => {
     getReadyView: true,
     settingsView: true,
   });
+  const playCorrect = new Audio(correct);
+  const playWrong = new Audio(wrong);
 
   useEffect(()=> {
     dispatch(setHasDifficulty())
@@ -47,7 +53,7 @@ const Savannah = () => {
     newWords.push(words[currentLevel]);
     setCurrentWords(shuffleArray(newWords));
     setCurrentAnswer(words[currentLevel].wordTranslate);
-  }, [currentLevel]);
+  }, [currentLevel, words]);
 
   useEffect(() => {
     if (livesLeft === 0) setGameIsDone(true);
@@ -66,12 +72,14 @@ const Savannah = () => {
     setWrongAnswers((prevState: any) => [...prevState, words[currentLevel]]);
   };
 
-  const checkAnswer = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
-    const word = e.currentTarget.textContent;
-    if (word && word.slice(2) !== currentAnswer) {
+  const checkAnswer = (variant: string) => {
+    const word = variant;
+    if (word !== currentAnswer) {
       setHearth();
+      playWrong.play();
     } else {
       setRightAnswers((prevState: any) => [...prevState, words[currentLevel]]);
+      playCorrect.play();
     }
     setNextLevel();
   };
@@ -79,6 +87,27 @@ const Savannah = () => {
   const onClose = () => {
     setGameIsPaused(true);
   };
+
+  const onFullScreen = () => {
+    const doc = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen(): Promise<void>;
+    };
+    if (doc.webkitRequestFullscreen) {
+      doc.webkitRequestFullscreen();
+    }
+  }
+
+  const onCloseGame = () => {
+    setGameIsPaused(false)
+    setGameIsDone(false)
+    setGameView((prevState) => ({
+      ...prevState,
+      startView: true,
+      settingsView: true,
+      getReadyView: true
+    }))
+    dispatch(setHasDifficulty())
+  }
 
   const conditionalRender = () => {
     if (gameView.startView) return <StartView setGameStatus={setGameView} />;
@@ -91,7 +120,8 @@ const Savannah = () => {
           <div className={styles.heartsContainer}>
             <HeartsWidget livesCount={livesCount} livesLeft={livesLeft} />
           </div>
-          <FullScreenIcon className={styles.fullscreenIcon} />
+          <FullScreenIcon onClick={onFullScreen} className={styles.fullscreenIcon} />
+          <CloseIcon className={styles.close} onClick={onClose} />
         </div>
         <Word
           gameIsPaused={gameIsPaused}
@@ -113,17 +143,16 @@ const Savannah = () => {
   return (
     <div className={styles.gameContainer}>
       {conditionalRender()}
-      <CloseIcon className={styles.close} onClick={onClose} />
       {gameIsPaused && (
         <>
           <div className={styles.overlay} />
-          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} />
+          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} onCloseGame={onCloseGame}/>
         </>
       )}
       {gameIsDone && (
         <>
           <div className={styles.overlay} />
-          <EndGameModal wrongAnswers={wrongAnswers} rightAnswers={rightAnswers} />
+          <EndGameModal wrongAnswers={wrongAnswers} rightAnswers={rightAnswers} submit={onCloseGame}/>
         </>
       )}
     </div>

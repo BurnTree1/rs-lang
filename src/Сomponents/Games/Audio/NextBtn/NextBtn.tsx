@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import next from '../../../../assets/image/next.svg';
-import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, word, wrongAnswers } from '../../../../store/reducers/audioSlice';
+import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, setToWrongWords, word, wrongAnswers } from '../../../../store/reducers/audioSlice';
 import EndGameModal from '../../../Modals/EndGameModal';
 import GamePauseModal from '../../../Modals/GamePauseModal';
 import { TopPanel } from '../../Sprint/TopPanel/TopPanel';
 import styles from './NextBtn.module.scss'
 
-export const NextBtn = () => {
+type PropsType = {
+  submitGameOver: ()=> void
+}
+export const NextBtn: FC<PropsType> = ({ submitGameOver }) => {
   const dispatch = useDispatch();
   const learnedWord = useSelector(word);
   const answered = useSelector(isAnswered);
@@ -22,7 +25,13 @@ export const NextBtn = () => {
   };
   const onAnswer = () => {
     dispatch(setAnswered(true));
+    dispatch(setToWrongWords(learnedWord))
   };
+  useEffect(() => {
+    if(gameIsDone) {
+      submitGameOver()
+    }
+  }, [gameIsDone]);
   return (
     <div className={styles.next}>
       {answered ? (
@@ -40,10 +49,10 @@ export const NextBtn = () => {
           <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} />
         </div>
       )}
-      {(gameIsDone || finished) && (
+      {finished && (
         <>
           <div className={styles.overlay} />
-          <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} />
+          <EndGameModal wrongAnswers={wrongWords} rightAnswers={correctWords} submit={submitGameOver}/>
         </>
       )}
     </div>
