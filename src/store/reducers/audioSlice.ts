@@ -27,7 +27,8 @@ const initialState = {
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
   isAnswered: false,
-  hasDifficulty: true
+  hasDifficulty: true,
+  longestSeries: 0,
 };
 
 export const audioSlice = createSlice({
@@ -67,8 +68,10 @@ export const audioSlice = createSlice({
     makeAnswer: (state, { payload: word }) => {
       if (state.word.wordTranslate === word) {
         state.correctAnswers = [...state.correctAnswers, state.word]
+        state.longestSeries += 1
       } else {
         state.wrongAnswers = [...state.wrongAnswers, state.word]
+        state.longestSeries = 0
       }
     },
     audioGameOver: (state, { payload: finished }) => {
@@ -102,5 +105,6 @@ export const isAnswered = (state: RootState) => state.audio.isAnswered;
 export const correctAnswers = (state: RootState) => state.audio.correctAnswers;
 export const wrongAnswers = (state: RootState) => state.audio.wrongAnswers;
 export const hasDifficulty = (state: RootState) => state.audio.hasDifficulty;
+export const longestSeries = (state: RootState) => state.audio.longestSeries;
 
 export default reducer;

@@ -12,11 +12,11 @@ import { formatTime, generateCards, getWord } from '../../my-game.helpers';
 import { Games, IGamesStatistics, IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
 import GamePauseModal from '../../../../Modals/GamePauseModal';
-import { WinModal } from '../WinModal/WinModal';
 import { clearWords } from '../../../../../store/reducers/memoryGameSlice';
-import './game.scss';
 import EndGameModal from '../../../../Modals/EndGameModal';
 import { StatisticsService } from '../../../../../services/statistics.service';
+import { getPercents } from '../../../../../helpers/statistics';
+import './game.scss';
 
 const DEFAULT_SETTINGS: ISettings = {
   width: 6,
@@ -276,7 +276,7 @@ class MemoryGame extends React.Component<IProps, IState> {
 
   saveStatistics() {
     const { rightAnswersCount, cards, wrongAnswers, longestSeries } = this.state;
-    const rightAnswersPercents = Math.ceil(rightAnswersCount / (rightAnswersCount + wrongAnswers.length)) * 100;
+    const rightAnswersPercents = getPercents(rightAnswersCount, wrongAnswers.length);
     const data: IGamesStatistics = {
       learnedWords: cards.length / 2,
       rightAnswers: rightAnswersPercents ,

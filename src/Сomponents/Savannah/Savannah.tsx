@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllWords, setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
+import { setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
@@ -14,6 +14,9 @@ import StartView from '../Views/StartView/StartView';
 import GetReadyView from '../Views/GetReadyView/GetReadyView';
 import SettingsView from '../Views/SettingsView/SettingsView';
 import GamePauseModal from '../Modals/GamePauseModal';
+import { sendStatistics } from '../../helpers/statistics';
+import { Games } from '../../models/common.models';
+import { serviceContext } from '../../contexts/ServiceContext';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
@@ -38,6 +41,22 @@ const Savannah = () => {
     settingsView: true,
   });
 
+  const [longestSeries, setLongesSeries] = useState<number>(0);
+  const { service } = useContext(serviceContext);
+
+  const sendStat = useCallback(
+    () => {
+      sendStatistics({
+        name: Games.savannah,
+        service,
+        rightAnswers: rightAnswers.length,
+        wrongAnswers: wrongAnswers.length,
+        longestSeries
+      });
+    },
+    [service, rightAnswers, wrongAnswers, longestSeries]
+  );
+
   useEffect(()=> {
     dispatch(setHasDifficulty())
    },[])
@@ -50,12 +69,16 @@ const Savannah = () => {
   }, [currentLevel]);
 
   useEffect(() => {
-    if (livesLeft === 0) setGameIsDone(true);
-  }, [livesLeft]);
+    if (livesLeft === 0) {
+      setGameIsDone(true);
+      sendStat();
+    }
+  }, [livesLeft, sendStat]);
 
   const setNextLevel = () => {
     if (currentLevel === words.length - 1) {
       setGameIsDone(true);
+      sendStat();
       return;
     }
     setCurrentLevel((prevLevel) => prevLevel + 1);
@@ -69,8 +92,10 @@ const Savannah = () => {
   const checkAnswer = (e: React.SyntheticEvent<HTMLSpanElement, MouseEvent>) => {
     const word = e.currentTarget.textContent;
     if (word && word.slice(2) !== currentAnswer) {
+      setLongesSeries(0);
       setHearth();
     } else {
+      setLongesSeries(longestSeries + 1);
       setRightAnswers((prevState: any) => [...prevState, words[currentLevel]]);
     }
     setNextLevel();

@@ -16,6 +16,7 @@ import { getUserData } from './store/reducers/authorizationSlice';
 import { PAGE_AUTH } from "./helpers";
 import Auth from "./Сomponents/Auth/Auth";
 import { StatisticsService } from './services/statistics.service';
+import { serviceContext } from './contexts/ServiceContext';
 
 export function App() {
   const dispatch = useDispatch()
@@ -26,47 +27,49 @@ export function App() {
   }, [dispatch])
   return (
     <div className="app">
-      <AppWrapper>
-        <Switch>
-          <Route path="/book" component={BookRoute}/>
+      <serviceContext.Provider value={{ service: statisticsService }} >
+        <AppWrapper>
+          <Switch>
+            <Route path="/book" component={BookRoute}/>
 
-          <Route path="/dictionary" component={DictionaryRoute}/>
+            <Route path="/dictionary" component={DictionaryRoute}/>
 
-          <Route path="/statistics">
-            <Statistics service={statisticsService} />
-          </Route>
+            <Route path="/statistics">
+              <Statistics service={statisticsService} />
+            </Route>
 
-          <Route path="/settings">
-            <Settings/>
-          </Route>
+            <Route path="/settings">
+              <Settings/>
+            </Route>
 
-          <Route path="/savannah">
-            <Savannah/>
-          </Route>
+            <Route path="/savannah">
+              <Savannah />
+            </Route>
 
-          <Route path="/audio">
-            <AudioContainer/>
-          </Route>
+            <Route path="/audio">
+              <AudioContainer/>
+            </Route>
 
-          <Route path="/sprint">
-            <SprintContainer/>
-          </Route>
+            <Route path="/sprint">
+              <SprintContainer />
+            </Route>
 
-          <Route path="/my-game">
-            <MyGame/>
-          </Route>
+            <Route path="/my-game">
+              <MyGame/>
+            </Route>
 
-          <Route path={PAGE_AUTH} component={Auth}/>
+            <Route path={PAGE_AUTH} component={Auth}/>
 
-          <Route exact path="/">
-            <LandingPage/>
-          </Route>
+            <Route exact path="/">
+              <LandingPage/>
+            </Route>
 
-          <Route>
-            <div>404 Not Found</div>
-          </Route>
-        </Switch>
-      </AppWrapper>
+            <Route>
+              <div>404 Not Found</div>
+            </Route>
+          </Switch>
+        </AppWrapper>
+      </serviceContext.Provider>
     </div>
   );
 }

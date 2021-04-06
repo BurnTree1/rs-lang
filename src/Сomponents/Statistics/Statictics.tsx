@@ -23,7 +23,7 @@ export const Statistics: React.FC<{ service: StatisticsService }> = ({ service }
 
   return (
       <div className={styles.statistics}>
-        {gameStatistics && <DayStatistics statistics={gameStatistics} />}
+        <DayStatistics statistics={gameStatistics} />
         <LongStatistics />
       </div>
     )

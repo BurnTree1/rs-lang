@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useSound from 'use-sound';
 import {
@@ -30,6 +30,9 @@ import { URL_API } from '../../../helpers';
 import correct from '../../../assets/sounds/sprint-correct.mp3';
 // @ts-ignore
 import wrong from '../../../assets/sounds/sprint-wrong.wav';
+import { sendStatistics } from '../../../helpers/statistics';
+import { Games } from '../../../models/common.models';
+import { serviceContext } from '../../../contexts/ServiceContext';
 
 export const Sprint: FC = () => {
   const words = useSelector(wordsArr);
@@ -47,6 +50,9 @@ export const Sprint: FC = () => {
   const playCorrect = new Audio(correct);
   const playWrong = new Audio(wrong);
   const { random, randomIndex } = useRandom(words.length);
+  const [longestSeries, setLongesSeries] = useState<number>(0);
+  const { service } = useContext(serviceContext);
+
   useEffect(() => {
     if (random > 0.6) {
       dispatch(setTranslated(learnedWord.wordTranslate));
@@ -58,13 +64,14 @@ export const Sprint: FC = () => {
     (isRight: boolean) => {
       if ((learnedWord.wordTranslate === translatedWord) === isRight) {
         playCorrect.play();
+        setLongesSeries(longestSeries + 1);
       } else {
         playWrong.play();
       }
       dispatch(setScore(isRight));
       dispatch(nextWord(learnedWord.word));
     },
-    [learnedWord.word, translatedWord, dispatch]
+    [learnedWord.word, translatedWord, dispatch, setLongesSeries, longestSeries]
   );
   const onAnswerSelect = useCallback(
     (e: KeyboardEvent): void => {
@@ -76,15 +83,31 @@ export const Sprint: FC = () => {
     },
     [onTranslationConfirm]
   );
+
+  const sendStat = useCallback(
+    () => {
+      sendStatistics({
+        name: Games.sprint,
+        service,
+        rightAnswers: wrongWords.length,
+        wrongAnswers: correctWords.length,
+        longestSeries
+      });
+    },
+    [service, correctWords, wrongWords, longestSeries]
+  );
+
   useEffect(() => {
     document.addEventListener('keydown', onAnswerSelect);
     if (finished) {
+      sendStat();
       document.removeEventListener('keydown', onAnswerSelect);
     }
     return () => {
       document.removeEventListener('keydown', onAnswerSelect);
     };
   }, [learnedWord, finished, onAnswerSelect]);
+
   return (
     <div className={styles.sprint}>
       <div className={styles.board}>
