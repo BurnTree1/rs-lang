@@ -61,16 +61,12 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
   const path = useLocation().pathname
   const difficulty = useSelector(hasDifficulty)
   const randomPage = useRandomPage()
-  useEffect(()=> {
-    dispatch(fetchAllAudioWords(values.section, randomPage))
-  },[values])
   const onChange = (event: React.ChangeEvent<{}>, value: number | number[]) => {
     setValues((prevState) => ({
       ...prevState,
       section: value as number,
     }));
   };
-
   const onConfirm = () => {
     const currentDifficult = sections[values.section];
     setSettings({
@@ -83,15 +79,16 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
     }));
     if(difficulty) {
       dispatch(fetchAllWords(values.section, randomPage))
+      dispatch(fetchAllAudioWords(values.section, randomPage))
     }
     dispatch(setSprintDifficult(values.difficult))
     dispatch(gameOver(false))
     dispatch(audioGameOver(false))
-    if(path === '/audio') {
-      setTimeout(()=> {
-        play()
-      },LOADER_TIME * 1000)
-    }
+    // if(path === '/audio') {
+    //   setTimeout(()=> {
+    //     play()
+    //   },LOADER_TIME * 1000)
+    // }
     startPlay && startPlay()
   };
   return (

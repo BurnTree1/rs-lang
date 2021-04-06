@@ -11,13 +11,12 @@ export const Listening = () => {
   const nextWord = useSelector(next);
   const answered = useSelector(isAnswered);
   const url = URL_API;
-  const playNext = useAudio(`${url}/${nextWord.audio}`);
-  const playCurrent = useAudio(`${url}/${learnedWord.audio}`);
+   const playCurrent = new Audio(`${url}/${learnedWord.audio}`);
   useEffect(() => {
-    playNext();
+    playCurrent.play();
   }, [learnedWord]);
   const onAudioPlay = () => {
-    playCurrent();
+    playCurrent.play();
   };
   return (
     <div className={styles.listen__wrap}>
