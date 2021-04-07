@@ -13,10 +13,10 @@
         height: 24px;
         margin: 0;
     }
+}
 
-    &:last-child .arrow {
-        transform: rotateY(180deg);
-    }
+.rightArrow .arrow {
+    transform: rotateY(180deg);
 }
 
 .categories {

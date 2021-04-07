@@ -62,10 +62,6 @@ const Savannah = () => {
     },
     [service, rightAnswers, wrongAnswers, longestSeries]
   );
-
-  useEffect(()=> {
-    dispatch(setHasDifficulty(true))
-   },[])
   useEffect(() => {
     const wordsWithoutCurrentWord = [...words.slice(0, currentLevel), ...words.slice(currentLevel + 1, words.length)];
     const newWords = getThreeRandomWords(wordsWithoutCurrentWord);

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWords } from '../../api/words';
+import words from '../../Сomponents/Savannah/mockData';
 import { RootState } from '../store.models';
 
 interface WordsType {
@@ -20,7 +21,7 @@ interface WordsType {
 }
 
 const initialState = {
-  wordsArr: [] as Array<WordsType>,
+  wordsArr: words as Array<WordsType>,
   word: {} as WordsType,
   translation: '',
   score: 0, 

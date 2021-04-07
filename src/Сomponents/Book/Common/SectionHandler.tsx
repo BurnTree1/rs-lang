@@ -26,8 +26,8 @@ const SectionHandler: FC<{prefix: string}> = ({ prefix }) => {
     </Link> : null;
 
   return <div className={styles.categories}>
-    {leftLink}
-    {rightLink}
+    <div>{leftLink}</div>
+    <div className={styles.rightArrow}>{rightLink}</div>
   </div>;
 };
 
