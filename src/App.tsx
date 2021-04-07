@@ -17,6 +17,8 @@ import { PAGE_AUTH } from "./helpers";
 import Auth from "./Сomponents/Auth/Auth";
 import { StatisticsService } from './services/statistics.service';
 import { serviceContext } from './contexts/ServiceContext';
+import { settingsApi } from "./api/settings";
+import { setSettings } from "./store/reducers/settings";
 
 export function App() {
   const dispatch = useDispatch()
@@ -24,7 +26,9 @@ export function App() {
 
   useEffect(() => {
     dispatch(getUserData())
+    settingsApi.get().then(({ data: { optional } }) => dispatch(setSettings(optional)))
   }, [dispatch])
+
   return (
     <div className="app">
       <serviceContext.Provider value={{ service: statisticsService }} >

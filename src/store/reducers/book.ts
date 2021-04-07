@@ -25,8 +25,8 @@ const bookSlice = createSlice({
         set(state, [sectionId, pageId, id], { ...word, id });
       });
     },
-    setWord: (state, { payload: { sectionId, pageId, id, param } }) => {
-      set(state, [sectionId, pageId, id, "userWord", "optional"], param);
+    setWord: (state, { payload: { sectionId, pageId, id, params } }) => {
+      set(state, [sectionId, pageId, id, "userWord", "optional"], params);
     },
     deleteWord: (state, { payload: { sectionId, pageId, id } }) => {
       // @ts-ignore

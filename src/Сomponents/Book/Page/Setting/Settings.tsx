@@ -22,12 +22,8 @@ const Settings: FC = () => {
   const dispatch = useDispatch();
 
   const onOpen = () => {
-    settingsApi.get()
-      .then(({ data: { optional } }) => {
-        setParams({ ...currentParams, ...optional });
-        setOpen(true);
-      })
-      .catch(() => setParams(currentParams));
+    setParams(currentParams);
+    setOpen(true)
   };
 
   const onClose = () => setOpen(false);

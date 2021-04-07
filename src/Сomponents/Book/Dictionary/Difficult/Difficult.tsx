@@ -10,6 +10,8 @@ import SectionHandler from "../../Common/SectionHandler";
 import Pagination from "../../Common/PaginationComponent";
 import { setType } from "../../../../store/reducers/book";
 import { GamesSection } from "../../Page/GamesSection/GamesSection";
+import { Footer } from "../../../Footer/Footer";
+import { rebaseWordId } from "../../../../helpers/words.helper";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -44,8 +46,11 @@ export const Difficult = () => {
 
   const cards = useMemo(() =>
       isLoaded ?
-        // @ts-ignore
-        map(words, word => <Card key={word.id} {...word} refresh={fetchWords}/>)
+        map(words, word => {
+          const newWord = rebaseWordId(word)
+          // @ts-ignore
+          return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>
+        })
         : <CircularProgress/>
     , [words, isLoaded]
   );
@@ -64,6 +69,7 @@ export const Difficult = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 };

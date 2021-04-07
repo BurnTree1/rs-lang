@@ -10,6 +10,8 @@ import Pagination from "../../Common/PaginationComponent";
 import Card from "../../Common/WordItem/WordItem";
 import { setType } from "../../../../store/reducers/book";
 import { StudiedStatistics } from "./StudiedStatistics";
+import { Footer } from "../../../Footer/Footer";
+import { rebaseWordId } from "../../../../helpers/words.helper";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,8 +43,11 @@ export const Studied = () => {
 
   const cards = useMemo(() =>
       isLoaded ?
-        // @ts-ignore
-        map(words, word => <Card key={word.id} {...word}/>)
+        map(words, word => {
+          const newWord = rebaseWordId(word)
+          // @ts-ignore
+          return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>
+        })
         : <CircularProgress/>
     , [words, isLoaded]
   );
@@ -61,6 +66,7 @@ export const Studied = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 };

@@ -1,13 +1,14 @@
 import axios from "axios";
-import { URL_API, token, userId } from "../helpers";
+import { URL_API } from "../helpers";
+import { LocalStorageService as userService } from './LocalStorageService'
 
 export const settingsApi = {
   get() {
     return axios({
-      url: `${URL_API}/users/${userId}/settings`,
+      url: `${URL_API}/users/${userService.getUserId()}/settings`,
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
@@ -16,10 +17,10 @@ export const settingsApi = {
   },
   set(params: object) {
     return axios({
-      url: `${URL_API}/users/${userId}/settings`,
+      url: `${URL_API}/users/${userService.getUserId()}/settings`,
       method: "PUT",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },

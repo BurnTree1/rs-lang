@@ -8,10 +8,12 @@ import SectionHandler from "../Common/SectionHandler";
 import { userAggregateWords, fetchWords } from "../../../api";
 import { initPage, setType } from "../../../store/reducers/book";
 import { RootState } from "../../../store/store.models";
-import { COUNT_SECTION_PAGES, isAuth, PAGE_BOOK, urlPrefix } from "../../../helpers";
+import { COUNT_SECTION_PAGES, PAGE_BOOK, urlPrefix } from "../../../helpers";
 import Pagination from "../Common/PaginationComponent";
 import { GamesSection } from "./GamesSection/GamesSection";
 import styles from "./Page.module.scss";
+import { Footer } from "../../Footer/Footer";
+import { authIsAuthorized } from "../../../store/reducers/authorizationSlice";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,24 +23,24 @@ const Page: FC = () => {
   const pageIdInt = parseInt(pageId, 10);
   const dispatch = useDispatch();
   const words = useSelector((state: RootState) => get(state.book, [sectionId, pageId]));
+  const isAuth = useSelector(authIsAuthorized);
 
   useEffect(() => {
-    dispatch(setType(PAGE_BOOK))
-  }, [])
+    dispatch(setType(PAGE_BOOK));
+  }, []);
 
   useEffect(() => {
-    if (!words) {
-      setIsLoaded(false);
-      const getWords = isAuth ? userAggregateWords.getForBook : fetchWords.get;
-      getWords(sectionIdInt - 1, pageIdInt - 1)
-        .then(({ data }) => {
-          // @ts-ignore
-          dispatch(initPage({ sectionId, pageId, words: data }));
-          setIsLoaded(true);
-        })
-        .catch(() => setIsLoaded(true));
-    }
-  }, [sectionId, pageId, words]);
+    setIsLoaded(false);
+    console.log(`is ${isAuth}`);
+    const getWords = isAuth ? userAggregateWords.getForBook : fetchWords.get;
+    getWords(sectionIdInt - 1, pageIdInt - 1)
+      .then(({ data }) => {
+        // @ts-ignore
+        dispatch(initPage({ sectionId, pageId, words: data }));
+        setIsLoaded(true);
+      })
+      .catch(() => setIsLoaded(true));
+  }, [isAuth, sectionId, pageId]);
 
   const cards = useMemo(() =>
       isLoaded ?
@@ -47,7 +49,6 @@ const Page: FC = () => {
         : <CircularProgress/>
     , [words, isLoaded]
   );
-
   const pagination = useMemo(() =>
       <Pagination prefix={urlPrefix.book}
                   sectionId={sectionId}
@@ -61,6 +62,7 @@ const Page: FC = () => {
     {pagination}
     {cards}
     {pagination}
+    <Footer/>
   </div>;
 };
 

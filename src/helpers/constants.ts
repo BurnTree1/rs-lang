@@ -10,10 +10,6 @@ export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
 export const MAX_WORDS_IN_GROUP = 600;
 
-export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzcxMDQ0OSwiZXhwIjoxNjE3NzI0ODQ5fQ.SsudJ5UKDMAox0wFJWiTFUUsdeqBI1HJE46VDLFlD94";
-export const userId = "605a44e22898bf35e44bff04";
-export const isAuth = true;
-
 export const urlPrefix = {
   studied: "/dictionary/studied",
   difficult: "/dictionary/difficult",
