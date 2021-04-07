@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import item1 from '../../../../assets/image/game-item1.svg'
 import item2 from '../../../../assets/image/game-item2.svg'
 import item3 from '../../../../assets/image/game-item3.svg'
@@ -10,16 +10,16 @@ import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
 import { setAudioWords } from '../../../../store/reducers/audioSlice';
 import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
 import Settings from "../Setting/Settings";
-import { bookSections } from '../../../../helpers/constants';
-import { isAuth } from "../../../../helpers";
+import { bookSections } from '../../../../helpers';
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
 
 type PropsType = {
     words: object
 }
 export const GamesSection: FC<PropsType> = ({ words }) => {
     const { sectionId } = useParams();
-    const { pageId = "1" } = useParams();
     const [level, image] = [bookSections[sectionId - 1].name, bookSections[sectionId - 1].image]
+    const isAuth = useSelector(authIsAuthorized)
     const dispatch = useDispatch()
     const onWordsSet = () => {
         setTimeout(()=> {
