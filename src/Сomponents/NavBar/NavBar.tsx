@@ -16,10 +16,10 @@ import {
 } from "@material-ui/icons";
 import { useSelector , useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
-import { authImageSelector } from '../../store/reducers/authorizationSlice';
 import user from '../../assets/image/user.png'
+import { authImageSelector, authIsAuthorized } from "../../store/reducers/authorizationSlice";
 import "./NavBar.css";
-import { isAuth, PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
+import { PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
 import { clearWords } from "../../store/reducers/memoryGameSlice";
 
 const drawerWidth = 240;
@@ -63,6 +63,7 @@ export const NavBar: FC<PropsType> = (props) => {
     setDictionaryOpen(!dictionaryOpen)
   }
   const imageUrl = useSelector(authImageSelector)
+  const isAuth = useSelector(authIsAuthorized)
 
   const dispatch = useDispatch();
 

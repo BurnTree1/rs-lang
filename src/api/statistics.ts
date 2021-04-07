@@ -1,33 +1,30 @@
 import axios from "axios";
 import { URL_API } from "../helpers";
 import { LocalStorageService as userService } from './LocalStorageService'
+import { IStatistics } from "../models/common.models";
 
-export const settingsApi = {
+export const userStatistics = {
   get() {
     return axios({
-      url: `${URL_API}/users/${userService.getUserId()}/settings`,
       method: "GET",
       headers: {
         "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
-      withCredentials: true
+      url: `${URL_API}/users/${userService.getUserId()}/statistics`,
     });
   },
-  set(params: object) {
+  put(value: IStatistics) {
     return axios({
-      url: `${URL_API}/users/${userService.getUserId()}/settings`,
       method: "PUT",
       headers: {
         "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
-      data: {
-        optional: params
-      },
-      withCredentials: true
+      url: `${URL_API}/users/${userService.getUserId()}/statistics`,
+      data: value
     });
-  },
+  }
 };

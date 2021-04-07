@@ -9,13 +9,14 @@ import shortid from 'shortid';
 import { ICard, ISettings, IState } from '../../my-game.models';
 import Card from '../Card/Card';
 import { formatTime, generateCards, getWord } from '../../my-game.helpers';
-import { IWord } from '../../../../../models/common.models';
+import { Games, IGamesStatistics, IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
 import GamePauseModal from '../../../../Modals/GamePauseModal';
-import { WinModal } from '../WinModal/WinModal';
 import { clearWords } from '../../../../../store/reducers/memoryGameSlice';
-import './game.scss';
 import EndGameModal from '../../../../Modals/EndGameModal';
+import { StatisticsService } from '../../../../../services/statistics.service';
+import { getPercents } from '../../../../../helpers/statistics';
+import './game.scss';
 
 const DEFAULT_SETTINGS: ISettings = {
   width: 6,
@@ -43,6 +44,8 @@ class MemoryGame extends React.Component<IProps, IState> {
 
   gameContainerRef: Ref<HTMLDivElement> | undefined;
 
+  statisticsService: StatisticsService
+
   constructor(props: IProps) {
     super(props);
     const { words } = props;
@@ -69,6 +72,7 @@ class MemoryGame extends React.Component<IProps, IState> {
     this.foundSound = new Audio(`${process.env.PUBLIC_URL}/cards_found.mp3`);
     this.mistakeSound = new Audio(`${process.env.PUBLIC_URL}/wrong_answer.mp3`);
     this.gameContainerRef = React.createRef();
+    this.statisticsService = new StatisticsService();
   }
 
   componentDidMount() {
@@ -274,7 +278,15 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   saveStatistics() {
-    console.log(this.state);
+    const { rightAnswersCount, cards, wrongAnswers, longestSeries } = this.state;
+    const rightAnswersPercents = getPercents(rightAnswersCount, wrongAnswers.length);
+    const data: IGamesStatistics = {
+      learnedWords: cards.length / 2,
+      rightAnswers: rightAnswersPercents ,
+      longestSeries: rightAnswersCount > longestSeries
+        ? rightAnswersCount : longestSeries,
+    };
+    this.statisticsService.sendGameStatistics(Games.memoryGame, data);
   }
 
   render() {

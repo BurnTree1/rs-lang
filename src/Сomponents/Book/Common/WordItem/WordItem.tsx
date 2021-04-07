@@ -4,13 +4,14 @@ import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
 import { useSelector } from "react-redux";
 import ActionButtons from './ActionButtons';
-import { URL_API, isAuth } from '../../../../helpers';
+import { URL_API } from '../../../../helpers';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
 import { isNeedTranslate, isNeedMeaningTranslate } from "../../../../store/reducers/settings";
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
 
 type WordType = {
-  _id: string;
+  id: string;
   word: string;
   image: string;
   audio: string;
@@ -29,7 +30,7 @@ type WordType = {
 };
 
 const WordItem: FC<WordType> = ({
-  _id: id,
+  id,
   word,
   image,
   audio,
@@ -46,7 +47,9 @@ const WordItem: FC<WordType> = ({
 }) => {
   const isShowTranslate = useSelector(isNeedTranslate);
   const isShowMeaningTranslate = useSelector(isNeedMeaningTranslate);
+  const isAuth = useSelector(authIsAuthorized)
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
+
 
   const [playWord] = useSound(`${URL_API}/${audio}`);
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllWords, setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
+import { setHasDifficulty, wordsArr } from '../../store/reducers/sprintSlice';
 import styles from './Savannah.module.scss';
 import Word from './Word';
 import HeartsWidget from './HeartsWidget';
@@ -14,6 +14,9 @@ import StartView from '../Views/StartView/StartView';
 import GetReadyView from '../Views/GetReadyView/GetReadyView';
 import SettingsView from '../Views/SettingsView/SettingsView';
 import GamePauseModal from '../Modals/GamePauseModal';
+import { sendStatistics } from '../../helpers/statistics';
+import { Games } from '../../models/common.models';
+import { serviceContext } from '../../contexts/ServiceContext';
 // @ts-ignore
 import correct from '../../assets/sounds/sprint-correct.mp3';
 // @ts-ignore
@@ -44,6 +47,22 @@ const Savannah = () => {
   const playCorrect = new Audio(correct);
   const playWrong = new Audio(wrong);
 
+  const [longestSeries, setLongesSeries] = useState<number>(0);
+  const { service } = useContext(serviceContext);
+
+  const sendStat = useCallback(
+    () => {
+      sendStatistics({
+        name: Games.savannah,
+        service,
+        rightAnswers: rightAnswers.length,
+        wrongAnswers: wrongAnswers.length,
+        longestSeries
+      });
+    },
+    [service, rightAnswers, wrongAnswers, longestSeries]
+  );
+
   useEffect(()=> {
     dispatch(setHasDifficulty(true))
    },[])
@@ -56,12 +75,16 @@ const Savannah = () => {
   }, [currentLevel, words]);
 
   useEffect(() => {
-    if (livesLeft === 0) setGameIsDone(true);
-  }, [livesLeft]);
+    if (livesLeft === 0) {
+      setGameIsDone(true);
+      sendStat();
+    }
+  }, [livesLeft, sendStat]);
 
   const setNextLevel = () => {
     if (currentLevel === words.length - 1) {
       setGameIsDone(true);
+      sendStat();
       return;
     }
     setCurrentLevel((prevLevel) => prevLevel + 1);
@@ -75,9 +98,11 @@ const Savannah = () => {
   const checkAnswer = (variant: string) => {
     const word = variant;
     if (word !== currentAnswer) {
+      setLongesSeries(0);
       setHearth();
       playWrong.play();
     } else {
+      setLongesSeries(longestSeries + 1);
       setRightAnswers((prevState: any) => [...prevState, words[currentLevel]]);
       playCorrect.play();
     }
