@@ -53,4 +53,5 @@ export const formatTime = (sec: number): string => {
   return `${addZero(minutes)} : ${addZero(seconds)}`;
 };
 
+// @ts-ignore
 export const getWord = (words: IWord[], card: ICard): WordType => (words.find(({ id }) => id === card.id) as WordType);

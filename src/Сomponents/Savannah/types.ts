@@ -1,5 +1,6 @@
 export type WordType = {
   id: string;
+  _id: string;
   group: number;
   word: string;
   image: string;
@@ -12,6 +13,9 @@ export type WordType = {
   textExampleTranslate: string;
   textMeaningTranslate: string;
   wordTranslate: string;
+  userWord? : {
+    optional: {}
+  };
 };
 
 export type WordsType = Array<WordType>;

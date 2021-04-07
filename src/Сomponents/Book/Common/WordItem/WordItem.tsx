@@ -4,11 +4,13 @@ import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
 import ActionButtons from './ActionButtons';
 import { URL_API, isAuth } from '../../../../helpers';
+import { getRandomColor } from '../../../../helpers/words.helper';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
+import Statistic from "./WordStatistic";
 
 type WordType = {
-  _id: string;
+  id: string;
   word: string;
   image: string;
   audio: string;
@@ -21,13 +23,13 @@ type WordType = {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   userWord?: {
-    optional: object;
+    optional: any;
   };
   refresh?: () => void;
 };
 
 const WordItem: FC<WordType> = ({
-  _id: id,
+  id,
   word,
   image,
   audio,
@@ -43,10 +45,11 @@ const WordItem: FC<WordType> = ({
   refresh
 }) => {
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
-  const isDeleted = _.get(userWord, ['optional', 'isDeleted'], false);
   const [playWord] = useSound(`${URL_API}/${audio}`);
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);
   const [playExample] = useSound(`${URL_API}/${audioExample}`);
+  const background = getRandomColor(word)
+
   const meaning = textMeaning
     .toLowerCase()
     .split(' ')
@@ -73,12 +76,11 @@ const WordItem: FC<WordType> = ({
     );
   return (
     <div className={styles.card__wrapper}>
-      <Card className={styles.card}>
+      <Card className={styles.card} style={{ background }}>
         <div className={styles.card__inner}>
           <div className={styles.card__desc}>
             <img src={`${URL_API}/${image}`} alt="word image" className={styles.card__img} />
-            <span className={styles.word__progress}>1000</span>
-            <span className={styles.word__progress}>1000</span>
+            {(userWord && (userWord.optional.correct || userWord.optional.wrong)) && <Statistic info={userWord.optional}/>}
           </div>
           <div className={styles.word}>
             <div className={styles.word__title}>{word}</div>
