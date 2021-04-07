@@ -44,7 +44,7 @@ export const team: Array<TeamType> = [
   {
     link: "https://github.com/GertValiakhmetov",
     image: team4,
-    role: "Ленивая жопа \n" +
+    role: "Ленивая зепа \n" +
       "(тех специалист)",
     dev: [
       "Игра 'Саванна'",

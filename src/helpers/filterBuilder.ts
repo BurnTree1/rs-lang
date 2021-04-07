@@ -16,6 +16,8 @@ export const isHard = (value: boolean | null) => ({ "userWord.optional.isHard": 
 
 export const isDeleted = (value: boolean | null) => ({ "userWord.optional.isDeleted": value });
 
+export const date = (value: boolean | null) => ({ "userWord.optional.date": value });
+
 export const correct = (value: boolean | null) => ({ "userWord.optional.correct": value });
 
 export const wrong = (value: boolean | null) => ({ "userWord.optional.wrong": value });

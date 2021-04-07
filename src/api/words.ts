@@ -1,7 +1,7 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { WORD_PER_PAGE, URL_API, MAX_WORDS_COUNT } from "../helpers";
 import { LocalStorageService as userService } from './LocalStorageService'
-import { and, choosePage, correct, isDeleted, isHard, not, or, wrong } from "../helpers/filterBuilder";
+import { and, choosePage, correct, date, isDeleted, isHard, not, or, wrong } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
 
@@ -83,5 +83,21 @@ export const userAggregateWords = {
   },
   getForDeleted(group: number, pageId: number) {
     return this.get(group, pageId, WORD_PER_PAGE, isDeleted(true))
+  },
+  getForStatistic() {
+    return axios({
+      url: `${URL_API}/users/${userService.getUserId()}/aggregatedWords`,
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${userService.getToken()}`,
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      params: {
+        wordsPerPage: MAX_WORDS_COUNT,
+        filter: not(date(null))
+      },
+      withCredentials: true
+    }).then(({ data }) => ({ data: data[0].paginatedResults }));
   },
 };

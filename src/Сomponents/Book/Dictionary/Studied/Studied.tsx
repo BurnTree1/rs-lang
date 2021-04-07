@@ -29,7 +29,7 @@ export const Studied = () => {
     dispatch(setType(PAGE_STUDIED))
   }, [])
 
-  useEffect(() => {
+  const fetchWords = () => {
     setIsLoaded(false);
     userAggregateWords.getForStudied(sectionIdInt - 1, pageIdInt - 1)
       .then(({ data }) => {
@@ -39,6 +39,10 @@ export const Studied = () => {
         setIsLoaded(true);
       })
       .catch(() => setIsLoaded(true));
+  }
+
+  useEffect(() => {
+    fetchWords()
   }, [sectionIdInt, pageIdInt]);
 
   const cards = useMemo(() =>

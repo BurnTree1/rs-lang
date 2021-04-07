@@ -1,35 +1,30 @@
-  
-import React from 'react'
-import { Line } from 'react-chartjs-2'
+import React, { FC } from "react";
+import { Line } from "react-chartjs-2";
 
-const data = {
-  labels: ['1', '2', '3', '4', '5', '6'],
+const initData = (dateMap: object) => ({
+  labels: Object.keys(dateMap),
   datasets: [
     {
-      label: 'Изученные слова',
-      data: [12, 19, 3, 5, 2, 3],
+      label: "Изученные слова",
+      data: Object.values(dateMap),
       fill: false,
-      backgroundColor: '#2196F3',
-      borderColor: '#2196F3',
-    },
-  ],
-}
+      backgroundColor: "#2196F3",
+      borderColor: "#2196F3"
+    }
+  ]
+});
 
 const options = {
   scales: {
     yAxes: [
       {
         ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
+          beginAtZero: true
+        }
+      }
+    ]
   },
   legend: false
-}
+};
 
-export const Chart = () => (
-  <>
-    <Line data={data} options={options} />
-  </>
-);
+export const Chart: FC<{ dateMap: object }> = ({ dateMap }) => <Line data={initData(dateMap)} options={options}/>;

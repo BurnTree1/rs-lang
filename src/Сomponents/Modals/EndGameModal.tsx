@@ -23,7 +23,7 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
     const optional = _.get(word, ["userWord", "optional"], {});
     if (!optional.isDeleted) {
       const field = (optional[name] || 0) + 1;
-      const param = { ...optional, [name]: field };
+      const param = { date: new Date().toDateString(), ...optional, [name]: field };
       // eslint-disable-next-line no-underscore-dangle
       userWords.makeUserWord(word.id || word._id, param);
     }
@@ -31,8 +31,8 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
 
   useEffect(() => {
     // @ts-ignore
-    rightAnswers.forEach((word) => sendResult(word, 'correct'));
-    wrongAnswers.forEach((word) => sendResult(word, 'wrong'));
+    rightAnswers.forEach((word) => sendResult(word, "correct"));
+    wrongAnswers.forEach((word) => sendResult(word, "wrong"));
   }, []);
 
   return (
@@ -43,7 +43,7 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
           <div className={styles.endModalWordsContainer}>
             {wrongAnswers.length ? (
               <>
-                <span style={{ color: '#E10050' }}>ОШИБОК: {wrongAnswers.length}</span>
+                <span style={{ color: "#E10050" }}>ОШИБОК: {wrongAnswers.length}</span>
                 {wrongAnswers.map((word) => (
                   <WrongAnswerList word={word} key={shortid()}/>
                 ))}
@@ -53,8 +53,8 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
               <>
                 <span
                   style={{
-                    color: '#4CAF50',
-                    paddingRight: 285,
+                    color: "#4CAF50",
+                    paddingRight: 285
                   }}
                 >
                   ЗНАЮ: {rightAnswers.length}
@@ -72,5 +72,5 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
       </div>
     </div>
   );
-}
+};
 export default EndGameModal;
