@@ -1,7 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import next from '../../../../assets/image/next.svg';
-import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, setToWrongWords, word, wrongAnswers } from '../../../../store/reducers/audioSlice';
+import { serviceContext } from '../../../../contexts/ServiceContext';
+import { sendStatistics } from '../../../../helpers/statistics';
+import { Games } from '../../../../models/common.models';
+import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, setToWrongWords, word, wrongAnswers, longestSeries } from '../../../../store/reducers/audioSlice';
 import EndGameModal from '../../../Modals/EndGameModal';
 import GamePauseModal from '../../../Modals/GamePauseModal';
 import { TopPanel } from '../../Sprint/TopPanel/TopPanel';
@@ -17,6 +20,7 @@ export const NextBtn: FC<PropsType> = ({ submitGameOver }) => {
   const wrongWords = useSelector(wrongAnswers);
   const correctWords = useSelector(correctAnswers);
   const finished = useSelector(isFinished);
+  const longestSeriesValue = useSelector(longestSeries);
   const [gameIsPaused, setGameIsPaused] = useState<boolean>(false);
   const [gameIsDone, setGameIsDone] = useState<boolean>(false);
   const onNextWord = () => {
@@ -27,6 +31,21 @@ export const NextBtn: FC<PropsType> = ({ submitGameOver }) => {
     dispatch(setAnswered(true));
     dispatch(setToWrongWords(learnedWord))
   };
+
+  const { service } = useContext(serviceContext);
+
+  useEffect(() => {
+    if (finished) {
+      sendStatistics({
+        name: Games.audio,
+        service,
+        rightAnswers: wrongWords.length,
+        wrongAnswers: correctWords.length,
+        longestSeries: longestSeriesValue
+      });
+    }
+  }, [finished, wrongWords, correctWords, longestSeriesValue, service]);
+
   useEffect(() => {
     if(gameIsDone) {
       submitGameOver()

@@ -14,3 +14,29 @@ export interface IWord {
   word: string;
   wordTranslate: string;
 }
+
+export enum Games {
+  savannah = 'savannah',
+  sprint = 'sprint',
+  audio = 'audio',
+  memoryGame = 'memoryGame'
+}
+
+export interface IGamesStatistics {
+    learnedWords: number;
+    rightAnswers: number;
+    longestSeries: number;
+}
+
+export interface IAllGamesStatistics {
+    [k: string]: {
+        [k: string]: IGamesStatistics
+    }
+}
+
+export interface IStatistics {
+    learnedWords: number;
+    optional: {
+        games?: IAllGamesStatistics
+    }
+}
