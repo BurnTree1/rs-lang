@@ -10,6 +10,8 @@ import Card from "../../Common/WordItem/WordItem";
 import Pagination from "../../Common/PaginationComponent";
 import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { setType } from "../../../../store/reducers/book";
+import { Footer } from "../../../Footer/Footer";
+import { rebaseWordId } from "../../../../helpers/words.helper";
 
 export const Deleted = () => {
 
@@ -46,8 +48,11 @@ export const Deleted = () => {
 
   const cards = useMemo(() =>
       isLoaded ?
-        // @ts-ignore
-        map(words, word => <Card key={word.id} {...word} refresh={fetchWords}/>)
+        map(words, word => {
+          const newWord = rebaseWordId(word)
+          // @ts-ignore
+          return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>
+        })
         : <CircularProgress/>
     , [words, isLoaded]
   );
@@ -66,6 +71,7 @@ export const Deleted = () => {
       {pagination}
       {cards}
       {pagination}
+      <Footer/>
     </div>
   );
 }

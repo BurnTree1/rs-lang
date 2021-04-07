@@ -2,12 +2,15 @@ import React, { FC } from 'react';
 import _ from 'lodash';
 import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
+import { useSelector } from "react-redux";
 import ActionButtons from './ActionButtons';
-import { URL_API, isAuth } from '../../../../helpers';
+import { URL_API } from '../../../../helpers';
 import { getRandomColor } from '../../../../helpers/words.helper';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
 import Statistic from "./WordStatistic";
+import { isNeedTranslate, isNeedMeaningTranslate } from "../../../../store/reducers/settings";
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
 
 type WordType = {
   id: string;
@@ -44,7 +47,12 @@ const WordItem: FC<WordType> = ({
   userWord,
   refresh
 }) => {
+  const isShowTranslate = useSelector(isNeedTranslate);
+  const isShowMeaningTranslate = useSelector(isNeedMeaningTranslate);
+  const isAuth = useSelector(authIsAuthorized)
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
+
+
   const [playWord] = useSound(`${URL_API}/${audio}`);
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);
   const [playExample] = useSound(`${URL_API}/${audioExample}`);
@@ -54,7 +62,7 @@ const WordItem: FC<WordType> = ({
     .toLowerCase()
     .split(' ')
     .map((w) =>
-      w === word ? (
+      w.toLowerCase().includes(word.toLowerCase()) ? (
         <span key={w} className={styles.word__bold}>
           {w}
         </span>
@@ -66,7 +74,7 @@ const WordItem: FC<WordType> = ({
     .toLowerCase()
     .split(' ')
     .map((w) =>
-      w === word ? (
+    w.toLowerCase().includes(word.toLowerCase()) ? (
         <span key={w} className={styles.word__bold}>
           {w}
         </span>
@@ -90,14 +98,14 @@ const WordItem: FC<WordType> = ({
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            <div className={styles.word__translation}>{wordTranslate}</div>
+            {isShowTranslate && <div className={styles.word__translation}>{wordTranslate}</div>}
             <div className={styles.word__mean}>
               <div className={styles.word__inner}>{meaning}</div>
               <button onClick={() => playExplain()} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            <div className={styles.word__explain}>{textMeaningTranslate}</div>
+            {isShowMeaningTranslate && <div className={styles.word__explain}>{textMeaningTranslate}</div>}
             <div className={styles.word__mean}>
             <div className={styles.word__inner}>{examples}</div>
               <button onClick={() => playExample()} type="button" className={styles.listen}>

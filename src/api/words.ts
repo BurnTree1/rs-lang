@@ -1,5 +1,6 @@
 import axios from "axios";
-import { WORD_PER_PAGE, URL_API, token, userId } from "../helpers";
+import { WORD_PER_PAGE, URL_API } from "../helpers";
+import { LocalStorageService as userService } from './LocalStorageService'
 import { and, choosePage, correct, isDeleted, isHard, not, or, wrong } from "../helpers/filterBuilder";
 
 const WORD_API = `${URL_API}/words`;
@@ -19,10 +20,10 @@ export const fetchWords = {
 export const userWords = {
   get(group: number, page: number) {
     return axios({
-      url: `${URL_API}/users/${userId}/words`,
+      url: `${URL_API}/users/${userService.getUserId()}/words`,
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
@@ -35,10 +36,10 @@ export const userWords = {
   },
   makeUserWord(wordId: string, param: object) {
     return axios({
-      url: `${URL_API}/users/${userId}/words/${wordId}`,
+      url: `${URL_API}/users/${userService.getUserId()}/words/${wordId}`,
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
@@ -54,10 +55,10 @@ export const userWords = {
 export const userAggregateWords = {
   get(group: number|null, page: number|null, wordsPerPage: number|null, filter: object|null) {
     return axios({
-      url: `${URL_API}/users/${userId}/aggregatedWords`,
+      url: `${URL_API}/users/${userService.getUserId()}/aggregatedWords`,
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${token}`,
+        "Authorization": `Bearer ${userService.getToken()}`,
         "Accept": "application/json",
         "Content-Type": "application/json"
       },

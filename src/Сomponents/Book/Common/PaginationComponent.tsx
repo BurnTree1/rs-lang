@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import { Link } from "react-router-dom";
 import { urlBuilder } from "../../../helpers";
+import styles from './SectionHandler.module.scss'
 
 type PaginationType = {
   prefix: string,
@@ -11,7 +12,7 @@ type PaginationType = {
 }
 
 const PaginationComponent: FC<PaginationType> = ({ prefix, sectionId, pageId, count }) =>
-  (<Pagination page={parseInt(pageId, 10)}
+  (<div className={styles.pagination}><Pagination page={parseInt(pageId, 10)}
                count={count}
                renderItem={(item) => (
                  <PaginationItem
@@ -19,6 +20,6 @@ const PaginationComponent: FC<PaginationType> = ({ prefix, sectionId, pageId, co
                    to={urlBuilder(prefix, sectionId, item.page)}
                    {...item}
                  />
-               )}/>);
+               )}/></div>);
 
 export default PaginationComponent;

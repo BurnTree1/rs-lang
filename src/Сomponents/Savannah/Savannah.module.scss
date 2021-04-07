@@ -44,7 +44,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 1000px;
+  width: 800px;
   height: 200px;
   display: flex;
   justify-content: space-between;
@@ -59,6 +59,16 @@
     align-items: center;
     color: #FFF;
     cursor: pointer;
+  }
+
+ @media (max-width: 820px) {
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 400px;
+
+    & > span {
+      width: 50%;
+    }
   }
 }
 
@@ -96,9 +106,9 @@
 .close {
   cursor: pointer;
   position: absolute;
-  z-index: 999999;
-  top: 13px;
-  right: 10px;
+  z-index: 1300;
+  top: 9px;
+  right: -30px;
 }
 
 .endModalContainer {

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { bookBuilder, bookSections } from '../../helpers';
 import styles from './Book.module.scss';
 import arrow from '../../assets/image/arrow-link.svg'
+import { Footer } from '../Footer/Footer';
 
 export default () => (
   <div>
@@ -13,6 +14,7 @@ export default () => (
         <SectionItem key={id} id={id} name={name} image={image} />
       ))}
     </div>
+    <Footer/>
   </div>
 );
 

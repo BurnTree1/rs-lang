@@ -130,9 +130,12 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   fullScreenToggle = () => {
-    this.setState({
-      fullScreen: !this.state.fullScreen,
-    });
+    const doc = document.documentElement as HTMLElement & {
+      webkitRequestFullscreen(): Promise<void>;
+    };
+    if (doc.webkitRequestFullscreen) {
+      doc.webkitRequestFullscreen();
+    }
   }
 
   animationCheck = (currentCard: ICard): boolean => {
@@ -308,7 +311,7 @@ class MemoryGame extends React.Component<IProps, IState> {
           </div>
           <div className="statistics__inner statistics__inner_controls">
             <IconButton color="primary" onClick={this.fullScreenToggle} component="span">
-              {fullScreen ? <FullscreenExit /> : <Fullscreen />}
+              <Fullscreen />
             </IconButton>
             <IconButton color="primary" onClick={this.pauseHandler} component="span">
               <Close />

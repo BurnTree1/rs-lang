@@ -4,9 +4,10 @@ import styles from '../Savannah/Savannah.module.scss';
 type Props = {
   setGameIsPaused: Dispatch<SetStateAction<boolean>>;
   setGameIsDone: Dispatch<SetStateAction<boolean>>;
+  onCloseGame?: ()=> void
 };
 
-const GamePauseModal: React.FC<Props> = ({ setGameIsPaused, setGameIsDone }) => (
+const GamePauseModal: React.FC<Props> = ({ setGameIsPaused, setGameIsDone, onCloseGame }) => (
   <div className={styles.pauseModalContainer}>
     <span>Тренировка не закончена!</span>
     <p>Если вы не вернетесь к списку, ваши результаты не будут сохранены</p>
@@ -14,7 +15,7 @@ const GamePauseModal: React.FC<Props> = ({ setGameIsPaused, setGameIsDone }) => 
       <button type="button" onClick={() => setGameIsPaused(false)}>
         ОТМЕНА
       </button>
-      <button type="button" onClick={() => setGameIsDone(true)}>
+      <button type="button" onClick={onCloseGame}>
         ЗАКРЫТЬ
       </button>
     </div>
