@@ -105,7 +105,7 @@ test('set game is over', () => {
 test('set difficulty field for game settings', () => {
   const newState = sprintSlice.reducer(
     state,
-    sprintSlice.actions.setHasDifficulty()
+    sprintSlice.actions.setHasDifficulty(true)
   );
   expect(newState.hasDifficulty).toBe(true);
 });

@@ -46,7 +46,7 @@ export const NextBtn: FC<PropsType> = ({ submitGameOver }) => {
       <TopPanel setGameIsPaused={setGameIsPaused} />
       {gameIsPaused && (
         <div className={styles.overlay}>
-          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} />
+          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} onCloseGame={submitGameOver}/>
         </div>
       )}
       {finished && (

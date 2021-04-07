@@ -10,7 +10,7 @@ export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
 export const MAX_WORDS_IN_GROUP = 600;
 
-export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzcyNjg3NCwiZXhwIjoxNjE3NzQxMjc0fQ.jRA3xokN4bmmD_Suz5LSvTRbGYxp3tKgAGayBx-iVU4";
+export const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNWE0NGUyMjg5OGJmMzVlNDRiZmYwNCIsImlhdCI6MTYxNzgyMTAwMCwiZXhwIjoxNjE3ODM1NDAwfQ.agLSyHPq-UY6pT9SmEzH2EmukR7j0pWXb8RaPjOly7E";
 export const userId = "605a44e22898bf35e44bff04";
 export const isAuth = true;
 

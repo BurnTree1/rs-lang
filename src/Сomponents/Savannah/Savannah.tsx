@@ -45,7 +45,7 @@ const Savannah = () => {
   const playWrong = new Audio(wrong);
 
   useEffect(()=> {
-    dispatch(setHasDifficulty())
+    dispatch(setHasDifficulty(true))
    },[])
   useEffect(() => {
     const wordsWithoutCurrentWord = [...words.slice(0, currentLevel), ...words.slice(currentLevel + 1, words.length)];
@@ -106,7 +106,7 @@ const Savannah = () => {
       settingsView: true,
       getReadyView: true
     }))
-    dispatch(setHasDifficulty())
+    dispatch(setHasDifficulty(true))
   }
 
   const conditionalRender = () => {

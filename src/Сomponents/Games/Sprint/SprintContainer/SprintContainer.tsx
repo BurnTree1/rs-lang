@@ -10,12 +10,12 @@ export const SprintContainer: FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const submitGameOver = () => {
     setIsGameStarted(false)
-    dispatch(setHasDifficulty())
+    dispatch(setHasDifficulty(true))
   }
   const dispatch = useDispatch()
-  useEffect(()=> {
-   dispatch(setHasDifficulty())
-  },[])
+  // useEffect(()=> {
+  //  dispatch(setHasDifficulty(true))
+  // },[])
   return (
     <div className={styles.sprint__wrapper}>
       <GameLayer difficultType='время игры' isGameStarted={isGameStarted} setIsGameStarted={setIsGameStarted}>
