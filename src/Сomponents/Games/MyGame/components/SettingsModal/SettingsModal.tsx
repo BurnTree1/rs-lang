@@ -6,7 +6,8 @@ import styles from './SettingsModal.module.scss';
 import { useRandomPage } from '../../../../../helpers/hooks';
 import ValueLabel from '../../../../Views/SettingsView/ValueLabel';
 import RadioButtons from '../../../../Views/SettingsView/RadioButtons';
-import { fetchAllWords, hasDifficulty, loading } from '../../../../../store/reducers/memoryGameSlice';
+import { fetchAllWords, hasDifficulty, loading, wordsArr } from '../../../../../store/reducers/memoryGameSlice';
+import { IWord } from '../../../../../models/common.models';
 
 type Props = {
   setSettings: Dispatch<SetStateAction<{ section: string; difficult: string }>>;
@@ -51,6 +52,7 @@ const SettingsModal: React.FC<Props> = ({ setSettings, setGameStatus, startPlay 
   const dispatch = useDispatch();
   const difficulty = useSelector(hasDifficulty);
   const loadingGame = useSelector(loading);
+  const allWords: IWord[] = useSelector(wordsArr);
   const randomPage = useRandomPage();
   const onChange = (event: React.ChangeEvent<{}>, value: number | number[]) => {
     setValues((prevState) => ({
@@ -69,7 +71,9 @@ const SettingsModal: React.FC<Props> = ({ setSettings, setGameStatus, startPlay 
       ...prevState,
       settingsView: false,
     }));
-    dispatch(fetchAllWords(values.section, randomPage));
+    if (!allWords || allWords.length === 0) {
+      dispatch(fetchAllWords(values.section, randomPage));
+    }
   };
   return (
     <div className={styles.settingsContainer}>

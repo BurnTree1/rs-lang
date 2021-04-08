@@ -342,7 +342,10 @@ class MemoryGame extends React.Component<IProps, IState> {
         {this.state.isPaused
           && (
           <div className="modal-overlay">
-            <GamePauseModal setGameIsPaused={this.pauseHandler} setGameIsDone={this.onStopGameHandler} />
+            <GamePauseModal
+              setGameIsPaused={this.pauseHandler}
+              setGameIsDone={this.onStopGameHandler}
+              onCloseGame={this.onStopGameHandler} />
           </div>
         )}
       </div>

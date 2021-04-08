@@ -33,6 +33,6 @@ export const GameScreen: React.FC<{ settings: IGameSettings, words: IWord[] }> =
     );
   }
   return (
-    <MemoryGame delay={Number(settings.difficult)} words={words.slice(0, 2)} />
+    <MemoryGame delay={Number(settings.difficult)} words={words} />
   );
 }

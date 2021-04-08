@@ -17,10 +17,10 @@ export default function Card(props: IProps) {
       className={
         `card-wrapper ${found && animationOn ? 'card-wrapper_hide' : ''}${found && !animationOn ? 'card-wrapper_display_none' : ''}`
         }
-        onClick={() => { !found && cardClick() }}>
+        >
       <div className={`card${  isFlipped ? " flipped" : ""} ${ isShown ? " shown" : ''}`}>
-        <div className="card__back" />
-        <div className="card__front">
+        {/* <div className="card__back" /> */}
+        <div className="card__front" onClick={() => { !found && cardClick() }}>
           <div className={`card__image-wrapper ${isSecondCard ? '' : 'card__image-wrapper_first'}`}>
             <img src={getSrcUrl(image)} className="card__image" alt="card__image" />
           </div>
