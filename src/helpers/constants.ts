@@ -8,7 +8,7 @@ import image6 from "../assets/image/categories-6.svg";
 export const URL_API = "https://rs-lang2021.herokuapp.com";
 export const COUNT_SECTION_PAGES = 30;
 export const WORD_PER_PAGE = 20;
-export const MAX_WORDS_IN_GROUP = 600;
+export const MAX_WORDS_COUNT = 3600;
 
 export const urlPrefix = {
   studied: "/dictionary/studied",

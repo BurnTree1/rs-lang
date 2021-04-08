@@ -1,8 +1,10 @@
-import React from 'react';
-import shortid from 'shortid';
-import styles from '../Savannah/Savannah.module.scss';
-import { WordsType } from '../Savannah/types';
-import WrongAnswerList from '../Savannah/WrongAnswerList';
+import React, { useEffect } from "react";
+import _ from "lodash";
+import shortid from "shortid";
+import styles from "../Savannah/Savannah.module.scss";
+import { WordsType, WordType } from "../Savannah/types";
+import WrongAnswerList from "../Savannah/WrongAnswerList";
+import { userWords } from "../../api";
 
 type Props = {
   wrongAnswers: WordsType;
@@ -17,6 +19,22 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
     }
   };
 
+  const sendResult = (word: WordType, name: string) => {
+    const optional = _.get(word, ["userWord", "optional"], {});
+    if (!optional.isDeleted) {
+      const field = (optional[name] || 0) + 1;
+      const param = { date: new Date().toDateString(), ...optional, [name]: field };
+      // eslint-disable-next-line no-underscore-dangle
+      userWords.makeUserWord(word.id || word._id, param);
+    }
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    rightAnswers.forEach((word) => sendResult(word, "correct"));
+    wrongAnswers.forEach((word) => sendResult(word, "wrong"));
+  }, []);
+
   return (
     <div className={styles.endModalContainer}>
       <div className={styles.endModalContent}>
@@ -25,9 +43,9 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
           <div className={styles.endModalWordsContainer}>
             {wrongAnswers.length ? (
               <>
-                <span style={{ color: '#E10050' }}>ОШИБОК: {wrongAnswers.length}</span>
+                <span style={{ color: "#E10050" }}>ОШИБОК: {wrongAnswers.length}</span>
                 {wrongAnswers.map((word) => (
-                  <WrongAnswerList word={word} key={shortid()} />
+                  <WrongAnswerList word={word} key={shortid()}/>
                 ))}
               </>
             ) : null}
@@ -35,14 +53,14 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
               <>
                 <span
                   style={{
-                    color: '#4CAF50',
-                    paddingRight: 285,
+                    color: "#4CAF50",
+                    paddingRight: 285
                   }}
                 >
                   ЗНАЮ: {rightAnswers.length}
                 </span>
                 {rightAnswers.map((word) => (
-                  <WrongAnswerList word={word} key={shortid()} />
+                  <WrongAnswerList word={word} key={shortid()}/>
                 ))}
               </>
             ) : null}
@@ -50,9 +68,9 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
         </div>
         <button type="button" className={styles.endModalButton} onClick={submitHandler}>
           Продолжить тренировку
-      </button>
+        </button>
       </div>
     </div>
   );
-}
+};
 export default EndGameModal;

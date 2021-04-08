@@ -5,8 +5,10 @@ import { Card } from '@material-ui/core';
 import { useSelector } from "react-redux";
 import ActionButtons from './ActionButtons';
 import { URL_API } from '../../../../helpers';
+import { getRandomColor } from '../../../../helpers/words.helper';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
+import Statistic from "./WordStatistic";
 import { isNeedTranslate, isNeedMeaningTranslate } from "../../../../store/reducers/settings";
 import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
 
@@ -24,7 +26,7 @@ type WordType = {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   userWord?: {
-    optional: object;
+    optional: any;
   };
   refresh?: () => void;
 };
@@ -54,6 +56,7 @@ const WordItem: FC<WordType> = ({
   const [playWord] = useSound(`${URL_API}/${audio}`);
   const [playExplain] = useSound(`${URL_API}/${audioMeaning}`);
   const [playExample] = useSound(`${URL_API}/${audioExample}`);
+  const background = getRandomColor(word)
 
   const meaning = textMeaning
     .toLowerCase()
@@ -81,12 +84,11 @@ const WordItem: FC<WordType> = ({
     );
   return (
     <div className={styles.card__wrapper}>
-      <Card className={styles.card}>
+      <Card className={styles.card} style={{ background }}>
         <div className={styles.card__inner}>
           <div className={styles.card__desc}>
             <img src={`${URL_API}/${image}`} alt="word image" className={styles.card__img} />
-            <span className={styles.word__progress}>1000</span>
-            <span className={styles.word__progress}>1000</span>
+            {(userWord && (userWord.optional.correct || userWord.optional.wrong)) && <Statistic info={userWord.optional}/>}
           </div>
           <div className={styles.word}>
             <div className={styles.word__title}>{word}</div>
