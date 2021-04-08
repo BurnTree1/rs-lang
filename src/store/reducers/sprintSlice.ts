@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { fetchWords } from '../../api/words';
 import words from '../../Сomponents/Savannah/mockData';
 import { RootState } from '../store.models';
@@ -24,7 +24,7 @@ const initialState = {
   wordsArr: words as Array<WordsType>,
   word: {} as WordsType,
   translation: '',
-  score: 0,
+  score: 0, 
   pointsToAdd: 10,
   isFinished: false,
   correctSeries: 0,
@@ -39,7 +39,9 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     setSprintWords: (state, { payload: fetchedWords }) => {
-      state.wordsArr = []
+      if(state.wordsArr.length >= 4) {
+        state.wordsArr = []
+      }
       state.score = 0
       state.correctSeries = 0
       state.correctAnswers = []
@@ -96,8 +98,8 @@ export const sprintSlice = createSlice({
     setSprintDifficult: (state, { payload: difficulty }) => {
       state.difficulty = difficulty / 100
     },
-    setHasDifficulty: (state) => {
-      state.hasDifficulty = true
+    setHasDifficulty: (state, { payload: hasDifficulty }) => {
+      state.hasDifficulty = hasDifficulty
     }
   },
 });
@@ -107,6 +109,14 @@ export function fetchAllWords(g: number,p: number) {
   return async dispatch => {
       const response = await fetchWords.get(g, p)
       dispatch(setSprintWords(response.data))
+  }
+}
+
+export function fetchWithAdditional(g: number,p: number, wordsArr: any) {
+  // @ts-ignore
+  return async dispatch => {
+      const response = await fetchWords.get(g, p)
+      dispatch(setSprintWords(Object.assign(response.data, wordsArr)))
   }
 }
 

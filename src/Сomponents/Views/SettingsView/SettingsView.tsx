@@ -84,11 +84,6 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
     dispatch(setSprintDifficult(values.difficult))
     dispatch(gameOver(false))
     dispatch(audioGameOver(false))
-    // if(path === '/audio') {
-    //   setTimeout(()=> {
-    //     play()
-    //   },LOADER_TIME * 1000)
-    // }
     startPlay && startPlay()
   };
   return (

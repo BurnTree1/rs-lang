@@ -12,7 +12,7 @@ type PropsType = {
 export const Audio: FC<PropsType> = ({ submitGameOver }) => {
   const learnedWord = useSelector(word);
   const allWords = useSelector(wordsArr);
-  const shuffledWords = useShuffle(allWords, learnedWord.wordTranslate);
+  const shuffledWords = useShuffle(allWords, learnedWord);
   return (
     <div>
       <Listening />

@@ -58,7 +58,7 @@ const Page: FC = () => {
 
   return <div className={styles.page}>
     <SectionHandler prefix={urlPrefix.book}/>
-    <GamesSection words={words}/>
+    <GamesSection words={words} additionalFetching={true}/>
     {pagination}
     {cards}
     {pagination}

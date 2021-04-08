@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux";
 import item1 from '../../../../assets/image/game-item1.svg'
@@ -6,26 +6,42 @@ import item2 from '../../../../assets/image/game-item2.svg'
 import item3 from '../../../../assets/image/game-item3.svg'
 import item4 from '../../../../assets/image/game-item4.svg'
 import styles from './GamesSection.module.scss'
-import {  setSprintWords } from '../../../../store/reducers/sprintSlice';
-import { setAudioWords } from '../../../../store/reducers/audioSlice';
+import {  fetchAllWords, fetchWithAdditional, setHasDifficulty, setSprintWords } from '../../../../store/reducers/sprintSlice';
+import { fetchAudioWithAdditional, setAudioWords, setHasAudioDifficulty } from '../../../../store/reducers/audioSlice';
 import { setMemoryGameWords } from '../../../../store/reducers/memoryGameSlice';
 import Settings from "../Setting/Settings";
 import { bookSections } from '../../../../helpers';
 import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
+import { useRandomPage } from '../../../../helpers/hooks'
 
 type PropsType = {
     words: object
+    additionalFetching?: boolean
 }
-export const GamesSection: FC<PropsType> = ({ words }) => {
+export const GamesSection: FC<PropsType> = ({ words, additionalFetching }) => {
     const { sectionId } = useParams();
+    const { pageId = "1" } = useParams();
+    const randomPage = useRandomPage()
     const [level, image] = [bookSections[sectionId - 1].name, bookSections[sectionId - 1].image]
     const isAuth = useSelector(authIsAuthorized)
     const dispatch = useDispatch()
+    useEffect(() => {
+        if(words && Object.keys(words).length < 4) {
+            if(additionalFetching) {
+                dispatch(fetchWithAdditional(sectionId, randomPage, words))
+                dispatch(fetchAudioWithAdditional(sectionId, randomPage, words))
+            }
+            dispatch(setHasDifficulty(false))
+            dispatch(setHasAudioDifficulty(false))
+        }
+    }, [words]);
     const onWordsSet = () => {
         setTimeout(()=> {
-            dispatch(setSprintWords(words))
-            dispatch(setAudioWords(words))
-            dispatch(setMemoryGameWords(words))
+           if(Object.keys(words).length >= 4 || !additionalFetching) {
+                dispatch(setSprintWords(words))
+                dispatch(setAudioWords(words))
+                dispatch(setMemoryGameWords(words))
+            }
         },0)
     }
     return (

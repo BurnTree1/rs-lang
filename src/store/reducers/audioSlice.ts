@@ -37,7 +37,9 @@ export const audioSlice = createSlice({
   reducers: {
     setAudioWords: (state, { payload: words }) => {
       state.hasDifficulty = false
-      state.wordsArr = []
+      if(state.wordsArr.length >= 4) {
+        state.wordsArr = []
+      }
       state.correctAnswers = []
       state.wrongAnswers = []
       for (const key in words) {
@@ -79,6 +81,9 @@ export const audioSlice = createSlice({
     },
     setToWrongWords: (state, { payload: word }) => {
       state.wrongAnswers = [...state.wrongAnswers, state.word]
+    },
+    setHasAudioDifficulty: (state, { payload: hasDifficulty }) => {
+      state.hasDifficulty = hasDifficulty
     }
   },
 });
@@ -92,9 +97,17 @@ export function fetchAllAudioWords(g: number,p: number) {
   }
 }
 
+export function fetchAudioWithAdditional(g: number,p: number, wordsArr: any) {
+  // @ts-ignore
+  return async dispatch => {
+      const response = await fetchWords.get(g, p)
+      dispatch(setAudioWords(Object.assign(response.data, wordsArr)))
+  }
+}
+
 const { actions, reducer } = audioSlice;
 
-export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords, setToWrongWords } = actions;
+export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords, setToWrongWords, setHasAudioDifficulty } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;

@@ -3,6 +3,7 @@ import _ from 'lodash';
 import useSound from 'use-sound';
 import { Card } from '@material-ui/core';
 import { useSelector } from "react-redux";
+import shortid from 'shortid';
 import ActionButtons from './ActionButtons';
 import { URL_API } from '../../../../helpers';
 import { getRandomColor } from '../../../../helpers/words.helper';
@@ -67,7 +68,7 @@ const WordItem: FC<WordType> = ({
           {w}
         </span>
       ) : (
-        <span>{w}</span>
+        <span key={shortid()}>{w}</span>
       )
     );
   const examples = textExample
@@ -79,7 +80,7 @@ const WordItem: FC<WordType> = ({
           {w}
         </span>
       ) : (
-        <span>{w}</span>
+        <span key={shortid()}>{w}</span>
       )
     );
   return (

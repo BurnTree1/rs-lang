@@ -10,12 +10,9 @@ export const AudioContainer = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
   const submitGameOver = () => {
     setIsGameStarted(false)
-    dispatch(setHasDifficulty())
+    dispatch(setHasDifficulty(true))
   }
   const dispatch = useDispatch()
-  useEffect(()=> {
-    dispatch(setHasDifficulty()) 
-   },[])
   return (
     <div className={styles.audio__wrapper}>
     <GameLayer difficultType='количество попыток прослушать слово' isGameStarted={isGameStarted} setIsGameStarted={setIsGameStarted}>

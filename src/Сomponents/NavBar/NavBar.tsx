@@ -17,6 +17,8 @@ import {
 import { useSelector , useDispatch } from 'react-redux';
 import { NavLink } from "react-router-dom";
 import user from '../../assets/image/user.png'
+import { setHasDifficulty } from '../../store/reducers/sprintSlice';
+import { setHasAudioDifficulty } from '../../store/reducers/audioSlice';
 import { authImageSelector, authIsAuthorized } from "../../store/reducers/authorizationSlice";
 import "./NavBar.css";
 import { PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
@@ -154,7 +156,7 @@ export const NavBar: FC<PropsType> = (props) => {
           </ListItem>
           <Collapse className='nested' in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to='/savannah' activeClassName='active'>
+              <NavLink to='/savannah' activeClassName='active' onClick={()=>dispatch(setHasDifficulty(true))}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -162,7 +164,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Саванна"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/audio' activeClassName='active'>
+              <NavLink to='/audio' activeClassName='active' onClick={()=>dispatch(setHasAudioDifficulty(true))}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -170,7 +172,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Аудиовызов"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/sprint' activeClassName='active'>
+              <NavLink to='/sprint' activeClassName='active' onClick={()=>dispatch(setHasDifficulty(true))}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
