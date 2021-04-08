@@ -16,8 +16,9 @@ import { useRandomPage } from '../../../../helpers/hooks'
 
 type PropsType = {
     words: object
+    additionalFetching?: boolean
 }
-export const GamesSection: FC<PropsType> = ({ words }) => {
+export const GamesSection: FC<PropsType> = ({ words, additionalFetching }) => {
     const { sectionId } = useParams();
     const { pageId = "1" } = useParams();
     const randomPage = useRandomPage()
@@ -26,15 +27,17 @@ export const GamesSection: FC<PropsType> = ({ words }) => {
     const dispatch = useDispatch()
     useEffect(() => {
         if(words && Object.keys(words).length < 4) {
-            dispatch(fetchWithAdditional(sectionId, randomPage, words))
-            dispatch(fetchAudioWithAdditional(sectionId, randomPage, words))
+            if(additionalFetching) {
+                dispatch(fetchWithAdditional(sectionId, randomPage, words))
+                dispatch(fetchAudioWithAdditional(sectionId, randomPage, words))
+            }
             dispatch(setHasDifficulty(false))
             dispatch(setHasAudioDifficulty(false))
         }
     }, [words]);
     const onWordsSet = () => {
         setTimeout(()=> {
-           if(Object.keys(words).length >= 4) {
+           if(Object.keys(words).length >= 4 || !additionalFetching) {
                 dispatch(setSprintWords(words))
                 dispatch(setAudioWords(words))
                 dispatch(setMemoryGameWords(words))

@@ -15,7 +15,8 @@ const getThreeRandomWords = <T>(a: Array<T>): Array<T> => {
     randomWords.push(shuffledArray[randomKey]);
     shuffledArray.splice(randomKey, 1);
   }
-  return randomWords;
+  const words = randomWords.filter(w=> w)
+  return words;
 };
 
 export default getThreeRandomWords;

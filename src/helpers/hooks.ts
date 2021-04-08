@@ -16,9 +16,11 @@ export const useAudio = (sound: string) => {
   return play;
 };
 
-export const useShuffle = (array: Array<WordsType>, word: string) => {
-  const shuffledArr = array.filter((w: WordsType) => w.wordTranslate !== word).sort(() => Math.random() - 0.5);
-  return [shuffledArr[0].wordTranslate, shuffledArr[1].wordTranslate, shuffledArr[2].wordTranslate, word].sort(
+export const useShuffle = (array: Array<WordsType>, word: WordsType) => {
+  const shuffledArr = array.filter((w: WordsType) => w.wordTranslate !== word.wordTranslate).sort(() => Math.random() - 0.5);
+  shuffledArr.length = 3
+  const shuffled = shuffledArr.filter(w=> w.wordTranslate)
+  return [...shuffled, word].sort(
     () => Math.random() - 0.5
   );
 };

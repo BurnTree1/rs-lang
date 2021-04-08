@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isAnswered, makeAnswer, setAnswered, word } from '../../../../store/reducers/audioSlice';
+import { isAnswered, makeAnswer, setAnswered, word, WordsType } from '../../../../store/reducers/audioSlice';
 import styles from './Variants.module.scss';
 // @ts-ignore
 import wrong from '../../../../assets/sounds/sprint-wrong.wav'
@@ -9,7 +9,7 @@ import wrong from '../../../../assets/sounds/sprint-wrong.wav'
 import correct from '../../../../assets/sounds/sprint-correct.mp3'
 
 type PropsType = {
-  shuffledWords: Array<string>;
+  shuffledWords: Array<WordsType>;
 };
 export const Variants: FC<PropsType> = ({ shuffledWords }) => {
   const learnedWord = useSelector(word);
@@ -35,7 +35,7 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
     setCorrectWord(learnedWord.wordTranslate);
   };
   const answerFromBoard = (index: number) => {
-    onAnswer(shuffledWords[index]);
+    onAnswer(shuffledWords[index].wordTranslate);
     document.removeEventListener('keydown', onAnswerSelect);
   }
   const onAnswerSelect = useCallback(
@@ -60,18 +60,18 @@ export const Variants: FC<PropsType> = ({ shuffledWords }) => {
   }, [onAnswerSelect]);
   return (
     <div className={styles.variants}>
-      {shuffledWords.map((w: string, i: number) => (
+      {shuffledWords.map((w: WordsType, i: number) => (
         <button
-          key={w}
-          onClick={() => onAnswer(w)}
+          key={w.wordTranslate}
+          onClick={() => onAnswer(w.wordTranslate)}
           disabled={answered}
           className={clsx(
-            answered && learnedWord.wordTranslate === w ? styles.correct : styles.variant__text,
-            wrongWord === w ? styles.wrong : styles.variant__text
+            answered && learnedWord.wordTranslate === w.wordTranslate ? styles.correct : styles.variant__text,
+            wrongWord === w.wordTranslate ? styles.wrong : styles.variant__text
           )}
           type="button"
         >
-          {i + 1}.{w}
+          {i + 1}.{w.wordTranslate}
         </button>
       ))}
     </div>

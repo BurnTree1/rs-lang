@@ -67,7 +67,7 @@ export const Deleted = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.deleted}/>
-      <GamesSection words={words}/>
+      <GamesSection words={words} additionalFetching={false}/>
       {pagination}
       {cards}
       {pagination}

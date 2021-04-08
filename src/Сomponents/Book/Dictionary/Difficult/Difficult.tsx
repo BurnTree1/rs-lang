@@ -65,7 +65,7 @@ export const Difficult = () => {
   return (
     <div>
       <SectionHandler prefix={urlPrefix.difficult}/>
-      <GamesSection words={words}/>
+      <GamesSection words={words} additionalFetching={false}/>
       {pagination}
       {cards}
       {pagination}
