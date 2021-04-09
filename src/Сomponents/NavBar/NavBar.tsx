@@ -205,7 +205,7 @@ export const NavBar: FC<PropsType> = (props) => {
               {!isAuth && <Lock/>}
             </ListItem>
           </NavLink>
-          {isAuth && <NavLink to='/' activeClassName='active'>
+          {isAuth && <NavLink to='/' activeClassName='active__logout'>
             <ListItem button>
               <ListItemIcon>
                 <ExitToApp style={{ color: "black" }}/>
