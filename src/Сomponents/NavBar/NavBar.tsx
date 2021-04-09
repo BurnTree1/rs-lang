@@ -19,7 +19,7 @@ import { NavLink } from "react-router-dom";
 import user from '../../assets/image/user.png'
 import { setHasDifficulty } from '../../store/reducers/sprintSlice';
 import { setHasAudioDifficulty } from '../../store/reducers/audioSlice';
-import { authImageSelector, authIsAuthorized } from "../../store/reducers/authorizationSlice";
+import { authImageSelector, authIsAuthorized, logOut } from "../../store/reducers/authorizationSlice";
 import "./NavBar.css";
 import { PAGE_AUTH, urlBuilder, urlPrefix } from "../../helpers";
 import { clearWords } from "../../store/reducers/memoryGameSlice";
@@ -68,6 +68,9 @@ export const NavBar: FC<PropsType> = (props) => {
   const isAuth = useSelector(authIsAuthorized)
 
   const dispatch = useDispatch();
+  const onLogOut = () => {
+    dispatch(logOut());
+  };
 
   const noAuthActive = (match: any, location: any) => (location.pathname !== PAGE_AUTH && match)
 
@@ -202,12 +205,12 @@ export const NavBar: FC<PropsType> = (props) => {
               {!isAuth && <Lock/>}
             </ListItem>
           </NavLink>
-          {isAuth && <NavLink to='/' activeClassName='active'>
+          {isAuth && <NavLink to='/' activeClassName='active__logout'>
             <ListItem button>
               <ListItemIcon>
                 <ExitToApp style={{ color: "black" }}/>
               </ListItemIcon>
-              <ListItemText primary="Выход"/>
+              <ListItemText primary="Выход" onClick={onLogOut} />
             </ListItem>
           </NavLink>}
           <ListItem className='avatar'>
