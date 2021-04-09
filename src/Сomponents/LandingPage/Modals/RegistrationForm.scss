@@ -71,28 +71,30 @@
   }
 }
 
-.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
-  padding: 0;
-}
-
-.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-  margin-bottom: 5px;
-  margin-top: 5px
-}
-
-.MuiButton-startIcon.MuiButton-iconSizeMedium {
-  margin-left: 0;
-}
-
-.MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
-  margin: 10px 0 20px 0;
-
-  & > .MuiButton-label {
-    margin: 0;
+.formContainer {
+  .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+    padding: 0;
   }
-}
-
-
-.MuiButton-startIcon.MuiButton-iconSizeMedium {
-  margin-right: 0;
+  
+  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+    margin-bottom: 5px;
+    margin-top: 5px
+  }
+  
+  .MuiButton-startIcon.MuiButton-iconSizeMedium {
+    margin-left: 0;
+  }
+  
+  .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+    margin: 10px 0 20px 0;
+  
+    & > .MuiButton-label {
+      margin: 0;
+    }
+  }
+  
+  
+  .MuiButton-startIcon.MuiButton-iconSizeMedium {
+    margin-right: 0;
+  }
 }

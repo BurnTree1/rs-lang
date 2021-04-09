@@ -3,7 +3,8 @@ export type AuthorizationState = {
   password: string,
   image: string,
   isAuthorized: boolean,
-  isSignInSuccessfully: boolean
+  isSignInSuccessfully: boolean,
+  error: boolean,
 }
 
 export type CreateNewUserType = {

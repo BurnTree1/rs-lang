@@ -10,13 +10,15 @@ const initialState: AuthorizationState = {
   password: "",
   image: '',
   isAuthorized: false,
-  isSignInSuccessfully: false
+  isSignInSuccessfully: false,
+  error: false,
 };
 
 export type UserDataResponse = {
   id: string,
   email: string,
-  photo: string
+  photo: string,
+  error: boolean,
 }
 
 export type SignInResponse = {
@@ -42,6 +44,7 @@ export const createNewUser = createAsyncThunk(
       await AppCreateNewUser(formData)
       return userData
     } catch (error) {
+      thunkAPI.dispatch(authFailure());
       return thunkAPI.rejectWithValue({ error: error.messages })
     }
   }
@@ -63,15 +66,24 @@ export const signInUser = createAsyncThunk(
   "authorization/signInUser",
   async (userData: SignIn, thunkAPI) => {
     try {
-      const response: AxiosResponse<SignInResponse> = await AppSignInUser(userData).catch(err => err);
+      thunkAPI.dispatch(resetFailure());
+      const response: AxiosResponse<SignInResponse> = await AppSignInUser(userData);
       LocalStorageService.setToken(response.data.token)
       LocalStorageService.setUserId(response.data.userId)
       thunkAPI.dispatch(await getUserData())
       thunkAPI.dispatch(updateSignInSuccessfullyStatus())
       return response.data
     } catch (error) {
+      thunkAPI.dispatch(authFailure());
       return thunkAPI.rejectWithValue({ error: error.messages })
     }
+  }
+)
+export const logOut = createAsyncThunk(
+  "authorization/logOut",
+  async (_, thunkAPI) => {
+    thunkAPI.dispatch(onLogOut());
+    LocalStorageService.logOut();
   }
 )
 
@@ -83,7 +95,22 @@ const AuthorizationSlice = createSlice({
       state.image = action.payload
     },
     updateSignInSuccessfullyStatus: (state) => {
-      state.isSignInSuccessfully = true
+      state.isSignInSuccessfully = true;
+      state.error = false;
+    },
+    authFailure: (state) => {
+      state.error = true
+    },
+    resetFailure: (state) => {
+      state.error = false
+    },
+    onLogOut: (state) => {
+      state.email = '';
+      state.password = '';
+      state.image = '';
+      state.isAuthorized = false;
+      state.isSignInSuccessfully = false;
+      state.error = false;
     }
   },
   extraReducers: builder => {
@@ -113,7 +140,10 @@ const AuthorizationSlice = createSlice({
 export const authImageSelector = (state: RootState) => state.auth.image;
 export const authIsAuthorized = (state: RootState) => state.auth.isAuthorized;
 export const authIsSignInSuccessfully = (state: RootState) => state.auth.isSignInSuccessfully;
+export const authIsFailure = (state: RootState) => state.auth.error;
 
-export const { updateAuthImage, updateSignInSuccessfullyStatus } = AuthorizationSlice.actions;
+export const {
+  updateAuthImage, updateSignInSuccessfullyStatus, authFailure, resetFailure, onLogOut
+} = AuthorizationSlice.actions;
 
 export default AuthorizationSlice.reducer

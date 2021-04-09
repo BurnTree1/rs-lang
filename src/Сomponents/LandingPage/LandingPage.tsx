@@ -53,9 +53,11 @@ export const LandingPage = () => {
               />
               <Benefits/>
               <Team/>
-              <Start
-                onOpenModal={onOpenModal}
-              />
+              {!isAuthIsAuthorized && (
+                <Start
+                    onOpenModal={onOpenModal}
+                />
+              )}
               <Footer/>
               <RegistrationForm open={modalControls.signUp} />
               <LoginForm open={modalControls.signIn} isSignInSuccessfully={isSignInSuccessfully}/>

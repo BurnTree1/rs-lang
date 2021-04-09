@@ -4,8 +4,8 @@ import { Button, TextField } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { useDispatch } from 'react-redux';
-import { signInUser, updateSignInSuccessfullyStatus } from '../../../store/reducers/authorizationSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInUser, authIsFailure } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean
@@ -17,8 +17,12 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
-  })
+  });
+
+  const [disabled, setDisabled] = useState<boolean>(false);
   const dispatch = useDispatch();
+
+  const isFailure = useSelector(authIsFailure);
 
  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
@@ -28,7 +32,8 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
  }
 
  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-   e.preventDefault()
+    e.preventDefault()
+    setDisabled(true);
     dispatch(signInUser(formData))
  }
 
@@ -37,9 +42,16 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
       setFormData({
         email: '',
         password: ''
-      })
+      });
+      setDisabled(false);
     }
   }, [open])
+
+  useEffect(() => {
+    if (isFailure) {
+      setDisabled(false);
+    }
+  }, [isFailure]);
 
   return (
     <div className="formContainerLogIn" style={{
@@ -51,6 +63,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
       <form onSubmit={onSubmit}>
         <TextField
           name="email"
+          required={true}
           value={formData.email}
           onChange={onChangeInputValue}
           style={{
@@ -67,6 +80,8 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
         />
         <TextField
           name="password"
+          type="password"
+          required={true}
           value={formData.password}
           onChange={onChangeInputValue}
           style={{
@@ -82,7 +97,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
           }}
         />
         <p>{ isSignInSuccessfully ? '' : "Введите данные или убедитесь в их валидности"}</p>
-        <Button type="submit" color="primary">Войти</Button>
+        <Button type="submit" color="primary" disabled={disabled}>Войти</Button>
       </form>
     </div>
   )
