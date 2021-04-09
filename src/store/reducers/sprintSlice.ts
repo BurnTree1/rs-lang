@@ -24,14 +24,14 @@ const initialState = {
   wordsArr: words as Array<WordsType>,
   word: {} as WordsType,
   translation: '',
-  score: 0, 
+  score: 0,
   pointsToAdd: 10,
   isFinished: false,
   correctSeries: 0,
   correctAnswers: [] as Array<WordsType>,
   wrongAnswers: [] as Array<WordsType>,
   hasDifficulty: true,
-  difficulty: 0
+  difficulty: 0,
 };
 
 export const sprintSlice = createSlice({
@@ -39,22 +39,20 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     setSprintWords: (state, { payload: fetchedWords }) => {
-      // if(state.wordsArr.length >= 4) {
-        state.wordsArr = []
-      // }
-      state.score = 0
-      state.correctSeries = 0
-      state.correctAnswers = []
-      state.wrongAnswers = []
-      state.pointsToAdd = 10
+      state.wordsArr = [];
+      state.score = 0;
+      state.correctSeries = 0;
+      state.correctAnswers = [];
+      state.wrongAnswers = [];
+      state.pointsToAdd = 10;
       for (const key in fetchedWords) {
         if (Object.prototype.hasOwnProperty.call(fetchedWords, key)) {
-        state.wordsArr = [...state.wordsArr, fetchedWords[key]]
+          state.wordsArr = [...state.wordsArr, fetchedWords[key]];
         }
       }
-      state.word = { ...state.wordsArr[0] }
-      state.translation = state.wordsArr[0].wordTranslate
-      state.hasDifficulty = false
+      state.word = { ...state.wordsArr[0] };
+      state.translation = state.wordsArr[0].wordTranslate;
+      state.hasDifficulty = false;
     },
     nextWord: (state, action) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === action.payload);
@@ -70,19 +68,19 @@ export const sprintSlice = createSlice({
     },
     setScore: (state, action) => {
       if (state.correctSeries >= 12) {
-        state.pointsToAdd = 80
+        state.pointsToAdd = 80;
       } else {
-        const power = Math.floor(state.correctSeries / 3)
-        state.pointsToAdd = 10 * Math.pow(2, power)
+        const power = Math.floor(state.correctSeries / 3);
+        state.pointsToAdd = 10 * Math.pow(2, power);
       }
       if ((state.word.wordTranslate === state.translation) === action.payload) {
         state.score += state.pointsToAdd;
         state.correctSeries += 1;
-        state.correctAnswers = [...state.correctAnswers, state.word]
+        state.correctAnswers = [...state.correctAnswers, state.word];
       } else {
         state.correctSeries = 0;
         state.pointsToAdd = 10;
-        state.wrongAnswers = [...state.wrongAnswers, state.word]
+        state.wrongAnswers = [...state.wrongAnswers, state.word];
       }
     },
     gameOver: (state, { payload: isFinished }) => {
@@ -90,39 +88,48 @@ export const sprintSlice = createSlice({
     },
     makeAnswer: (state, { payload: word }) => {
       if (state.word.wordTranslate === word.wordTranslate) {
-        state.correctAnswers = [...state.correctAnswers, state.word]
+        state.correctAnswers = [...state.correctAnswers, state.word];
       } else {
-        state.wrongAnswers = [...state.wrongAnswers, state.word]
+        state.wrongAnswers = [...state.wrongAnswers, state.word];
       }
     },
     setSprintDifficult: (state, { payload: difficulty }) => {
-      state.difficulty = difficulty / 100
+      state.difficulty = difficulty / 100;
     },
     setHasDifficulty: (state, { payload: hasDifficulty }) => {
-      state.hasDifficulty = hasDifficulty
-    }
+      state.hasDifficulty = hasDifficulty;
+    },
   },
 });
 
-export function fetchAllWords(g: number,p: number) {
+export function fetchAllWords(g: number, p: number) {
   // @ts-ignore
-  return async dispatch => {
-      const response = await fetchWords.get(g, p)
-      dispatch(setSprintWords(response.data))
-  }
+  return async (dispatch) => {
+    const response = await fetchWords.get(g, p);
+    dispatch(setSprintWords(response.data));
+  };
 }
 
-export function fetchWithAdditional(g: number,p: number, wordsArr: any) {
+export function fetchWithAdditional(g: number, p: number, wordsArr: any) {
   // @ts-ignore
-  return async dispatch => {
-      const response = await fetchWords.get(g, p)
-      dispatch(setSprintWords(Object.assign(response.data, wordsArr)))
-  }
+  return async (dispatch) => {
+    const response = await fetchWords.get(g, p);
+    dispatch(setSprintWords(Object.assign(response.data, wordsArr)));
+  };
 }
 
 const { actions, reducer } = sprintSlice;
 
-export const { nextWord, setTranslated, setScore, gameOver, makeAnswer, setSprintWords, setSprintDifficult, setHasDifficulty } = actions;
+export const {
+  nextWord,
+  setTranslated,
+  setScore,
+  gameOver,
+  makeAnswer,
+  setSprintWords,
+  setSprintDifficult,
+  setHasDifficulty,
+} = actions;
 
 export const wordsArr = (state: RootState) => state.sprint.wordsArr;
 export const word = (state: RootState) => state.sprint.word;

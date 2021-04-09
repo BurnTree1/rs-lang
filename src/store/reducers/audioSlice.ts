@@ -36,19 +36,17 @@ export const audioSlice = createSlice({
   initialState,
   reducers: {
     setAudioWords: (state, { payload: words }) => {
-      state.hasDifficulty = false
-      if(state.wordsArr.length >= 4) {
-        state.wordsArr = []
-      }
-      state.correctAnswers = []
-      state.wrongAnswers = []
+      state.hasDifficulty = false;
+      state.wordsArr = [];
+      state.correctAnswers = [];
+      state.wrongAnswers = [];
       for (const key in words) {
         if (Object.prototype.hasOwnProperty.call(words, key)) {
-        state.wordsArr = [...state.wordsArr, words[key]]
+          state.wordsArr = [...state.wordsArr, words[key]];
         }
       }
-      state.word = { ...state.wordsArr[0] }
-      state.next = { ...state.wordsArr[1] }
+      state.word = { ...state.wordsArr[0] };
+      state.next = { ...state.wordsArr[1] };
     },
     nextWord: (state, { payload: word }) => {
       const wordIndex = state.wordsArr.findIndex((w) => w.word === word.word);
@@ -57,57 +55,64 @@ export const audioSlice = createSlice({
         state.word = state.wordsArr[wordIndex];
       } else {
         state.word = state.wordsArr[wordIndex + 1];
-        if(state.wordsArr[wordIndex + 2]) {
+        if (state.wordsArr[wordIndex + 2]) {
           state.next = state.wordsArr[wordIndex + 2];
         } else {
-          state.next = state.wordsArr[state.wordsArr.length - 1]
+          state.next = state.wordsArr[state.wordsArr.length - 1];
         }
       }
     },
-    setAnswered: (state, { payload: isAnswered }:PayloadAction<boolean>) => {
-      state.isAnswered = isAnswered
+    setAnswered: (state, { payload: isAnswered }: PayloadAction<boolean>) => {
+      state.isAnswered = isAnswered;
     },
     makeAnswer: (state, { payload: word }) => {
       if (state.word.wordTranslate === word) {
-        state.correctAnswers = [...state.correctAnswers, state.word]
-        state.longestSeries += 1
+        state.correctAnswers = [...state.correctAnswers, state.word];
+        state.longestSeries += 1;
       } else {
-        state.wrongAnswers = [...state.wrongAnswers, state.word]
-        state.longestSeries = 0
+        state.wrongAnswers = [...state.wrongAnswers, state.word];
+        state.longestSeries = 0;
       }
     },
     audioGameOver: (state, { payload: finished }) => {
       state.isFinished = finished;
     },
     setToWrongWords: (state, { payload: word }) => {
-      state.wrongAnswers = [...state.wrongAnswers, state.word]
+      state.wrongAnswers = [...state.wrongAnswers, state.word];
     },
     setHasAudioDifficulty: (state, { payload: hasDifficulty }) => {
-      state.hasDifficulty = hasDifficulty
-    }
+      state.hasDifficulty = hasDifficulty;
+    },
   },
 });
 
-export function fetchAllAudioWords(g: number,p: number) {
+export function fetchAllAudioWords(g: number, p: number) {
   // @ts-ignore
-  return async dispatch => {
-      const response = await fetchWords.get(g, p)
-      dispatch(setAudioWords(response.data))
-   
-  }
+  return async (dispatch) => {
+    const response = await fetchWords.get(g, p);
+    dispatch(setAudioWords(response.data));
+  };
 }
 
-export function fetchAudioWithAdditional(g: number,p: number, wordsArr: any) {
+export function fetchAudioWithAdditional(g: number, p: number, wordsArr: any) {
   // @ts-ignore
-  return async dispatch => {
-      const response = await fetchWords.get(g, p)
-      dispatch(setAudioWords(Object.assign(response.data, wordsArr)))
-  }
+  return async (dispatch) => {
+    const response = await fetchWords.get(g, p);
+    dispatch(setAudioWords(Object.assign(response.data, wordsArr)));
+  };
 }
 
 const { actions, reducer } = audioSlice;
 
-export const { nextWord, audioGameOver, makeAnswer, setAnswered, setAudioWords, setToWrongWords, setHasAudioDifficulty } = actions;
+export const {
+  nextWord,
+  audioGameOver,
+  makeAnswer,
+  setAnswered,
+  setAudioWords,
+  setToWrongWords,
+  setHasAudioDifficulty,
+} = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
 export const word = (state: RootState) => state.audio.word;
