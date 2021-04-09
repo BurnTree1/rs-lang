@@ -19,12 +19,13 @@
   align-items: center;
 }
 
-.card__img {
-  min-width: 100px;
+.card__imgWrap {
   width: 100px;
   height: 100px;
-  margin-bottom: 18px;
   border-radius: 50%;
+  margin-bottom: 18px;
+  line-height: 0;
+  font-size: 0;
 }
 
 .word__progress {

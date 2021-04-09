@@ -39,9 +39,9 @@ export const sprintSlice = createSlice({
   initialState,
   reducers: {
     setSprintWords: (state, { payload: fetchedWords }) => {
-      if(state.wordsArr.length >= 4) {
+      // if(state.wordsArr.length >= 4) {
         state.wordsArr = []
-      }
+      // }
       state.score = 0
       state.correctSeries = 0
       state.correctAnswers = []

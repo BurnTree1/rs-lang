@@ -12,6 +12,7 @@ import { setType } from "../../../../store/reducers/book";
 import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
+import styles from '../../Page/Page.module.scss'
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -63,7 +64,7 @@ export const Difficult = () => {
     [pagesCount, sectionId, pageId]);
 
   return (
-    <div>
+    <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.difficult}/>
       <GamesSection words={words} additionalFetching={false}/>
       {pagination}

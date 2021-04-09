@@ -31,7 +31,6 @@ const Page: FC = () => {
 
   useEffect(() => {
     setIsLoaded(false);
-    console.log(`is ${isAuth}`);
     const getWords = isAuth ? userAggregateWords.getForBook : fetchWords.get;
     getWords(sectionIdInt - 1, pageIdInt - 1)
       .then(({ data }) => {

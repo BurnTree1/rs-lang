@@ -12,6 +12,7 @@ import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { setType } from "../../../../store/reducers/book";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
+import styles from '../../Page/Page.module.scss'
 
 export const Deleted = () => {
 
@@ -65,7 +66,7 @@ export const Deleted = () => {
     [pagesCount, sectionId, pageId]);
 
   return (
-    <div>
+    <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.deleted}/>
       <GamesSection words={words} additionalFetching={false}/>
       {pagination}

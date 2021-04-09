@@ -12,6 +12,7 @@ import { setType } from "../../../../store/reducers/book";
 import { StudiedStatistics } from "./StudiedStatistics";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
+import styles from '../../Page/Page.module.scss'
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,7 +65,7 @@ export const Studied = () => {
     [pagesCount, sectionId, pageId]);
 
   return (
-    <div>
+    <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.studied}/>
       <StudiedStatistics words={words}/>
       {pagination}
