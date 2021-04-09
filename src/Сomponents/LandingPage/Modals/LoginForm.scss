@@ -56,14 +56,16 @@
   }
 }
 
-.MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
-  padding-top: 0;
-}
-
-.MuiButton-label {
-  margin-top: 10px;
-}
-
-.MuiButton-startIcon.MuiButton-iconSizeMedium {
-  margin-right: 0;
+.formContainerLogIn {
+  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+    padding-top: 0;
+  }
+  
+  .MuiButton-label {
+    margin-top: 10px;
+  }
+  
+  .MuiButton-startIcon.MuiButton-iconSizeMedium {
+    margin-right: 0;
+  }
 }

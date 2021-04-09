@@ -14,5 +14,9 @@ export const LocalStorageService = {
     const userId = localStorage.getItem('userId');
     if (userId) return JSON.parse(userId)
     return null
+  },
+  logOut: (): void => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
   }
 }

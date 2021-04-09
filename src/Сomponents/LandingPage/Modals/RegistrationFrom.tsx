@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import "./RegistrationForm.scss"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button } from '@material-ui/core';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import { createNewUser, updateAuthImage } from '../../../store/reducers/authorizationSlice';
+import { authIsFailure, createNewUser, updateAuthImage } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean
@@ -61,9 +61,12 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
   })
 
   const dispatch = useDispatch()
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const isFailure = useSelector(authIsFailure);
 
   useEffect(() => {
     if (!open) {
+      setDisabled(false);
       setFormData({
         email: '',
         password: '',
@@ -78,7 +81,13 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
       password: false,
       image: false
     })
-  }, [open])
+  }, [open]);
+
+  useEffect(() => {
+    if (isFailure) {
+      setDisabled(false);
+    }
+  }, [isFailure]);
 
   const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -113,6 +122,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (Object.keys(validationFields).every((field) => !validationFields[field])) {
+      setDisabled(true);
       const reader = new FileReader();
       reader.readAsDataURL(formData.image);
       reader.onloadend = () => {
@@ -138,6 +148,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
       <form onSubmit={onSubmit}>
         <TextField
           name="email"
+          required={true}
           error={validationFields.email}
           helperText={validationFields.email ? "Введите корректный e-mail адрес.": ' '}
           value={formData.email}
@@ -156,6 +167,8 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
         />
         <TextField
           name="password"
+          required={true}
+          type="password"
           error={validationFields.password}
           helperText={validationFields.password ? "Пароль должен состоять из латицины. Как минимум 1 заглавная и 1 цифра. ": ' '}
           value={formData.password}
@@ -174,6 +187,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
         />
         <TextField
           name="name"
+          required={true}
           error={validationFields.name}
           helperText={validationFields.name ? "Имя должно состоять как минимум из 3 символов": ' '}
           value={formData.name}
@@ -192,11 +206,14 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
         />
           <TextField
             name="image"
+            required={true}
             placeholder="Загрузить аватарку"
             type="file" id="icon-button-file"
             onChange={onChangeInputValue}
             style={{
-              display: "none"
+              opacity: 0,
+              position: 'absolute',
+              left: '35%'
             }}
           />
           <label htmlFor="icon-button-file">
@@ -214,7 +231,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
                 : <AccountCircleIcon style={{ fontSize: 80 }}/>} />
           </label>
           <p>{validationFields.image ? "Размер не должен превышать 500Kb": ' '}</p>
-        <Button type="submit" color="primary" style={{
+        <Button type="submit" color="primary" disabled={disabled} style={{
         }}>Зарегистрироваться</Button>
       </form>
     </div>
