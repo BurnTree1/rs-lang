@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import _ from "lodash";
 import shortid from "shortid";
+import { useSelector } from "react-redux";
 import styles from "../Savannah/Savannah.module.scss";
 import { WordsType, WordType } from "../Savannah/types";
 import WrongAnswerList from "../Savannah/WrongAnswerList";
 import { userWords } from "../../api";
+import { authIsAuthorized } from "../../store/reducers/authorizationSlice";
 
 type Props = {
   wrongAnswers: WordsType;
@@ -13,6 +15,7 @@ type Props = {
 };
 
 const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) => {
+  const isAuth = useSelector(authIsAuthorized);
   const submitHandler = () => {
     if (submit) {
       submit();
@@ -30,9 +33,10 @@ const EndGameModal: React.FC<Props> = ({ wrongAnswers, rightAnswers, submit }) =
   };
 
   useEffect(() => {
-    // @ts-ignore
-    rightAnswers.forEach((word) => sendResult(word, "correct"));
-    wrongAnswers.forEach((word) => sendResult(word, "wrong"));
+    if(isAuth) {
+      rightAnswers.forEach((word) => sendResult(word, "correct"));
+      wrongAnswers.forEach((word) => sendResult(word, "wrong"));
+    }
   }, []);
 
   return (

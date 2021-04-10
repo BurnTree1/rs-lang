@@ -59,7 +59,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
       display: open? "flex": "none"
     }}>
       <div>
-        <span>Sign In</span>
+        <span>Вход</span>
       </div>
       <form onSubmit={onSubmit}>
         <TextField

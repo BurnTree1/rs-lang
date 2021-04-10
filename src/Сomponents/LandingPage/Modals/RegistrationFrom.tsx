@@ -143,7 +143,7 @@ const RegistrationForm: React.FC<Props> = ({ open }) => {
       display: open? "flex": "none"
     }} >
        <div>
-        <span>Sign Up</span>
+        <span>Регистрация</span>
        </div>
       <form onSubmit={onSubmit}>
         <TextField
