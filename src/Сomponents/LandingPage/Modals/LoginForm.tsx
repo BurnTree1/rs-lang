@@ -5,7 +5,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInUser, authIsFailure } from '../../../store/reducers/authorizationSlice';
+import { signInUser, authIsFailure, resetFailure } from '../../../store/reducers/authorizationSlice';
 
 type Props = {
   open: boolean
@@ -22,7 +22,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
   const [disabled, setDisabled] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  const isFailure = useSelector(authIsFailure);
+  const isFailure = useSelector(authIsFailure)
 
  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
@@ -44,6 +44,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
         password: ''
       });
       setDisabled(false);
+      dispatch(resetFailure())
     }
   }, [open])
 
@@ -96,7 +97,7 @@ const LoginForm: React.FC<Props> = ({ open, isSignInSuccessfully }) => {
             ),
           }}
         />
-        <p>{ isSignInSuccessfully ? '' : "Введите данные или убедитесь в их валидности"}</p>
+        { isFailure ? <p>Неправильный логин или пароль</p> : <p/>}
         <Button type="submit" color="primary" disabled={disabled}>Войти</Button>
       </form>
     </div>
