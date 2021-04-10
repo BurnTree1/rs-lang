@@ -117,8 +117,7 @@ export const NavBar: FC<PropsType> = (props) => {
           </ListItem>
           <Collapse className='nested' in={dictionaryOpen} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <NavLink to={isAuth ? urlBuilder(urlPrefix.studied, "1") : PAGE_AUTH} activeClassName='active'
-                       isActive={noAuthActive}>
+              <NavLink to={urlBuilder(urlPrefix.studied, "1")} activeClassName='active' isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -127,8 +126,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   {!isAuth && <Lock/>}
                 </ListItem>
               </NavLink>
-              <NavLink to={isAuth ? urlBuilder(urlPrefix.difficult, "1") : PAGE_AUTH} activeClassName='active'
-                       isActive={noAuthActive}>
+              <NavLink to={urlBuilder(urlPrefix.difficult, "1")} activeClassName='active' isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -137,8 +135,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   {!isAuth && <Lock/>}
                 </ListItem>
               </NavLink>
-              <NavLink to={isAuth ? urlBuilder(urlPrefix.deleted, "1") : PAGE_AUTH} activeClassName='active'
-                       isActive={noAuthActive}>
+              <NavLink to={urlBuilder(urlPrefix.deleted, "1")} activeClassName='active' isActive={noAuthActive}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
@@ -196,7 +193,7 @@ export const NavBar: FC<PropsType> = (props) => {
             </List>
           </Collapse>
           <Divider/>
-          <NavLink to={isAuth ? "/statistics" : PAGE_AUTH} activeClassName='active' isActive={noAuthActive}>
+          <NavLink to="/statistics" activeClassName='active' isActive={noAuthActive}>
             <ListItem button>
               <ListItemIcon>
                 <Equalizer style={{ color: "black" }}/>

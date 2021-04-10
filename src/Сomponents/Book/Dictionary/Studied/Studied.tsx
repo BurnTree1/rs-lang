@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get, map } from "lodash";
 import { CircularProgress } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PAGE_STUDIED, urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
 import SectionHandler from "../../Common/SectionHandler";
@@ -14,6 +14,8 @@ import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
 import book_style from "../../Book.module.scss";
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
+import Auth from "../../../Auth/Auth";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,6 +28,7 @@ export const Studied = () => {
   const [pagesCount, setPagesCount] = useState(1)
 
   const dispatch = useDispatch();
+  const isAuth = useSelector(authIsAuthorized)
 
   useEffect(() => {
     dispatch(setType(PAGE_STUDIED))
@@ -62,6 +65,9 @@ export const Studied = () => {
                   pageId={pageId}
                   count={pagesCount}/>,
     [pagesCount, sectionId, pageId]);
+
+  if(!isAuth)
+    return <Auth/>
 
   return (
     <div className={styles.page}>

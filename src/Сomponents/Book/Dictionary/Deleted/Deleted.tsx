@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { get, map } from "lodash";
 import { CircularProgress } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SectionHandler from "../../Common/SectionHandler";
 import { PAGE_DELETED, urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
@@ -14,6 +14,8 @@ import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
 import book_style from "../../Book.module.scss";
+import Auth from "../../../Auth/Auth";
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
 
 export const Deleted = () => {
 
@@ -27,6 +29,7 @@ export const Deleted = () => {
   const [pagesCount, setPagesCount] = useState(1);
 
   const dispatch = useDispatch();
+  const isAuth = useSelector(authIsAuthorized)
 
   useEffect(() => {
     dispatch(setType(PAGE_DELETED))
@@ -66,6 +69,8 @@ export const Deleted = () => {
                   count={pagesCount}/>,
     [pagesCount, sectionId, pageId]);
 
+  if(!isAuth)
+    return <Auth/>
   return (
     <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.deleted}/>

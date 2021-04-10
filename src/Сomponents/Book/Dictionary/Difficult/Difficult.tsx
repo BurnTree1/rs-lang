@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { get, map } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { PAGE_HARD, urlPrefix, WORD_PER_PAGE } from "../../../../helpers";
 import { userAggregateWords } from "../../../../api";
 import Card from "../../Common/WordItem/WordItem";
@@ -14,6 +14,8 @@ import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
 import book_style from "../../Book.module.scss";
+import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
+import Auth from "../../../Auth/Auth";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -25,6 +27,7 @@ export const Difficult = () => {
   const [words, setWords] = useState([]);
   const [pagesCount, setPagesCount] = useState(1);
   const dispatch = useDispatch();
+  const isAuth = useSelector(authIsAuthorized)
 
   useEffect(() => {
     dispatch(setType(PAGE_HARD));
@@ -62,6 +65,8 @@ export const Difficult = () => {
                   count={pagesCount}/>,
     [pagesCount, sectionId, pageId]);
 
+  if(!isAuth)
+    return <Auth/>
   return (
     <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.difficult}/>
