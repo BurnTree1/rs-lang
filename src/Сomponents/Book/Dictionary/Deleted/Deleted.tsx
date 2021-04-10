@@ -13,6 +13,7 @@ import { setType } from "../../../../store/reducers/book";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
+import book_style from "../../Book.module.scss";
 
 export const Deleted = () => {
 
@@ -68,10 +69,12 @@ export const Deleted = () => {
   return (
     <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.deleted}/>
-      <GamesSection words={words} additionalFetching={false}/>
+      <GamesSection words={words} additionalFetching={false} disabled={words.length === 0}/>
       {pagination}
-      {cards}
-      {pagination}
+      <div className={book_style.words_container}>
+        {isLoaded ? cards : <CircularProgress className={book_style.spinner} size={80}/>}
+      </div>
+      {isLoaded && pagination}
       <Footer/>
     </div>
   );

@@ -13,6 +13,7 @@ import { GamesSection } from "../../Page/GamesSection/GamesSection";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
+import book_style from "../../Book.module.scss";
 
 export const Difficult = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,8 +27,8 @@ export const Difficult = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setType(PAGE_HARD))
-  }, [])
+    dispatch(setType(PAGE_HARD));
+  }, []);
 
   const fetchWords = () => {
     setIsLoaded(false);
@@ -46,30 +47,30 @@ export const Difficult = () => {
   }, [sectionIdInt, pageIdInt]);
 
   const cards = useMemo(() =>
-      isLoaded ?
-        map(words, word => {
-          const newWord = rebaseWordId(word)
-          // @ts-ignore
-          return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>
-        })
-        : <CircularProgress/>
+      map(words, word => {
+        const newWord = rebaseWordId(word);
+        // @ts-ignore
+        return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>;
+      })
     , [words, isLoaded]
   );
 
   const pagination = useMemo(() =>
-    <Pagination prefix={urlPrefix.difficult}
-                sectionId={sectionId}
-                pageId={pageId}
-                count={pagesCount}/>,
+      <Pagination prefix={urlPrefix.difficult}
+                  sectionId={sectionId}
+                  pageId={pageId}
+                  count={pagesCount}/>,
     [pagesCount, sectionId, pageId]);
 
   return (
     <div className={styles.page}>
       <SectionHandler prefix={urlPrefix.difficult}/>
-      <GamesSection words={words} additionalFetching={false}/>
+      <GamesSection words={words} additionalFetching={false} disabled/>
       {pagination}
-      {cards}
-      {pagination}
+      <div className={book_style.words_container}>
+        {isLoaded ? cards : <CircularProgress className={book_style.spinner} size={80}/>}
+      </div>
+      {isLoaded && pagination}
       <Footer/>
     </div>
   );

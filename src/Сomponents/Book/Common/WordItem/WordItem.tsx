@@ -5,13 +5,14 @@ import { Card } from '@material-ui/core';
 import { useSelector } from "react-redux";
 import shortid from 'shortid';
 import ActionButtons from './ActionButtons';
-import { URL_API } from '../../../../helpers';
+import { PAGE_BOOK, URL_API } from "../../../../helpers";
 import { getRandomColor } from '../../../../helpers/words.helper';
 import listen from '../../../../assets/image/listen.svg';
 import styles from './WordItem.module.scss';
 import Statistic from "./WordStatistic";
 import { isNeedTranslate, isNeedMeaningTranslate } from "../../../../store/reducers/settings";
 import { authIsAuthorized } from "../../../../store/reducers/authorizationSlice";
+import { pageType } from "../../../../store/reducers/book";
 
 type WordType = {
   id: string;
@@ -51,6 +52,7 @@ const WordItem: FC<WordType> = ({
   const isShowTranslate = useSelector(isNeedTranslate);
   const isShowMeaningTranslate = useSelector(isNeedMeaningTranslate);
   const isAuth = useSelector(authIsAuthorized)
+  const type = useSelector(pageType);
   const isHard = _.get(userWord, ['optional', 'isHard'], false);
 
 
@@ -120,14 +122,14 @@ const WordItem: FC<WordType> = ({
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            {isShowTranslate && <div className={styles.word__translation}>{wordTranslate}</div>}
+            {(isShowTranslate || type !== PAGE_BOOK) && <div className={styles.word__translation}>{wordTranslate}</div>}
             <div className={styles.word__mean}>
               <div className={styles.word__inner}>{meaning}</div>
               <button onClick={onExplainPlay} type="button" className={styles.listen}>
                 <img src={listen} alt="listen" className={styles.listen__img} />
               </button>
             </div>
-            {isShowMeaningTranslate && <div className={styles.word__explain}>{textMeaningTranslate}</div>}
+            {(isShowMeaningTranslate || type !== PAGE_BOOK) && <div className={styles.word__explain}>{textMeaningTranslate}</div>}
             <div className={styles.word__mean}>
             <div className={styles.word__inner}>{examples}</div>
               <button onClick={onExamplePlay} type="button" className={styles.listen}>

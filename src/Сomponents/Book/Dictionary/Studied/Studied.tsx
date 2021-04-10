@@ -13,6 +13,7 @@ import { StudiedStatistics } from "./StudiedStatistics";
 import { Footer } from "../../../Footer/Footer";
 import { rebaseWordId } from "../../../../helpers/words.helper";
 import styles from '../../Page/Page.module.scss'
+import book_style from "../../Book.module.scss";
 
 export const Studied = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -47,13 +48,11 @@ export const Studied = () => {
   }, [sectionIdInt, pageIdInt]);
 
   const cards = useMemo(() =>
-      isLoaded ?
         map(words, word => {
           const newWord = rebaseWordId(word)
           // @ts-ignore
           return <Card key={newWord.id} {...newWord} refresh={fetchWords}/>
         })
-        : <CircularProgress/>
     , [words, isLoaded]
   );
 
@@ -69,8 +68,10 @@ export const Studied = () => {
       <SectionHandler prefix={urlPrefix.studied}/>
       <StudiedStatistics words={words}/>
       {pagination}
-      {cards}
-      {pagination}
+      <div className={book_style.words_container}>
+        {isLoaded ? cards : <CircularProgress className={book_style.spinner} size={80}/>}
+      </div>
+      {isLoaded && pagination}
       <Footer/>
     </div>
   );

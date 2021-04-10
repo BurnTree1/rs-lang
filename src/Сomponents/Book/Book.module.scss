@@ -90,3 +90,14 @@
   align-items: center;
   justify-content: center;
 }
+
+.words_container {
+  min-height: 400px;
+  position: relative;
+}
+
+.spinner {
+  position: absolute;
+  left: 30%;
+  top: 50%;
+}

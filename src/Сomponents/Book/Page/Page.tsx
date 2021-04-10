@@ -14,6 +14,7 @@ import { GamesSection } from "./GamesSection/GamesSection";
 import styles from "./Page.module.scss";
 import { Footer } from "../../Footer/Footer";
 import { authIsAuthorized } from "../../../store/reducers/authorizationSlice";
+import book_style from "../Book.module.scss";
 
 const Page: FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -41,26 +42,23 @@ const Page: FC = () => {
       .catch(() => setIsLoaded(true));
   }, [isAuth, sectionId, pageId]);
 
-  const cards = useMemo(() =>
-      isLoaded ?
-        // @ts-ignore
-        map(words, word => <Card key={word.id} {...word}/>)
-        : <CircularProgress/>
-    , [words, isLoaded]
-  );
+  const cards = map(words, word => <Card key={word.id} {...word}/>)
+
   const pagination = useMemo(() =>
       <Pagination prefix={urlPrefix.book}
                   sectionId={sectionId}
                   pageId={pageId}
                   count={COUNT_SECTION_PAGES}/>,
-    [sectionId, pageId]);
+    [sectionId, pageId, isAuth]);
 
   return <div className={styles.page}>
     <SectionHandler prefix={urlPrefix.book}/>
     <GamesSection words={words} additionalFetching={true}/>
     {pagination}
-    {cards}
-    {pagination}
+    <div className={book_style.words_container}>
+      {isLoaded ? cards : <CircularProgress className={book_style.spinner} size={80}/>}
+    </div>
+    {isLoaded && pagination}
     <Footer/>
   </div>;
 };

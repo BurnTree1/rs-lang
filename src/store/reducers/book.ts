@@ -19,6 +19,7 @@ const bookSlice = createSlice({
   initialState,
   reducers: {
     initPage: (state, { payload: { sectionId, pageId, words } }) => {
+      set(state, [sectionId, pageId], {})
       words.forEach((word: WordType) => {
         // eslint-disable-next-line no-underscore-dangle
         const id  = (word._id) ? word._id : word.id;
