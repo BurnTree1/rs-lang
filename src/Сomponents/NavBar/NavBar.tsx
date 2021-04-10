@@ -164,7 +164,7 @@ export const NavBar: FC<PropsType> = (props) => {
                   <ListItemText primary="Саванна"/>
                 </ListItem>
               </NavLink>
-              <NavLink to='/audio' activeClassName='active' onClick={()=>dispatch(setHasAudioDifficulty(true))}>
+              <NavLink to='/audio' activeClassName='active' onClick={()=>dispatch(setHasDifficulty(true))}>
                 <ListItem button>
                   <ListItemIcon>
                     <></>
