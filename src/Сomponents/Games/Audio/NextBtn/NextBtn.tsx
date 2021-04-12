@@ -54,11 +54,11 @@ export const NextBtn: FC<PropsType> = ({ submitGameOver }) => {
   return (
     <div className={styles.next}>
       {answered ? (
-        <button onClick={onNextWord} type="button" className={styles.next__btn}>
+        <button onClick={onNextWord} disabled={finished} type="button" className={styles.next__btn}>
           <img src={next} alt="next" className={styles.next__img} />
         </button>
       ) : (
-        <button onClick={onAnswer} type="button" className={styles.next__btn}>
+        <button onClick={onAnswer} type="button" disabled={finished} className={styles.next__btn}>
           НЕ ЗНАЮ
         </button>
       )}

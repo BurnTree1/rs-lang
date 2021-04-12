@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import sound from '../../../../assets/image/listen-btn.svg';
 import { URL_API } from '../../../../helpers/constants';
 import { useAudio } from '../../../../helpers/hooks';
-import { isAnswered, next, word } from '../../../../store/reducers/audioSlice';
+import { isAnswered, isFinished, next, word } from '../../../../store/reducers/audioSlice';
 import styles from './Listening.module.scss'
 
 export const Listening = () => {
   const learnedWord = useSelector(word);
-  const nextWord = useSelector(next);
+  const finished = useSelector(isFinished);
   const answered = useSelector(isAnswered);
   const url = URL_API;
    const playCurrent = new Audio(`${url}/${learnedWord.audio}`);
@@ -21,7 +21,7 @@ export const Listening = () => {
   return (
     <div className={styles.listen__wrap}>
       {!answered ? (
-        <button onClick={onAudioPlay} type="button" className={styles.listen}>
+        <button onClick={onAudioPlay} disabled={finished} type="button" className={styles.listen}>
           <img src={sound} alt="sound"/>
         </button>
       ) : (
