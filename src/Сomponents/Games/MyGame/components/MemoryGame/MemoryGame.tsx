@@ -132,9 +132,17 @@ class MemoryGame extends React.Component<IProps, IState> {
   fullScreenToggle = () => {
     const doc = document.documentElement as HTMLElement & {
       webkitRequestFullscreen(): Promise<void>;
+      webkitCancelFullScreen(): Promise<void>;
     };
-    if (doc.webkitRequestFullscreen) {
+    if (doc.webkitRequestFullscreen && !this.state.fullScreen) {
       doc.webkitRequestFullscreen();
+      this.setState({fullScreen: true});
+    }
+    // @ts-ignore 
+    if (document.webkitCancelFullScreen && this.state.fullScreen) {
+      // @ts-ignore
+      document.webkitCancelFullScreen();
+      this.setState({fullScreen: false});
     }
   }
 

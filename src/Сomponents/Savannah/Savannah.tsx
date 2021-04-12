@@ -50,6 +50,8 @@ const Savannah = () => {
   const [longestSeries, setLongesSeries] = useState<number>(0);
   const { service } = useContext(serviceContext);
 
+  const [isFull, setIsFull] = useState<boolean>(false);
+
   const sendStat = useCallback(
     () => {
       sendStatistics({
@@ -112,11 +114,19 @@ const Savannah = () => {
   const onFullScreen = () => {
     const doc = document.documentElement as HTMLElement & {
       webkitRequestFullscreen(): Promise<void>;
+      webkitCancelFullScreen(): Promise<void>;
     };
-    if (doc.webkitRequestFullscreen) {
+    if (doc.webkitRequestFullscreen && !isFull) {
       doc.webkitRequestFullscreen();
+      setIsFull(true);
     }
-  }
+    // @ts-ignore
+    if (document.webkitCancelFullScreen && isFull) {
+      // @ts-ignore
+      document.webkitCancelFullScreen();
+      setIsFull(false);
+    }
+  };
 
   const onCloseGame = () => {
     setGameIsPaused(false)
