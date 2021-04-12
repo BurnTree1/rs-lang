@@ -30,7 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      flexDirection: "column"
+      flexDirection: "column",
+      [theme.breakpoints.down(1280)]: {
+        position: 'absolute',
+      },
     },
     drawer: {
       width: drawerWidth,

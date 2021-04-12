@@ -8,11 +8,12 @@ import "./AppWrapper.scss";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex"
+      display: "flex",
     },
     drawerHeader: {
       display: "flex",
       alignItems: "center",
+      minHeight: '1px',
       padding: theme.spacing(0, 1),
       ...theme.mixins.toolbar,
       justifyContent: "flex-end"
@@ -24,16 +25,26 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen
-      })
-
+      }),
+      [theme.breakpoints.down(1280)]: {
+        marginLeft: '0',
+      },
+      [theme.breakpoints.down(960)]: {
+        paddingTop: '50px',
+      },
     },
     contentShift: {
       transition: theme.transitions.create("margin", {
         easing: theme.transitions.easing.easeOut,
         duration: theme.transitions.duration.enteringScreen
       }),
-      marginLeft: "65px"
-    }
+      marginLeft: "65px",
+      [theme.breakpoints.down(1280)]: {
+        marginLeft: '0',
+    filter: 'blur(5px)',
+    pointerEvents: 'none',
+      },
+    },
   })
 );
 
@@ -64,7 +75,7 @@ export const AppWrapper: FC<PropsType> = (props) => {
       <NavBar open={open} handleClick={handleClick} handleDrawerToggle={handleDrawerToggle} menuOpen={menuOpen}/>
       <main
         className={clsx(classes.content, {
-          [classes.contentShift]: menuOpen
+          [classes.contentShift]: menuOpen,
         })}
       >
         <div className={classes.drawerHeader}/>

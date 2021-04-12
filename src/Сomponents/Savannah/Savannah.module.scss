@@ -512,3 +512,27 @@
     color: rgba(0, 0, 0, 0.87);
   }
 }
+
+
+@media (max-width: 785px) {
+  .gameContainer {
+    min-height: 110vh;
+  }
+}
+
+@media (max-width: 650px) {
+  .settingsContainer {
+    width: 470px;
+    height: auto;
+    padding: 10px;
+  }
+
+  .startViewContainer > p:nth-of-type(2) {
+    font-size: 18px;
+  }
+
+
+  .startViewContainer {
+    width: 100%;
+  }
+}

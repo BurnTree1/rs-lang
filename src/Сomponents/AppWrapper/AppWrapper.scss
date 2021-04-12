@@ -1,33 +1,12 @@
-.app .makeStyles-drawerHeader-2 {
-  min-height: 1px;
-}
-
 @media (max-width: 1280px) {
   main {
     padding: 15px;
   }
-
-  .makeStyles-root-10 {
-    position: absolute;
-  }
-
-  .app .makeStyles-contentShift-4 {
-    margin-left: 0;
-    filter: blur(5px);
-    pointer-events: none;
-  }
-
-  .app .makeStyles-content-3 {
-    margin-left: 0;
-  }
 }
 
 @media (max-width: 960px) {
-  .app .makeStyles-content-3 {
-    padding-top: 50px;
-  }
-
   main {
     padding: 5px;
+    padding-top: 50px;
   }
 }
