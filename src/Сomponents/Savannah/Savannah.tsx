@@ -24,8 +24,8 @@ import wrong from '../../assets/sounds/sprint-wrong.wav';
 
 const Savannah = () => {
   const rockRef = useRef<HTMLDivElement>(null);
-  const words = useSelector(wordsArr)
-  const dispatch = useDispatch()
+  const words = useSelector(wordsArr);
+  const dispatch = useDispatch();
   const [currentWords, setCurrentWords] = useState<typeof words>([]);
   const [currentAnswer, setCurrentAnswer] = useState<string>();
   const [wrongAnswers, setWrongAnswers] = useState<typeof words>([]);
@@ -52,18 +52,15 @@ const Savannah = () => {
 
   const [isFull, setIsFull] = useState<boolean>(false);
 
-  const sendStat = useCallback(
-    () => {
-      sendStatistics({
-        name: Games.savannah,
-        service,
-        rightAnswers: rightAnswers.length,
-        wrongAnswers: wrongAnswers.length,
-        longestSeries
-      });
-    },
-    [service, rightAnswers, wrongAnswers, longestSeries]
-  );
+  const sendStat = useCallback(() => {
+    sendStatistics({
+      name: Games.savannah,
+      service,
+      rightAnswers: rightAnswers.length,
+      wrongAnswers: wrongAnswers.length,
+      longestSeries,
+    });
+  }, [service, rightAnswers, wrongAnswers, longestSeries]);
   useEffect(() => {
     const wordsWithoutCurrentWord = [...words.slice(0, currentLevel), ...words.slice(currentLevel + 1, words.length)];
     const newWords = getThreeRandomWords(wordsWithoutCurrentWord);
@@ -129,20 +126,27 @@ const Savannah = () => {
   };
 
   const onCloseGame = () => {
-    setGameIsPaused(false)
-    setGameIsDone(false)
+    setGameIsPaused(false);
+    setGameIsDone(false);
     setGameView((prevState) => ({
       ...prevState,
       startView: true,
       settingsView: true,
-      getReadyView: true
-    }))
-    dispatch(setHasDifficulty(true))
-  }
+      getReadyView: true,
+    }));
+    dispatch(setHasDifficulty(true));
+    setCurrentWords([]);
+    setCurrentAnswer('');
+    setWrongAnswers([]);
+    setRightAnswers([]);
+    setLives(5);
+    setCurrentLevel(0);
+  };
 
   const conditionalRender = () => {
     if (gameView.startView) return <StartView setGameStatus={setGameView} />;
-    if (gameView.settingsView) return <SettingsView difficultType='время ответа' setSettings={setSettings} setGameStatus={setGameView} />;
+    if (gameView.settingsView)
+      return <SettingsView difficultType="время ответа" setSettings={setSettings} setGameStatus={setGameView} />;
     if (gameView.getReadyView) return <GetReadyView setGameStatus={setGameView} />;
 
     return (
@@ -177,13 +181,13 @@ const Savannah = () => {
       {gameIsPaused && (
         <>
           <div className={styles.overlay} />
-          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} onCloseGame={onCloseGame}/>
+          <GamePauseModal setGameIsPaused={setGameIsPaused} setGameIsDone={setGameIsDone} onCloseGame={onCloseGame} />
         </>
       )}
       {gameIsDone && (
         <>
           <div className={styles.overlay} />
-          <EndGameModal wrongAnswers={wrongAnswers} rightAnswers={rightAnswers} submit={onCloseGame}/>
+          <EndGameModal wrongAnswers={wrongAnswers} rightAnswers={rightAnswers} submit={onCloseGame} />
         </>
       )}
     </div>
