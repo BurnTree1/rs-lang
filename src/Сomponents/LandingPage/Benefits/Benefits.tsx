@@ -5,7 +5,7 @@ import benefits_2 from '../../../assets/image/benefits-2.svg'
 import benefits_3 from '../../../assets/image/benefits-3.svg'
 
 export const  Benefits =() => <div className={styles.benefits}>
-  <h2 className={styles.title}>Что вы получаете с RLang</h2>
+  <h2 className={styles.title}>Что вы получаете с RS Lang</h2>
   <div className={styles.benefits__inner}>
     <div className={styles.benefits__col}>
       <div className={styles.benefits__item}>
