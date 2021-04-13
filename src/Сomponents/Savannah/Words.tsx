@@ -5,9 +5,10 @@ import styles from './Savannah.module.scss';
 type Props = {
   currentWords: WordsType;
   checkAnswer: (word: string) => void;
+  livesLeft: number
 };
 
-const Words: React.FC<Props> = ({ currentWords, checkAnswer }) => {
+const Words: React.FC<Props> = ({ currentWords, checkAnswer, livesLeft }) => {
   const onAnswerSelect = useCallback(
     (e: KeyboardEvent): void => {
       if (e.key === '1') {
@@ -26,6 +27,9 @@ const Words: React.FC<Props> = ({ currentWords, checkAnswer }) => {
   );
   useEffect(() => {
     document.addEventListener('keydown', onAnswerSelect);
+    if (livesLeft === 0 ) {
+      document.removeEventListener('keydown', onAnswerSelect);
+    }
     return () => {
       document.removeEventListener('keydown', onAnswerSelect);
     };

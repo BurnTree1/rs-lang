@@ -167,7 +167,7 @@ const Savannah = () => {
           setNextLevel={setNextLevel}
           setHearths={setHearth}
         />
-        <Words currentWords={currentWords} checkAnswer={checkAnswer} />
+        <Words currentWords={currentWords} checkAnswer={checkAnswer} livesLeft={livesLeft} />
         <div className={styles.secondBlock} ref={rockRef}>
           <RockIcon height="100px" width="100px" />
         </div>
