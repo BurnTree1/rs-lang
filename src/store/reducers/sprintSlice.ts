@@ -51,7 +51,9 @@ export const sprintSlice = createSlice({
         }
       }
       state.word = { ...state.wordsArr[0] };
-      state.translation = state.wordsArr[0].wordTranslate;
+      if(state.wordsArr[0]) {
+        state.translation = state.wordsArr[0].wordTranslate;
+      }
       state.hasDifficulty = false;
     },
     nextWord: (state, action) => {
