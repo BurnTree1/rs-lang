@@ -78,7 +78,9 @@ const ActionButtons: FC<{ id: string, isHard: boolean, refresh?: () => void }> =
         </Tooltip>
       </div>;
     case PAGE_STUDIED:
-      return <></>;
+      return <div className={styles.actions}>
+        {isHard && hardMark}
+      </div>
     default:
       return <div className={styles.actions}>
         {isHard ? hardMark : hardButton}
