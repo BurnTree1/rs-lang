@@ -1,4 +1,6 @@
 .card-wrapper {
+  position: relative;
+  z-index: 1;
   cursor: pointer;
   perspective: 300px;
 }
@@ -15,6 +17,7 @@
   }
   to {
     opacity: 0;
+    // display: none;
   }
 }
 
@@ -28,6 +31,11 @@
   100% {
     transform: scale(0.9, 1.1) translateX(-10px);
   }
+}
+
+.card__found {
+  animation: hiding 1s linear forwards, bounce 300ms linear 300ms normal;
+  // display: none;
 }
 
 .card-wrapper_hide {

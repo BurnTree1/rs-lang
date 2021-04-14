@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import shortid from "shortid";
 import { IWord } from "../../../models/common.models";
 import { WordType } from "../../Savannah/types";
@@ -54,4 +55,10 @@ export const formatTime = (sec: number): string => {
 };
 
 // @ts-ignore
-export const getWord = (words: IWord[], card: ICard): WordType => (words.find(({ id }) => id === card.id) as WordType);
+export const getWord = (words: IWord[], card: ICard): WordType => {
+  // eslint-disable-next-line no-debugger
+  console.log()// @ts-ignore
+  return (words.find(({ word }) => word === card.word) as WordType);
+};
+
+export const checkWin = (cards: ICard[]) => cards.filter((card: ICard) => !card.found).length === 0;
