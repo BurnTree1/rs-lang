@@ -8,7 +8,7 @@ import styles from '../../Savannah/Savannah.module.scss';
 import ValueLabel from './ValueLabel';
 import RadioButtons from './RadioButtons';
 import { fetchAllWords, gameOver, hasDifficulty, setSprintDifficult } from '../../../store/reducers/sprintSlice';
-import { audioGameOver, fetchAllAudioWords, word } from '../../../store/reducers/audioSlice';
+import { audioGameOver, fetchAllAudioWords, setAudioDifficult, word } from '../../../store/reducers/audioSlice';
 import { useRandomPage } from '../../../helpers/hooks';
 import { URL_API } from '../../../helpers/constants';
 
@@ -82,6 +82,7 @@ const SettingsView: React.FC<Props> = ({ setSettings, setGameStatus, startPlay, 
       dispatch(fetchAllAudioWords(values.section, randomPage))
     }
     dispatch(setSprintDifficult(values.difficult))
+    dispatch(setAudioDifficult(values.difficult))
     dispatch(gameOver(false))
     dispatch(audioGameOver(false))
     startPlay && startPlay()

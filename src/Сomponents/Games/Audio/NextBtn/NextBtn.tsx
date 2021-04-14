@@ -4,7 +4,7 @@ import next from '../../../../assets/image/next.svg';
 import { serviceContext } from '../../../../contexts/ServiceContext';
 import { sendStatistics } from '../../../../helpers/statistics';
 import { Games } from '../../../../models/common.models';
-import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, setToWrongWords, word, wrongAnswers, longestSeries } from '../../../../store/reducers/audioSlice';
+import { correctAnswers, isAnswered, isFinished, nextWord, setAnswered, setToWrongWords, word, wrongAnswers, longestSeries, resetListenAttempts } from '../../../../store/reducers/audioSlice';
 import EndGameModal from '../../../Modals/EndGameModal';
 import GamePauseModal from '../../../Modals/GamePauseModal';
 import { TopPanel } from '../../Sprint/TopPanel/TopPanel';

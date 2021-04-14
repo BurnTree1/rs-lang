@@ -29,6 +29,9 @@ const initialState = {
   isAnswered: false,
   hasDifficulty: true,
   longestSeries: 0,
+  difficulty: 0,
+  canListen: true,
+  listenAttempts: 0
 };
 
 export const audioSlice = createSlice({
@@ -83,6 +86,19 @@ export const audioSlice = createSlice({
     setHasAudioDifficulty: (state, { payload: hasDifficulty }) => {
       state.hasDifficulty = hasDifficulty;
     },
+    setAudioDifficult: (state, { payload: difficulty }) => {
+      state.difficulty = difficulty
+    },
+    audioPlayed: (state) => {
+      if(+state.difficulty / 1000 - 3 === state.listenAttempts) {
+        state.canListen = false
+      }
+      state.listenAttempts += 1
+    },
+    resetListenAttempts: (state) => {
+      state.listenAttempts = 0
+      state.canListen = true
+    }
   },
 });
 
@@ -112,6 +128,9 @@ export const {
   setAudioWords,
   setToWrongWords,
   setHasAudioDifficulty,
+  setAudioDifficult,
+  audioPlayed,
+  resetListenAttempts,
 } = actions;
 
 export const wordsArr = (state: RootState) => state.audio.wordsArr;
@@ -127,5 +146,6 @@ export const correctAnswers = (state: RootState) => state.audio.correctAnswers;
 export const wrongAnswers = (state: RootState) => state.audio.wrongAnswers;
 export const hasDifficulty = (state: RootState) => state.audio.hasDifficulty;
 export const longestSeries = (state: RootState) => state.audio.longestSeries;
+export const canListen = (state: RootState) => state.audio.canListen;
 
 export default reducer;

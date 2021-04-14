@@ -136,13 +136,13 @@ class MemoryGame extends React.Component<IProps, IState> {
     };
     if (doc.webkitRequestFullscreen && !this.state.fullScreen) {
       doc.webkitRequestFullscreen();
-      this.setState({fullScreen: true});
+      this.setState({ fullScreen: true });
     }
     // @ts-ignore 
     if (document.webkitCancelFullScreen && this.state.fullScreen) {
       // @ts-ignore
       document.webkitCancelFullScreen();
-      this.setState({fullScreen: false});
+      this.setState({ fullScreen: false });
     }
   }
 
