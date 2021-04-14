@@ -1,0 +1,61 @@
+.footer {
+  height: 64px;
+  background: #011321;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 13;
+}
+
+.year {
+  color: #F2F2F2;
+  font-size: 24px;
+  line-height: 28px;
+  padding-left: 70px;
+  padding-right: 70px;
+}
+
+.school__img {
+  width: 100px;
+  height: 37.5px;
+}
+
+.feedback {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.githubs {
+  display: flex;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.githubs__row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.githubs__row>a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.githubs__row>a:last-of-type {
+  margin-right: 0;
+}
+
+.git__img {
+  width: 30px;
+  height: auto;
+}

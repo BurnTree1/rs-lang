@@ -1,0 +1,98 @@
+
+.settingsContainer {
+  border-radius: 4px;
+  font-family: Roboto, sans-serif;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  height: 400px;
+  position: absolute;
+  background-color: #FFFFFF;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  & > span {
+    margin: 28px 0 26px 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  & > button {
+    margin-top: 52px;
+    box-sizing: border-box;
+    width: 115px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1.25px;
+    font-family: Roboto, sans-serif;
+    background: #2196F3;
+    color: #FFFFFF;
+    border-radius: 4px;
+    padding: 0 9px 0 12px;
+    outline: none;
+    cursor: pointer;
+    border: 0;
+
+    &:hover {
+      background-color: rgb(76, 112, 195);
+    }
+
+    &:active {
+      background-color:rgba(76, 112, 195, 0.5);
+    }
+  }
+
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  & > span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    padding-bottom: 35px;
+    color: rgba(0, 0, 0, 0.87)
+  }
+ }
+
+.radioButtonsContainer {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  & > span {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.15px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
+
+@media (max-width: 650px) {
+  .settingsContainer {
+    width: 470px;
+  }
+}

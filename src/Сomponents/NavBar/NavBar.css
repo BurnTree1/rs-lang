@@ -1,0 +1,19 @@
+.app .MuiTypography-displayBlock {
+    font-size: 14px;
+}
+
+.nested {
+    color: #757575;
+}
+
+.app .active .MuiTypography-displayBlock {
+    font-weight: bold;
+}
+
+.app .avatar {
+    position: absolute;
+    top: -68px;
+    left: 0;
+    width: 70px;
+    height: 70px;
+}

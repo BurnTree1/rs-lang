@@ -1,0 +1,100 @@
+.formContainer {
+  z-index: 3;
+  width: 600px;
+  height: 500px;
+  background-color: #FFF;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > div {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f75757;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    & > span {
+      font-family: Roboto, sans-serif;
+      font-size: 32px;
+      font-weight: bold;
+      color: #FFF;
+    }
+  }
+
+  & > form {
+    height: 400px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 500px;
+
+    & > input {
+      border: none;
+      border-radius: 10px;
+      height: 30px;
+      margin-bottom: 15px;
+      outline: none;
+    }
+
+    & > p {
+      min-height: 12px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 12px;
+      color: red;
+    }
+  }
+}
+
+.registrationAvatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover ;
+  }
+}
+
+.formContainer {
+  .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+    padding: 0;
+  }
+  
+  .MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary {
+    margin-bottom: 5px;
+    margin-top: 5px
+  }
+  
+  .MuiButton-startIcon.MuiButton-iconSizeMedium {
+    margin-left: 0;
+  }
+  
+  .MuiButtonBase-root.MuiButton-root.MuiButton-contained.MuiButton-containedPrimary {
+    margin: 10px 0 20px 0;
+  
+    & > .MuiButton-label {
+      margin: 0;
+    }
+  }
+  
+  
+  .MuiButton-startIcon.MuiButton-iconSizeMedium {
+    margin-right: 0;
+  }
+}

@@ -1,0 +1,147 @@
+.card-wrapper {
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  perspective: 300px;
+}
+
+@keyframes hiding {
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  to {
+    opacity: 0;
+    // display: none;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1, 1) translateX(-10px);
+  }
+  50% {
+    transform: scale(1.1, 0.9) translateX(10px);
+  }
+  100% {
+    transform: scale(0.9, 1.1) translateX(-10px);
+  }
+}
+
+.card__found {
+  animation: hiding 1s linear forwards, bounce 300ms linear 300ms normal;
+  // display: none;
+}
+
+.card-wrapper_hide {
+  animation: hiding 1s linear, bounce 300ms infinite 300ms normal;
+  opacity: 0;
+  cursor: default;
+}
+
+.card-wrapper_display_none {
+  display: none;
+}
+
+.card {
+  width: 100px;
+  height: 139.68px;
+  // background: #80cbc4;
+  background: #630468;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  background-image: url('../../assets/logo.png');
+  background-size: 90px;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  transition: all 1s;
+  transform-style: preserve-3d;
+}
+
+.card {
+  transform: rotateY(180deg);
+}
+
+.card.flipped {
+
+  & .card__front {
+    box-shadow: inset 0 0 0px 2px #2196f3;
+    background-color: #fafafa;
+  }
+}
+
+.card__image-wrapper {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
+.card__image-wrapper_first {
+  display: none;
+}
+
+.card.shown {
+
+  & .card__image-wrapper_first {
+    display: inline;
+  }
+}
+
+.card__image {
+  width: 100px;
+  height: auto;
+}
+
+.card__front {
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 5px;
+  transform: rotateY(180deg);
+}
+
+.card__front,
+.card__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@media (max-width: 1023px) {
+  .card {
+    width: 80px;
+    height: 80px;
+    background-size: 70px;
+  }
+
+  .card__image {
+    width: 80px;
+    height: auto;
+  }
+}
+
+.card__description {
+  height: 28px;
+  width: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 14px;
+  word-break: break-word;
+  text-align: center;
+}
