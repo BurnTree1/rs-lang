@@ -16,6 +16,7 @@ export default function Card(props: IProps) {
     <div
       className={
         `card-wrapper ${found && animationOn ? 'card-wrapper_hide' : ''}${found && !animationOn ? 'card-wrapper_display_none' : ''}`
+        // `card-wrapper ${found && 'card__found'}`
         }
         onClick={() => { !found && cardClick() }}>
       <div className={`card${  isFlipped ? " flipped" : ""} ${ isShown ? " shown" : ''}`}>
