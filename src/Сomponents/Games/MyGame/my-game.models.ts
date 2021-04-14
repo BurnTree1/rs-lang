@@ -6,7 +6,6 @@ export interface IState {
   size: number;
   firstCard: ICard | null;
   secondCard: ICard | null;
-  isResumed: boolean;
   startTime: boolean;
   attempts: number;
   time: number;

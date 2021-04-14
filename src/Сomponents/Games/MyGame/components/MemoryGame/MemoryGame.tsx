@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import shortid from 'shortid';
 import { ICard, ISettings, IState } from '../../my-game.models';
 import Card from '../Card/Card';
-import { formatTime, generateCards, getWord } from '../../my-game.helpers';
+import { checkWin, formatTime, generateCards, getWord } from '../../my-game.helpers';
 import { Games, IGamesStatistics, IWord } from '../../../../../models/common.models';
 import { VolumeControl } from '../VolumeControl/VolumeControl';
 import GamePauseModal from '../../../../Modals/GamePauseModal';
@@ -54,7 +54,6 @@ class MemoryGame extends React.Component<IProps, IState> {
       cards: generateCards(words, DEFAULT_SETTINGS),
       firstCard: null,
       secondCard: null,
-      isResumed: false,
       startTime: false,
       attempts: 0,
       time: 0,
@@ -88,7 +87,6 @@ class MemoryGame extends React.Component<IProps, IState> {
       }, () => {
       });
     }, delay);
-    this.tick();
   }
 
   pauseHandler = () => {
@@ -103,17 +101,6 @@ class MemoryGame extends React.Component<IProps, IState> {
     const { time, attempts } = this.state;
     const points = ((settings.width * settings.height * settings.delay) ** 2) / (Math.sqrt(time * attempts));
     return Number(points.toFixed(0));
-  }
-
-  tick() {
-    setTimeout(() => {
-      if (this.state.startTime && !this.state.haveWin) {
-        this.setState({
-          time: this.state.time + 1,
-        });
-      }
-      this.tick();
-    }, 1000);
   }
 
   getFieldSize() {
@@ -142,7 +129,7 @@ class MemoryGame extends React.Component<IProps, IState> {
     if (document.webkitCancelFullScreen && this.state.fullScreen) {
       // @ts-ignore
       document.webkitCancelFullScreen();
-      this.setState({fullScreen: false});
+      this.setState({ fullScreen: false });
     }
   }
 
@@ -162,13 +149,8 @@ class MemoryGame extends React.Component<IProps, IState> {
     return false;
   }
 
-  checkWin() {
-    return this.state.cards.filter((card: ICard) => !card.found).length === 0;
-  }
-
-  changeFlipped(cardKey: string) {
-    const cardIndex = this.state.cards.findIndex(({ key }) => key === cardKey);
-    if (this.state.cards[cardIndex].isFlipped) {
+  changeFlipped(card: ICard) {
+    if (card.isFlipped) {
       return;
     }
 
@@ -176,100 +158,59 @@ class MemoryGame extends React.Component<IProps, IState> {
       this.flipSound.play();
     }
 
-    const changedCard: ICard = { ...this.state.cards[cardIndex], isFlipped: !this.state.cards[cardIndex].isFlipped };
-    let cardsCopy = this.state.cards.slice();
-    cardsCopy.splice(cardIndex, 1, changedCard);
+    const { firstCard, attempts } = this.state;
 
-    this.setState((prevState: any) => {
-      const newState = {
-        ...prevState,
-        cards: cardsCopy,
-      };
-      if (!prevState.firstCard && changedCard.isFlipped) {
-        return { ...newState, firstCard: changedCard };
-      }
-      if (!prevState.secondCard && changedCard.isFlipped) {
-        let secondCard = null;
-        let firstCard = null;
-        let rightAnswers = [...this.state.rightAnswers];
-        let wrongAnswers = [...this.state.wrongAnswers, getWord(this.props.words, changedCard)];
-        let { rightAnswersCount, longestSeries } = this.state;
-
-        if (prevState.firstCard && prevState.firstCard.image === changedCard.image) {
-          if (this.state.soundToggle) {
-            this.foundSound.play();
-          }
-
-          secondCard = { ...changedCard, found: true };
-          firstCard = { ...prevState.firstCard, found: true };
-          rightAnswers = [...this.state.rightAnswers, getWord(this.props.words, prevState.firstCard)];
-          wrongAnswers = [...this.state.wrongAnswers];
-          rightAnswersCount += 1;
-
-          cardsCopy = cardsCopy.map((card) => {
-            if (card.key === (prevState.firstCard as ICard).key || card.key === (changedCard as ICard).key) {
-              return { ...card, found: true };
-            }
-            return card;
-          });
-  
-        } else {
-          longestSeries = rightAnswersCount > longestSeries ? rightAnswersCount : longestSeries;
-          rightAnswersCount = 0;
-          cardsCopy = cardsCopy.map((card) => {
-            if (card.key === (prevState.firstCard as ICard).key || card.key === (changedCard as ICard).key) {
-              return { ...card, isFlipped: false };
-            }
-            return card;
-          });
-          if (this.state.soundToggle) {
-            this.mistakeSound.play();
-          }
-        }
-
-        return {
-          ...prevState,
-          cards: cardsCopy,
-          secondCard,
-          firstCard,
-          rightAnswers,
-          wrongAnswers,
-          rightAnswersCount,
-          longestSeries,
-        };
-      }
-
-      if (prevState.firstCard && prevState.secondCard) {
-        cardsCopy = cardsCopy.map((card) => {
-          if (card.key === (prevState.firstCard as ICard).key || card.key === (prevState.secondCard as ICard).key) {
-            return { ...card, isFlipped: false };
-          }
-          return card;
-        });
-        return {
-          ...prevState,
-          cards: cardsCopy,
-          firstCard: changedCard,
-          secondCard: null,
-        };
-      }
-
-      return {
-        ...prevState,
-      }
-    }, () => {
+    if (!firstCard) {
       this.setState({
-        attempts: this.state.attempts + 1,
-      }, () => {
-        const win = this.checkWin();
-        if (win) {
-          this.setState({
-            haveWin: win,
-          });
-          this.saveStatistics();
+        firstCard: card,
+        attempts: attempts + 1,
+      });
+      return;
+    }
+    let { rightAnswersCount } = this.state;
+    if (firstCard?.image === card?.image) {
+      if (this.state.soundToggle) {
+        this.foundSound.play();
+      }
+
+      rightAnswersCount += 1;
+
+      const cardsCopy = this.state.cards.slice().map((item: ICard) => {
+        if (item.key === firstCard.key || item.key === card.key) {
+          return { ...item, found: true };
         }
-      })
-    });
+        return item;
+      });
+
+      const rightAnswers = [...this.state.rightAnswers, getWord(this.props.words, firstCard)];
+      const win = checkWin(cardsCopy);
+      if (win) {
+        this.saveStatistics(rightAnswersCount);
+      }
+      this.setState({
+        firstCard: null,
+        secondCard: null,
+        cards: cardsCopy,
+        rightAnswers,
+        haveWin: win,
+        rightAnswersCount,
+        attempts: attempts + 1,
+      });
+      return;
+    }
+
+    if (this.state.soundToggle) {
+      this.mistakeSound.play();
+    }
+
+    const wrongAnswers = [...this.state.wrongAnswers, getWord(this.props.words, firstCard)];
+      this.setState({
+        firstCard: null,
+        secondCard: null,
+        wrongAnswers,
+        rightAnswersCount: 0,
+        attempts: attempts + 1,
+      });
   }
 
   onSoundToggle = () => {
@@ -285,11 +226,11 @@ class MemoryGame extends React.Component<IProps, IState> {
     this.props.history.push('/my-game');
   }
 
-  saveStatistics() {
-    const { rightAnswersCount, cards, wrongAnswers, longestSeries } = this.state;
+  saveStatistics(rightAnswersCount: number) {
+    const { wrongAnswers, longestSeries } = this.state;
     const rightAnswersPercents = getPercents(rightAnswersCount, wrongAnswers.length);
     const data: IGamesStatistics = {
-      learnedWords: cards.length / 2,
+      learnedWords: this.props.words.length,
       rightAnswers: rightAnswersPercents ,
       longestSeries: rightAnswersCount > longestSeries
         ? rightAnswersCount : longestSeries,
@@ -298,8 +239,7 @@ class MemoryGame extends React.Component<IProps, IState> {
   }
 
   render() {
-    const { cards, fullScreen } = this.state;
-
+    const { cards, fullScreen, firstCard } = this.state;
     return (
       <div className={`game ${fullScreen ? 'game_fullscreen' : ''}`} ref={this.gameContainerRef}>
         <div className="statistics">
@@ -313,7 +253,7 @@ class MemoryGame extends React.Component<IProps, IState> {
             </div>
 
             <div className="time-wrapper">
-              <p className="time-wrapper__caption">Time:</p> <p className="time-wrapper__time">{formatTime(this.state.time)}</p>
+              {/* <p className="time-wrapper__caption">Time:</p> <p className="time-wrapper__time">{formatTime(this.state.time)}</p> */}
             </div>
             <div />
           </div>
@@ -332,7 +272,8 @@ class MemoryGame extends React.Component<IProps, IState> {
               <Card
                 {...{
                   ...card,
-                  cardClick: () => this.changeFlipped(card.key),
+                  cardClick: () => this.changeFlipped(card),
+                  isFlipped: firstCard?.key === card.key,
                   animationOn: this.animationCheck(card)
                 }}
               />
